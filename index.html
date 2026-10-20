@@ -316,19 +316,58 @@
 
   .descripcion-libro{
     background:var(--surface-2);border:1px solid var(--border);border-radius:14px;
-    padding:16px;margin-bottom:16px;
+    padding:16px;margin-bottom:16px;cursor:pointer;
     border-left:3px solid var(--cat-c1, var(--accent));
+    transition:.16s;
+  }
+  .descripcion-libro:hover{
+    background:color-mix(in srgb, var(--cat-c1, var(--accent)) 6%, var(--surface-2));
+    border-color:color-mix(in srgb, var(--cat-c1, var(--accent)) 40%, var(--border));
   }
   .descripcion-label{
     font-size:.7rem;font-weight:800;color:var(--cat-c1, var(--accent));
     text-transform:uppercase;letter-spacing:.08em;
-    margin-bottom:6px;display:flex;align-items:center;gap:6px;
+    margin-bottom:6px;display:flex;align-items:center;gap:6px;justify-content:space-between;
   }
-  .descripcion-label svg{width:12px;height:12px}
+  .descripcion-label .desc-play-hint{
+    font-size:.62rem;font-weight:700;color:var(--muted);
+    text-transform:none;letter-spacing:0;
+    display:inline-flex;align-items:center;gap:4px;
+  }
+  .descripcion-label .desc-play-hint svg{width:10px;height:10px}
+  .descripcion-label .label-left{display:inline-flex;align-items:center;gap:6px}
+  .descripcion-label .label-left svg{width:12px;height:12px}
   .descripcion-texto{
     font-family:var(--serif);font-size:1rem;line-height:1.7;
     color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;
+    display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden;
   }
+
+  /* ═══ Diálogo Introducción (lector suelto) ═══ */
+  #descReader{width:min(720px,94vw);max-height:92vh}
+  @media(max-width:640px){#descReader{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+  .desc-reader-wrap{display:flex;flex-direction:column;max-height:92vh}
+  @media(max-width:640px){.desc-reader-wrap{height:100dvh;max-height:100dvh}}
+  .desc-reader-head{
+    display:flex;gap:12px;align-items:flex-start;padding:16px 20px;
+    border-bottom:1px solid var(--border);flex-shrink:0;
+    background:linear-gradient(135deg,
+      color-mix(in srgb, var(--cat-c1, var(--surface)) 14%, var(--surface)),
+      color-mix(in srgb, var(--cat-c2, var(--surface)) 8%, var(--surface)));
+  }
+  .desc-reader-head .cover{width:60px;height:84px;font-size:1.7rem}
+  .desc-reader-meta{flex:1;min-width:0}
+  .desc-reader-meta h2{margin:0;font-family:var(--serif);font-size:clamp(1.05rem,3vw,1.3rem);line-height:1.22;letter-spacing:-.02em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .desc-reader-meta .autor{margin-top:3px;font-size:.82rem;color:var(--muted);overflow-wrap:anywhere}
+  .desc-reader-meta .subtitulo{margin-top:5px;font-size:.7rem;font-weight:800;color:var(--cat-c1, var(--accent));text-transform:uppercase;letter-spacing:.08em;display:inline-flex;align-items:center;gap:6px}
+  .desc-reader-meta .subtitulo svg{width:11px;height:11px}
+  .desc-reader-body{overflow-y:auto;padding:18px 20px;flex:1;min-height:0;font-family:var(--serif);font-size:1.05rem;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text)}
+  .desc-reader-body p{margin:0 0 1em}
+  .desc-reader-body p:last-child{margin-bottom:0}
+  .desc-reader-foot{display:flex;gap:8px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
+  .desc-reader-foot .btn{padding:9px 14px;font-size:.84rem;flex:1;min-width:0;font-weight:700}
+  .tts-frag{transition:background-color .25s, box-shadow .25s;border-radius:4px;scroll-margin-top:80px;scroll-margin-bottom:80px}
+  .tts-frag.tts-activo{background:color-mix(in srgb,var(--accent) 26%, transparent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 38%, transparent)}
 
   .seccion-bloque{
     background:color-mix(in srgb,var(--seccion) 5%, var(--surface));
@@ -385,8 +424,6 @@
   .cap-resumen p{margin:0 0 1em}
   .cap-resumen p:last-child{margin-bottom:0}
   .cap-resumen.vacio{font-style:italic;color:var(--muted);font-family:inherit;font-size:.85rem;padding-top:4px}
-  .tts-frag{transition:background-color .25s, box-shadow .25s;border-radius:4px;scroll-margin-top:80px;scroll-margin-bottom:80px}
-  .tts-frag.tts-activo{background:color-mix(in srgb,var(--accent) 26%, transparent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 38%, transparent)}
   .cap-notas{margin-top:14px;padding-top:12px;border-top:1px dashed var(--border)}
   .cap-notas-label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
   .cap-notas-label svg{width:12px;height:12px;color:var(--nota)}
@@ -537,6 +574,35 @@
   .qc-bulk-info li.sec-item:first-child{border-top:none;padding-top:0}
   .qc-bulk-info li.cap-item{margin-left:10px;color:var(--muted)}
   .qc-bulk-info li.intro-item{margin-left:10px;color:var(--accent);font-weight:700}
+
+  /* ═══ Traducción ═══ */
+  .qc-translate-box{
+    background:color-mix(in srgb,var(--accent) 8%, var(--surface-2));
+    border:1px solid color-mix(in srgb,var(--accent) 30%, var(--border));
+    border-radius:10px;padding:11px 13px;margin-top:6px;
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .qc-translate-box label{
+    display:flex;align-items:center;gap:8px;cursor:pointer;
+    font-size:.85rem;font-weight:700;color:var(--text);
+  }
+  .qc-translate-box input[type="checkbox"]{
+    width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;
+  }
+  .qc-translate-box .lang-info{
+    font-size:.74rem;color:var(--muted);margin-left:24px;
+  }
+  .qc-translate-box .lang-info strong{color:var(--accent)}
+  .qc-progress{
+    display:none;flex-direction:column;gap:5px;margin-top:8px;
+    padding:10px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;
+  }
+  .qc-progress.show{display:flex}
+  .qc-progress-text{font-size:.8rem;font-weight:700;color:var(--text)}
+  .qc-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+  .qc-progress-bar .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .25s}
+  .qc-progress-detail{font-size:.72rem;color:var(--muted)}
+
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
@@ -634,6 +700,9 @@
     .seccion-titulo{font-size:.88rem}
     .seccion-body{padding:10px 8px 4px}
     .seccion-edit{padding:9px}
+    .desc-reader-head{padding:14px 16px;gap:10px}
+    .desc-reader-head .cover{width:46px;height:64px;font-size:1.3rem}
+    .desc-reader-body{padding:14px 16px;font-size:1rem}
   }
   @media(min-width:641px) and (max-width:900px){
     .grid:not(.list-view){grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
@@ -782,6 +851,54 @@
   </div>
 </dialog>
 
+<!-- ═══ Lector de Introducción (modal propio) ═══ -->
+<dialog id="descReader">
+  <div class="desc-reader-wrap">
+    <header class="desc-reader-head">
+      <div class="cover" id="drCover"></div>
+      <div class="desc-reader-meta">
+        <h2 id="drTitulo"></h2>
+        <p class="autor" id="drAutor"></p>
+        <span class="subtitulo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          Introducción
+        </span>
+      </div>
+      <div class="reader-head-actions">
+        <button class="icon-btn" id="drClose" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="desc-reader-body" id="drBody"></div>
+    <footer class="desc-reader-foot">
+      <button class="btn btn-ghost" id="drPlay" title="Escuchar introducción">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <span id="drPlayTxt">Escuchar</span>
+      </button>
+      <button class="btn btn-ghost" id="drPause" hidden title="Pausar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+        Pausar
+      </button>
+      <button class="btn btn-ghost" id="drStop" hidden title="Detener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>
+        Detener
+      </button>
+      <select class="cap-speed" id="drSpeed" title="Velocidad" style="flex:0 0 auto;min-width:70px">
+        <option value="0.75">0.75×</option>
+        <option value="1" selected>1×</option>
+        <option value="1.25">1.25×</option>
+        <option value="1.5">1.5×</option>
+        <option value="1.75">1.75×</option>
+        <option value="2">2×</option>
+      </select>
+    </footer>
+  </div>
+</dialog>
+
 <dialog id="descDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -867,6 +984,21 @@
             <input type="file" id="qcBulkFile" accept=".txt,text/plain" hidden />
           </div>
         </div>
+
+        <div class="qc-translate-box" id="qcTranslateBox" style="display:none">
+          <label>
+            <input type="checkbox" id="qcTraducir" checked />
+            <span>Traducir al español con Google Translate</span>
+          </label>
+          <div class="lang-info" id="qcLangInfo"></div>
+        </div>
+
+        <div class="qc-progress" id="qcProgress">
+          <div class="qc-progress-text" id="qcProgressText">Traduciendo…</div>
+          <div class="qc-progress-bar"><div class="fill" id="qcProgressFill"></div></div>
+          <div class="qc-progress-detail" id="qcProgressDetail"></div>
+        </div>
+
         <div class="qc-bulk-info" id="qcBulkInfo"></div>
       </div>
     </div>
@@ -1402,6 +1534,15 @@
   let ttsCapId = null;
   let fragDialogCapId = null;
   let fragDialogFrags = [];
+
+  // TTS de introducción (independiente)
+  let drTtsPausado = false;
+  let drTtsVelocidad = 1.0;
+  let drTtsCola = [];
+  let drTtsIndice = 0;
+  let drTtsGen = 0;
+  let drTtsActivo = false;
+  let drTextoActual = '';
 
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
     ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
@@ -2063,13 +2204,19 @@
     const d = (l.descripcion || '').trim();
     if (!d) return '';
     return `
-      <div class="descripcion-libro">
+      <div class="descripcion-libro" data-abrir-intro="${l.id}" role="button" tabindex="0" title="Abrir introducción">
         <div class="descripcion-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-          </svg>
-          Introducción
+          <span class="label-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            Introducción
+          </span>
+          <span class="desc-play-hint">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Abrir
+          </span>
         </div>
         <div class="descripcion-texto">${esc(d)}</div>
       </div>
@@ -2179,6 +2326,12 @@
   }
 
   rBody.addEventListener('click', (e) => {
+    const intro = e.target.closest('[data-abrir-intro]');
+    if (intro) {
+      e.stopPropagation();
+      abrirDescReader(intro.dataset.abrirIntro);
+      return;
+    }
     const toggleSec = e.target.closest('[data-toggle-sec]');
     if (toggleSec) {
       e.stopPropagation();
@@ -2221,6 +2374,12 @@
 
   rBody.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter') return;
+    const intro = e.target.closest('[data-abrir-intro]');
+    if (intro) {
+      e.preventDefault();
+      abrirDescReader(intro.dataset.abrirIntro);
+      return;
+    }
     const input = e.target.closest('[data-nota-input]');
     if (!input) return;
     e.preventDefault();
@@ -2244,6 +2403,216 @@
           reproducirTrozo(gen);
         }, 100);
       }
+    }
+  });
+
+  /* ═══════════ LECTOR DE INTRODUCCIÓN ═══════════ */
+  const descReader = $('#descReader');
+  const drBody = $('#drBody');
+  const drCover = $('#drCover');
+  const drTitulo = $('#drTitulo');
+  const drAutor = $('#drAutor');
+  const drPlay = $('#drPlay');
+  const drPlayTxt = $('#drPlayTxt');
+  const drPause = $('#drPause');
+  const drStop = $('#drStop');
+  const drSpeed = $('#drSpeed');
+
+  function pararDrTTS() {
+    drTtsGen++;
+    drTtsActivo = false;
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch {}
+    }
+    drTtsCola = [];
+    drTtsIndice = 0;
+    drTtsPausado = false;
+  }
+
+  function resetDrTTS() {
+    pararDrTTS();
+    limpiarResaltadoDr();
+    actualizarBotonesDrTTS(false);
+  }
+
+  function limpiarResaltadoDr() {
+    drBody.querySelectorAll('.tts-frag.tts-activo').forEach(el => el.classList.remove('tts-activo'));
+  }
+
+  function resaltarFragmentoDr(i) {
+    limpiarResaltadoDr();
+    const span = drBody.querySelector(`.tts-frag[data-frag="${i}"]`);
+    if (!span) return;
+    span.classList.add('tts-activo');
+    const totalFrags = drBody.querySelectorAll('.tts-frag').length;
+    if (totalFrags - 1 - i <= 1) {
+      span.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    } else {
+      const rect = span.getBoundingClientRect();
+      const bodyRect = drBody.getBoundingClientRect();
+      const spanCenter = rect.top + rect.height / 2 - bodyRect.top;
+      const bodyCenter = drBody.clientHeight / 2;
+      const delta = spanCenter - bodyCenter;
+      drBody.scrollTo({ top: Math.max(0, drBody.scrollTop + delta), behavior: 'smooth' });
+    }
+  }
+
+  function actualizarBotonesDrTTS(activo) {
+    if (activo) {
+      drPlay.hidden = true;
+      drPause.hidden = false;
+      drStop.hidden = false;
+      drPlayTxt.textContent = 'Escuchar';
+      drPause.querySelector('svg').innerHTML = drTtsPausado
+        ? '<path d="M8 5v14l11-7z"/>'
+        : '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+      drPause.lastChild.textContent = ' ' + (drTtsPausado ? 'Reanudar' : 'Pausar');
+    } else {
+      drPlay.hidden = false;
+      drPause.hidden = true;
+      drStop.hidden = true;
+      drPlayTxt.textContent = 'Escuchar';
+    }
+  }
+
+  function reproducirDrTrozo(gen) {
+    if (gen !== drTtsGen) return;
+    if (!drTtsActivo) return;
+    if (drTtsIndice >= drTtsCola.length) {
+      resetDrTTS();
+      toast('Introducción terminada');
+      return;
+    }
+    const trozo = drTtsCola[drTtsIndice];
+    const u = new SpeechSynthesisUtterance(trozo);
+    u.lang = 'es-ES';
+    u.rate = drTtsVelocidad;
+    u.pitch = 1;
+    if (!mejorVoz) elegirMejorVoz();
+    if (mejorVoz) { u.voice = mejorVoz; u.lang = mejorVoz.lang || 'es-ES'; }
+    resaltarFragmentoDr(drTtsIndice);
+    u.onend = () => {
+      if (gen !== drTtsGen) return;
+      drTtsIndice++;
+      setTimeout(() => reproducirDrTrozo(gen), 60);
+    };
+    u.onerror = (e) => {
+      if (gen !== drTtsGen) return;
+      if (e.error === 'interrupted' || e.error === 'canceled') return;
+      drTtsIndice++;
+      setTimeout(() => reproducirDrTrozo(gen), 60);
+    };
+    try {
+      window.speechSynthesis.speak(u);
+    } catch {
+      resetDrTTS();
+    }
+  }
+
+  function iniciarDrTTS(desdeInicio = true) {
+    if (!('speechSynthesis' in window)) { toast('Tu navegador no soporta lectura por voz'); return; }
+    const frags = [];
+    drBody.querySelectorAll('.tts-frag').forEach(s => frags.push(s.textContent));
+    if (!frags.length) { toast('No hay texto para leer'); return; }
+    drTtsGen++;
+    const gen = drTtsGen;
+    try { window.speechSynthesis.cancel(); } catch {}
+    drTtsActivo = true;
+    drTtsPausado = false;
+    drTtsCola = frags;
+    drTtsIndice = desdeInicio ? 0 : Math.min(drTtsIndice, frags.length - 1);
+    actualizarBotonesDrTTS(true);
+    if (!mejorVoz) elegirMejorVoz();
+    setTimeout(() => {
+      if (gen !== drTtsGen) return;
+      reproducirDrTrozo(gen);
+    }, 100);
+  }
+
+  function abrirDescReader(id) {
+    const l = libros.find(x => x.id === id);
+    if (!l) return;
+    const desc = (l.descripcion || '').trim();
+    if (!desc) { toast('Este libro no tiene introducción'); return; }
+    drTextoActual = desc;
+
+    const cat = getCategoria(l.categoria || detectarCategoria(l.titulo, l.autor));
+    descReader.style.setProperty('--cat-c1', cat.c1);
+    descReader.style.setProperty('--cat-c2', cat.c2);
+
+    // portada
+    drCover.innerHTML = '';
+    drCover.style.background = '';
+    const url = coversCache.get(l.id);
+    if (url) {
+      drCover.style.background = 'transparent';
+      const img = document.createElement('img');
+      img.src = url;
+      drCover.appendChild(img);
+    } else {
+      const [c1, c2] = colorLibro(l);
+      drCover.style.background = `linear-gradient(145deg, ${c1}, ${c2})`;
+      drCover.textContent = ((l.titulo||'?').trim()[0]||'?').toUpperCase();
+    }
+    drTitulo.textContent = l.titulo || 'Sin título';
+    drAutor.textContent = (l.autor && l.autor !== '—') ? l.autor : '';
+
+    // Partir el texto en párrafos + fragmentos TTS
+    const parrafos = desc.split(/\n+/).map(p => p.trim()).filter(Boolean);
+    let contador = 0;
+    drBody.innerHTML = parrafos.map(p => {
+      const frags = dividirTextoEnTrozos(p, 220);
+      const spans = frags.map(f => {
+        const i = contador++;
+        return `<span class="tts-frag" data-frag="${i}">${esc(f)}</span>`;
+      }).join(' ');
+      return `<p>${spans}</p>`;
+    }).join('');
+
+    resetDrTTS();
+    descReader.showModal();
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        drBody.scrollTop = 0;
+        elegirMejorVoz();
+      }, 60);
+    });
+  }
+
+  $('#drClose').addEventListener('click', () => {
+    resetDrTTS();
+    descReader.close();
+  });
+
+  drPlay.addEventListener('click', () => iniciarDrTTS(true));
+
+  drPause.addEventListener('click', () => {
+    if (!drTtsActivo) return;
+    if (drTtsPausado) {
+      try { window.speechSynthesis.resume(); } catch {}
+      drTtsPausado = false;
+    } else {
+      try { window.speechSynthesis.pause(); } catch {}
+      drTtsPausado = true;
+    }
+    actualizarBotonesDrTTS(true);
+  });
+
+  drStop.addEventListener('click', () => {
+    resetDrTTS();
+    toast('Detenido');
+  });
+
+  drSpeed.addEventListener('change', () => {
+    drTtsVelocidad = parseFloat(drSpeed.value);
+    if (drTtsActivo && !drTtsPausado && drTtsCola.length > 0) {
+      drTtsGen++;
+      const gen = drTtsGen;
+      try { window.speechSynthesis.cancel(); } catch {}
+      setTimeout(() => {
+        if (gen !== drTtsGen) return;
+        reproducirDrTrozo(gen);
+      }, 100);
     }
   });
 
@@ -2533,8 +2902,17 @@
   const qcWc = $('#qcWc');
   const qcBulkTexto = $('#qcBulkTexto');
   const qcBulkInfo = $('#qcBulkInfo');
+  const qcTranslateBox = $('#qcTranslateBox');
+  const qcTraducir = $('#qcTraducir');
+  const qcLangInfo = $('#qcLangInfo');
+  const qcProgress = $('#qcProgress');
+  const qcProgressText = $('#qcProgressText');
+  const qcProgressFill = $('#qcProgressFill');
+  const qcProgressDetail = $('#qcProgressDetail');
   let qcTabActivo = 'uno';
   let qcCapsDetectados = [];
+  let qcIdiomaDetectado = 'es';
+  let qcTraduciendo = false;
 
   function actualizarQcWc() {
     if (qcTabActivo === 'uno') {
@@ -2581,7 +2959,6 @@
       if (/^(tabla de contenido|[ií]ndice|indice|contenido|contents|table of contents)$/i.test(t)) {
         return 'toc';
       }
-      // Introducción / prefacio → auto-descripcion
       if (/^(introducci[oó]n|prefacio|proemio)\s*$/i.test(t)) {
         return 'intro';
       }
@@ -2713,15 +3090,109 @@
     return estructura;
   }
 
+  /* ═══ Detección de idioma simple ═══ */
+  function detectarIdioma(texto) {
+    const t = ' ' + String(texto || '').toLowerCase().slice(0, 3000) + ' ';
+    const enStops = [' the ', ' and ', ' of ', ' to ', ' in ', ' is ', ' that ', ' it ', ' was ', ' he ', ' she ', ' for ', ' on ', ' with ', ' as ', ' his ', ' her ', ' at ', ' by ', ' from ', ' but ', ' they '];
+    const esStops = [' el ', ' la ', ' los ', ' las ', ' de ', ' que ', ' y ', ' en ', ' un ', ' una ', ' es ', ' por ', ' con ', ' para ', ' se ', ' su ', ' al ', ' del ', ' como ', ' más ', ' pero ', ' este '];
+    let enScore = 0, esScore = 0;
+    for (const w of enStops) { const re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'); enScore += (t.match(re) || []).length; }
+    for (const w of esStops) { const re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'); esScore += (t.match(re) || []).length; }
+    // Letras no-españolas típicas del inglés
+    const enChars = (t.match(/[a-z]/g) || []).length;
+    if (enScore > esScore && enScore >= 3) return 'en';
+    if (esScore > enScore) return 'es';
+    return enChars > 100 ? 'en' : 'es';
+  }
+
+  /* ═══ Traducción con Google Translate (endpoint público) ═══ */
+  async function traducirGoogle(texto, source = 'en', target = 'es') {
+    if (!texto || !texto.trim()) return texto;
+    // Trocear por párrafos, y cada párrafo por tamaño máximo ~4500 chars
+    const bloques = [];
+    const parrafos = texto.split(/\n+/);
+    for (const p of parrafos) {
+      if (!p.trim()) { bloques.push(''); continue; }
+      if (p.length <= 4500) { bloques.push(p); continue; }
+      // partir por frases si es muy grande
+      const oraciones = p.match(/[^.!?…]+[.!?…]+["')\]]*\s*/g) || [p];
+      let buf = '';
+      for (const o of oraciones) {
+        if ((buf + o).length > 4500) {
+          if (buf) bloques.push(buf);
+          if (o.length > 4500) {
+            // fallback: cortar por espacio
+            let rest = o;
+            while (rest.length > 4500) {
+              let cut = rest.lastIndexOf(' ', 4500);
+              if (cut < 3000) cut = 4500;
+              bloques.push(rest.slice(0, cut));
+              rest = rest.slice(cut);
+            }
+            if (rest) bloques.push(rest);
+            buf = '';
+          } else {
+            buf = o;
+          }
+        } else {
+          buf += o;
+        }
+      }
+      if (buf) bloques.push(buf);
+    }
+
+    const resultados = [];
+    for (let i = 0; i < bloques.length; i++) {
+      const b = bloques[i];
+      if (!b.trim()) { resultados.push(''); continue; }
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(b)}`;
+      let ok = false;
+      for (let intento = 0; intento < 3 && !ok; intento++) {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          if (Array.isArray(data) && Array.isArray(data[0])) {
+            const txt = data[0].map(seg => seg[0]).filter(Boolean).join('');
+            resultados.push(txt);
+            ok = true;
+          } else {
+            throw new Error('Formato inesperado');
+          }
+        } catch (err) {
+          if (intento === 2) {
+            // último intento: dejar original
+            resultados.push(b);
+          } else {
+            await new Promise(r => setTimeout(r, 400 * (intento + 1)));
+          }
+        }
+      }
+      // pequeña pausa para no colapsar Google
+      if (i < bloques.length - 1) await new Promise(r => setTimeout(r, 120));
+    }
+    return resultados.join('\n');
+  }
+
   function actualizarBulkInfo() {
     const texto = qcBulkTexto.value;
     if (!texto.trim()) {
       qcCapsDetectados = [];
       qcBulkInfo.innerHTML = '';
+      qcTranslateBox.style.display = 'none';
+      qcProgress.classList.remove('show');
       actualizarQcWc();
       return;
     }
     qcCapsDetectados = detectarEstructura(texto);
+    qcIdiomaDetectado = detectarIdioma(texto);
+    if (qcIdiomaDetectado === 'en') {
+      qcTranslateBox.style.display = '';
+      qcLangInfo.innerHTML = `Idioma detectado: <strong>inglés</strong>. Se traducirá <strong>capítulo por capítulo</strong> al pulsar Añadir.`;
+    } else {
+      qcTranslateBox.style.display = 'none';
+    }
+
     const secciones = qcCapsDetectados.filter(x => x.tipo === 'sec');
     const intros = qcCapsDetectados.filter(x => x.tipo === 'intro');
     const capsSueltos = qcCapsDetectados.filter(x => x.tipo === 'cap');
@@ -2862,6 +3333,8 @@
     qcBulkInfo.innerHTML = '';
     qcCapsDetectados = [];
     qcSeccion.value = '';
+    qcTranslateBox.style.display = 'none';
+    qcProgress.classList.remove('show');
     const secciones = libroAbierto.secciones || [];
     if (secciones.length) {
       const datalist = document.getElementById('seccionesDatalist') || (() => {
@@ -2886,8 +3359,8 @@
   }
 
   $('#rAddCap').addEventListener('click', abrirQuickCap);
-  $('#qcCerrar').addEventListener('click', () => quickCapDialog.close());
-  $('#qcCancelar').addEventListener('click', () => quickCapDialog.close());
+  $('#qcCerrar').addEventListener('click', () => { if (!qcTraduciendo) quickCapDialog.close(); });
+  $('#qcCancelar').addEventListener('click', () => { if (!qcTraduciendo) quickCapDialog.close(); });
 
   function insertarEnLibroYRender(nuevosItems) {
     if (!libroAbierto || !nuevosItems.length) return;
@@ -2947,8 +3420,78 @@
     render();
   }
 
-  $('#qcGuardar').addEventListener('click', () => {
-    if (!libroAbierto) return;
+  function setTraduciendo(activo, texto = '', pct = 0, detalle = '') {
+    qcTraduciendo = activo;
+    if (activo) {
+      qcProgress.classList.add('show');
+      qcProgressText.textContent = texto;
+      qcProgressFill.style.width = pct + '%';
+      qcProgressDetail.textContent = detalle;
+      $('#qcGuardar').disabled = true;
+      $('#qcCancelar').disabled = true;
+      $('#qcCerrar').disabled = true;
+    } else {
+      qcProgress.classList.remove('show');
+      $('#qcGuardar').disabled = false;
+      $('#qcCancelar').disabled = false;
+      $('#qcCerrar').disabled = false;
+    }
+  }
+
+  async function traducirEstructura(estructura) {
+    // Recorre la estructura y traduce título+resumen de cada capítulo/intro
+    const total = (() => {
+      let n = 0;
+      for (const it of estructura) {
+        if (it.tipo === 'sec') n += 1 + it.capitulos.length;
+        else n += 1;
+      }
+      return n;
+    })();
+    let hechos = 0;
+    const resultados = [];
+    for (const item of estructura) {
+      if (item.tipo === 'sec') {
+        const secNueva = { tipo: 'sec', titulo: item.titulo, capitulos: [] };
+        // traducir título de la sección
+        setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Sección: ${item.titulo.slice(0, 60)}`);
+        try { secNueva.titulo = await traducirGoogle(item.titulo); } catch {}
+        hechos++;
+        for (const c of item.capitulos) {
+          setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Capítulo: ${c.titulo.slice(0, 60)}`);
+          let tituloT = c.titulo;
+          let resumenT = c.resumen;
+          try { tituloT = await traducirGoogle(c.titulo); } catch {}
+          try { resumenT = await traducirGoogle(c.resumen); } catch {}
+          secNueva.capitulos.push({ ...c, titulo: tituloT, resumen: resumenT });
+          hechos++;
+        }
+        resultados.push(secNueva);
+      } else if (item.tipo === 'intro') {
+        setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Introducción`);
+        let tituloT = item.titulo;
+        let resumenT = item.resumen;
+        try { tituloT = await traducirGoogle(item.titulo); } catch {}
+        try { resumenT = await traducirGoogle(item.resumen); } catch {}
+        resultados.push({ ...item, titulo: tituloT, resumen: resumenT });
+        hechos++;
+      } else {
+        setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Capítulo: ${item.titulo.slice(0, 60)}`);
+        let tituloT = item.titulo;
+        let resumenT = item.resumen;
+        try { tituloT = await traducirGoogle(item.titulo); } catch {}
+        try { resumenT = await traducirGoogle(item.resumen); } catch {}
+        resultados.push({ ...item, titulo: tituloT, resumen: resumenT });
+        hechos++;
+      }
+    }
+    setTraduciendo(true, 'Traducción completa', 100, '');
+    await new Promise(r => setTimeout(r, 250));
+    return resultados;
+  }
+
+  $('#qcGuardar').addEventListener('click', async () => {
+    if (!libroAbierto || qcTraduciendo) return;
 
     if (qcTabActivo === 'uno') {
       const titulo = qcTitulo.value.trim();
@@ -2978,8 +3521,23 @@
     } else {
       const texto = qcBulkTexto.value;
       if (!texto.trim()) { toast('Pega o sube el texto primero'); return; }
-      const detectado = detectarEstructura(texto);
+      let detectado = detectarEstructura(texto);
       if (!detectado.length) { toast('No hay texto para importar'); return; }
+
+      const debeTraducir = qcIdiomaDetectado === 'en' && qcTraducir.checked && qcTranslateBox.style.display !== 'none';
+
+      if (debeTraducir) {
+        setTraduciendo(true, 'Iniciando traducción…', 0, 'Preparando capítulos…');
+        try {
+          detectado = await traducirEstructura(detectado);
+        } catch (err) {
+          console.error(err);
+          toast('Error en traducción: ' + err.message);
+          setTraduciendo(false);
+          return;
+        }
+        setTraduciendo(false);
+      }
 
       // Extract intro → descripcion
       const intros = detectado.filter(x => x.tipo === 'intro');
@@ -3000,7 +3558,6 @@
             l.descripcion = textoIntro;
             libroAbierto = l;
             guardar();
-            toast('Introducción asignada al libro');
           }
         }
       }
@@ -3014,7 +3571,7 @@
       }
 
       if (totalCaps === 0 && intros.length === 0) { toast('No se detectó contenido válido'); return; }
-      toast(`${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} añadido${totalCaps === 1 ? '' : 's'}${intros.length ? ' · intro importada' : ''}`);
+      toast(`${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} añadido${totalCaps === 1 ? '' : 's'}${intros.length ? ' · intro importada' : ''}${debeTraducir ? ' · traducido' : ''}`);
     }
   });
 
@@ -3072,7 +3629,6 @@
     if (!l) return;
     libroAbierto = l;
 
-    // Category color on reader
     const cat = getCategoria(l.categoria || detectarCategoria(l.titulo, l.autor));
     reader.style.setProperty('--cat-c1', cat.c1);
     reader.style.setProperty('--cat-c2', cat.c2);
