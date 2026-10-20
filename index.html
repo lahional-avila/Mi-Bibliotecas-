@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#6366f1" />
 <title>Biblioteca · Mis resúmenes</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%236366f1'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><rect width='512' height='512' rx='96' fill='url(%23bg)'/><path d='M 100 200 Q 180 180 256 200 L 256 380 Q 180 360 100 380 Z' fill='%23fef9c3'/><path d='M 256 200 Q 332 180 412 200 L 412 380 Q 332 360 256 380 Z' fill='%23fde68a'/><line x1='130' y1='240' x2='230' y2='228' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='130' y1='290' x2='230' y2='278' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='130' y1='340' x2='230' y2='328' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='282' y1='228' x2='368' y2='238' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='282' y1='278' x2='368' y2='288' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='282' y1='328' x2='368' y2='338' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><path d='M 380 200 L 380 340 L 396 322 L 412 340 L 412 200 Z' fill='%23ef4444'/><line x1='256' y1='200' x2='256' y2='380' stroke='%2392400e' stroke-width='6' opacity='.55'/></svg>" />
-<link rel="manifest" href="manifest.json" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
+<link rel="manifest" href="manifest.json?v=3" />
 <script>
   try{
     document.documentElement.dataset.theme = localStorage.getItem('tema') || 'light';
@@ -243,21 +244,51 @@
   .toc-item .notas-toc{font-size:.7rem;background:color-mix(in srgb,var(--nota) 20%, transparent);color:#a16207;padding:1px 6px;border-radius:10px;font-weight:700}
   .reader-progress{height:3px;background:var(--border);flex-shrink:0;overflow:hidden}
   .reader-progress .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0;transition:width .15s}
-  .reader-body{overflow-y:auto;padding:20px 22px 28px;flex:1;min-height:0;scroll-behavior:smooth;position:relative}
+  .reader-body{overflow-y:auto;padding:16px 16px 24px;flex:1;min-height:0;scroll-behavior:smooth;position:relative}
   .reader-body.sin-texto{font-family:inherit;font-size:.92rem;color:var(--muted);font-style:italic;text-align:center;padding-top:60px}
-  .cap{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;scroll-margin-top:80px}
+
+  /* ============ CAPÍTULOS COLAPSABLES ============ */
+  .cap{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:14px;
+    margin-bottom:10px;
+    scroll-margin-top:8px;
+  }
   .cap.actual{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%, transparent)}
-  .cap-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border);transition:.2s}
+  .cap-header{
+    display:flex;align-items:center;gap:10px;
+    padding:13px 16px;
+    cursor:pointer;
+    user-select:none;
+    transition:background-color .15s;
+    border-radius:14px;
+  }
+  .cap.expanded .cap-header{
+    border-radius:14px 14px 0 0;
+    border-bottom:1px solid var(--border);
+  }
+  .cap-header:hover{background:color-mix(in srgb,var(--accent) 4%, transparent)}
   .cap-header.sticky-active{
     position:sticky;top:0;z-index:5;
-    margin:-16px -16px 10px;padding:12px 16px;
-    background:var(--surface);border-bottom:2px solid var(--accent);
+    background:var(--surface);
+    border-bottom:2px solid var(--accent);
     box-shadow:0 4px 12px -6px rgba(0,0,0,.15);
     border-radius:14px 14px 0 0;
   }
-  .cap-num{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.9rem;flex-shrink:0}
-  .cap-titulo{flex:1;min-width:0;font-size:1rem;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .cap-num{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem;flex-shrink:0}
+  .cap-titulo{flex:1;min-width:0;font-size:.96rem;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .cap-controls{display:flex;gap:6px;flex-shrink:0;align-items:center}
+  .cap-toggle{
+    background:none;border:none;padding:4px;cursor:pointer;
+    color:var(--muted);display:grid;place-items:center;
+    border-radius:6px;transition:.15s;flex-shrink:0;
+  }
+  .cap-toggle:hover{background:var(--surface);color:var(--text)}
+  .cap-toggle svg{width:18px;height:18px;transition:transform .2s}
+  .cap.expanded .cap-toggle svg{transform:rotate(180deg)}
+  .cap-body{display:none;padding:0 16px 16px}
+  .cap.expanded .cap-body{display:block}
   .frag-btn{
     font:inherit;font-size:.72rem;font-weight:800;
     background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);
@@ -273,10 +304,10 @@
     background-repeat:no-repeat;background-position:right 6px center;
   }
   .tts-resume{font-size:.7rem;background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);padding:3px 8px;border-radius:10px;font-weight:800;white-space:nowrap;flex-shrink:0}
-  .cap-resumen{font-family:var(--serif);font-size:1.04rem;line-height:1.8;white-space:normal;overflow-wrap:anywhere;color:var(--text)}
+  .cap-resumen{font-family:var(--serif);font-size:1.04rem;line-height:1.8;white-space:normal;overflow-wrap:anywhere;color:var(--text);padding-top:14px}
   .cap-resumen p{margin:0 0 1em}
   .cap-resumen p:last-child{margin-bottom:0}
-  .cap-resumen.vacio{font-style:italic;color:var(--muted);font-family:inherit;font-size:.85rem}
+  .cap-resumen.vacio{font-style:italic;color:var(--muted);font-family:inherit;font-size:.85rem;padding-top:4px}
   .tts-frag{transition:background-color .25s, box-shadow .25s;border-radius:4px;scroll-margin-top:80px}
   .tts-frag.tts-activo{background:color-mix(in srgb,var(--accent) 26%, transparent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 38%, transparent)}
   .cap-notas{margin-top:14px;padding-top:12px;border-top:1px dashed var(--border)}
@@ -292,6 +323,7 @@
   .nota-add input:focus{border-color:var(--nota);box-shadow:0 0 0 3px color-mix(in srgb,var(--nota) 20%, transparent)}
   .nota-add button{font:inherit;font-size:.8rem;font-weight:700;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;flex-shrink:0;transition:.15s}
   .nota-add button:hover{background:var(--nota);color:#fff;border-color:var(--nota)}
+
   .reader-foot{display:flex;gap:7px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
   .reader-foot .btn{padding:8px 12px;font-size:.82rem}
   .btn-leido{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;font-weight:700}
@@ -368,34 +400,19 @@
   }
   .settings-options button:hover{background:var(--surface-2)}
   .settings-options button.active{background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);border-color:var(--accent)}
-  .settings-preview{
-    display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;
-    background:var(--surface-2);border:1px solid var(--border);margin-top:8px;
-  }
+  .settings-preview{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);margin-top:8px}
   .settings-preview .cover{width:var(--card-cover-w);height:var(--card-cover-h);font-size:1.3rem}
   .settings-preview .preview-text{flex:1;min-width:0}
   .settings-preview .preview-text strong{display:block;font-size:.95rem;line-height:1.3}
   .settings-preview .preview-text span{display:block;font-size:.78rem;color:var(--muted)}
   .settings-preview .preview-icons{display:flex;gap:8px;color:var(--muted);flex-shrink:0}
   .settings-preview .preview-icons svg{width:var(--icon-md);height:var(--icon-md)}
-
-  /* Frag dialog */
   .frag-controls{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap}
   .frag-controls .btn{padding:6px 10px;font-size:.8rem;font-weight:700;min-width:38px}
-  .frag-controls input{
-    font:inherit;font-size:1.1rem;font-weight:800;text-align:center;
-    padding:8px 10px;border:1px solid var(--border);border-radius:9px;
-    background:var(--surface-2);color:var(--text);outline:none;width:80px;
-  }
+  .frag-controls input{font:inherit;font-size:1.1rem;font-weight:800;text-align:center;padding:8px 10px;border:1px solid var(--border);border-radius:9px;background:var(--surface-2);color:var(--text);outline:none;width:80px}
   .frag-controls input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%, transparent)}
-  .frag-preview{
-    font-family:var(--serif);font-size:.92rem;line-height:1.6;
-    padding:11px 13px;border-radius:10px;background:var(--surface-2);
-    border:1px solid var(--border);max-height:140px;overflow-y:auto;
-    color:var(--text);font-style:italic;
-  }
+  .frag-preview{font-family:var(--serif);font-size:.92rem;line-height:1.6;padding:11px 13px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);max-height:140px;overflow-y:auto;color:var(--text);font-style:italic}
   .frag-preview strong{font-style:normal;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
-
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
@@ -455,7 +472,7 @@
     .view-toggle button.active{box-shadow:inset 0 0 0 1.5px var(--accent)}
     .row2{grid-template-columns:1fr}
     .reader-head{padding:14px 16px}
-    .reader-body{padding:14px 14px 22px}
+    .reader-body{padding:12px 12px 20px}
     .reader-foot{padding:10px 12px}
     .reader-foot .btn{flex:1;min-width:calc(33% - 5px)}
     .editor-body{padding:14px 16px}
@@ -463,12 +480,12 @@
     .editor-actions{flex:1}
     .editor-actions .btn{flex:1}
     .toolbar select{width:100%}
-    .cap{padding:12px}
-    .cap-resumen{font-size:1rem}
-    .cap-header{gap:8px}
-    .cap-header.sticky-active{margin:-12px -12px 10px;padding:10px 12px}
-    .cap-num{width:28px;height:28px;font-size:.82rem}
+    .cap{padding:0}
+    .cap-header{padding:11px 13px;gap:8px}
+    .cap-num{width:26px;height:26px;font-size:.78rem}
     .cap-titulo{font-size:.88rem}
+    .cap-body{padding:0 13px 13px}
+    .cap-resumen{font-size:1rem}
     .cap-controls{gap:4px}
     .frag-btn{font-size:.66rem;padding:4px 7px}
     .cap-speed{font-size:.66rem;padding:4px 20px 4px 6px}
@@ -1085,7 +1102,6 @@
   let filtroActivo = 'todos';
   let vistaActual = 'grid';
 
-  // TTS
   let ttsPausado = false;
   let ttsVelocidad = 1.0;
   let mejorVoz = null;
@@ -1117,7 +1133,7 @@
 
   function libroEnProgreso(l) {
     if (l.leido) return false;
-    if ((l.progreso || 0) > 2 && (l.progreso || 0) < 99) return true;
+    if (l.abierto) return true;
     for (const c of (l.capitulos || [])) {
       if (c.ttsIndice && c.ttsIndice > 0) return true;
     }
@@ -1289,7 +1305,7 @@
     switch (filtroActivo) {
       case 'leidos': return l.leido === true;
       case 'en-progreso': return libroEnProgreso(l);
-      case 'no-leidos': return l.leido !== true;
+      case 'no-leidos': return l.leido !== true && !l.abierto;
       case 'con-caps': return c.caps > 0;
       case 'sin-caps': return c.caps === 0;
       case 'con-notas': return c.notas > 0;
@@ -1426,8 +1442,6 @@
 
   const reader = $('#reader');
   const rBody = $('#rBody');
-
-  // ═══════════════ TTS ═══════════════
 
   function elegirMejorVoz() {
     if (!('speechSynthesis' in window)) return null;
@@ -1619,8 +1633,6 @@
     }
   }
 
-  // ═══════════════ Header del capítulo (sticky + controles) ═══════════════
-
   function renderCapControls(cap, totalFrags) {
     const activo = (ttsActivo && ttsCapId === cap.id);
     const idxActual = cap.ttsIndice || 0;
@@ -1657,7 +1669,7 @@
     if (!header) return;
     const totalFrags = dividirResumenEnFragmentos(cap.resumen || '').flat().length;
     const activo = (ttsActivo && ttsCapId === capId);
-    header.className = 'cap-header' + (activo ? ' sticky-active' : '');
+    header.classList.toggle('sticky-active', activo);
     const ctrl = header.querySelector('.cap-controls');
     if (ctrl) ctrl.innerHTML = renderCapControls(cap, totalFrags);
   }
@@ -1679,94 +1691,101 @@
         return `<p>${spans}</p>`;
       }).join('');
     }
-    const activo = (ttsActivo && ttsCapId === cap.id);
     return `
       <section class="cap" data-cap-el="${cap.id}" data-cap-id="${cap.id}">
-        <div class="cap-header ${activo ? 'sticky-active' : ''}" data-cap-header="${cap.id}">
+        <div class="cap-header" data-cap-header="${cap.id}">
           <div class="cap-num">${idx + 1}</div>
           <div class="cap-titulo">${esc(cap.titulo || 'Capítulo ' + (idx+1))}</div>
           <div class="cap-controls">${renderCapControls(cap, totalFrags)}</div>
+          <button class="cap-toggle" data-toggle-cap="${cap.id}" title="Expandir / contraer" aria-label="Expandir">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
         </div>
-        ${resumen ? `<div class="cap-resumen">${resumenHTML}</div>` : `<div class="cap-resumen vacio">Sin resumen para este capítulo.</div>`}
-        <div class="cap-notas">
-          <div class="cap-notas-label">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>
-            </svg>
-            Notas de recordatorio
-          </div>
-          <div class="cap-notas-list" data-cap-notas="${cap.id}">
-            ${notas.map((n, i) => `
-              <div class="nota-item">
-                <span class="nota-texto">${esc(n)}</span>
-                <button class="nota-del" data-del-nota="${cap.id}" data-nota-idx="${i}" title="Eliminar nota">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
-              </div>
-            `).join('')}
-          </div>
-          <div class="nota-add">
-            <input type="text" placeholder="Añadir nota rápida…" data-nota-input="${cap.id}" maxlength="500" />
-            <button data-add-nota="${cap.id}">+ Nota</button>
+        <div class="cap-body">
+          ${resumen ? `<div class="cap-resumen">${resumenHTML}</div>` : `<div class="cap-resumen vacio">Sin resumen para este capítulo.</div>`}
+          <div class="cap-notas">
+            <div class="cap-notas-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>
+              </svg>
+              Notas de recordatorio
+            </div>
+            <div class="cap-notas-list" data-cap-notas="${cap.id}">
+              ${notas.map((n, i) => `
+                <div class="nota-item">
+                  <span class="nota-texto">${esc(n)}</span>
+                  <button class="nota-del" data-del-nota="${cap.id}" data-nota-idx="${i}" title="Eliminar nota">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+            <div class="nota-add">
+              <input type="text" placeholder="Añadir nota rápida…" data-nota-input="${cap.id}" maxlength="500" />
+              <button data-add-nota="${cap.id}">+ Nota</button>
+            </div>
           </div>
         </div>
       </section>
     `;
   }
 
-  function engancharEventosCaps() {
-    rBody.querySelectorAll('[data-add-nota]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const capId = btn.dataset.addNota;
+  function expandirCap(capId) {
+    const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
+    if (!capEl) return;
+    capEl.classList.add('expanded');
+  }
+
+  function colapsarCap(capId) {
+    const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
+    if (!capEl) return;
+    capEl.classList.remove('expanded');
+  }
+
+  function toggleCap(capId) {
+    const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
+    if (!capEl) return;
+    const estaExpandido = capEl.classList.contains('expanded');
+    if (estaExpandido) {
+      if (ttsCapId === capId && ttsActivo) resetTTS();
+      colapsarCap(capId);
+    } else {
+      expandirCap(capId);
+    }
+  }
+
+  rBody.addEventListener('click', (e) => {
+    if (e.target.closest('button, select, input')) {
+      const btn = e.target.closest('[data-cap-tts],[data-cap-playpause],[data-cap-stop],[data-frag-sel],[data-toggle-cap]');
+      if (btn) {
+        if (btn.dataset.capTts) escucharCapitulo(btn.dataset.capTts);
+        else if (btn.dataset.capPlaypause) togglePausaCap(btn.dataset.capPlaypause);
+        else if (btn.dataset.capStop) detenerCap(btn.dataset.capStop);
+        else if (btn.dataset.fragSel) abrirFragDialog(btn.dataset.fragSel);
+        else if (btn.dataset.toggleCap) toggleCap(btn.dataset.toggleCap);
+        return;
+      }
+      const notaBtn = e.target.closest('[data-add-nota]');
+      if (notaBtn) {
+        const capId = notaBtn.dataset.addNota;
         const input = rBody.querySelector(`[data-nota-input="${capId}"]`);
         const txt = (input?.value || '').trim();
         if (!txt) return;
         agregarNota(capId, txt);
         input.value = '';
-      });
-    });
-    rBody.querySelectorAll('[data-nota-input]').forEach(input => {
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          const capId = input.dataset.notaInput;
-          const txt = input.value.trim();
-          if (!txt) return;
-          agregarNota(capId, txt);
-          input.value = '';
-        }
-      });
-    });
-    rBody.querySelectorAll('[data-del-nota]').forEach(btn => {
-      btn.addEventListener('click', () => eliminarNota(btn.dataset.delNota, Number(btn.dataset.notaIdx)));
-    });
-  }
-
-  // Delegación de clicks en el body (para los controles del header que se regeneran)
-  rBody.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-cap-tts],[data-cap-playpause],[data-cap-stop],[data-frag-sel]');
-    if (btn) {
-      if (btn.dataset.capTts) escucharCapitulo(btn.dataset.capTts);
-      else if (btn.dataset.capPlaypause) togglePausaCap(btn.dataset.capPlaypause);
-      else if (btn.dataset.capStop) detenerCap(btn.dataset.capStop);
-      else if (btn.dataset.fragSel) abrirFragDialog(btn.dataset.fragSel);
+        return;
+      }
+      const delBtn = e.target.closest('[data-del-nota]');
+      if (delBtn) {
+        eliminarNota(delBtn.dataset.delNota, Number(delBtn.dataset.notaIdx));
+        return;
+      }
       return;
     }
-    // Botones de notas
-    const notaBtn = e.target.closest('[data-add-nota]');
-    if (notaBtn) {
-      const capId = notaBtn.dataset.addNota;
-      const input = rBody.querySelector(`[data-nota-input="${capId}"]`);
-      const txt = (input?.value || '').trim();
-      if (!txt) return;
-      agregarNota(capId, txt);
-      input.value = '';
-      return;
-    }
-    const delBtn = e.target.closest('[data-del-nota]');
-    if (delBtn) {
-      eliminarNota(delBtn.dataset.delNota, Number(delBtn.dataset.notaIdx));
-      return;
+    const header = e.target.closest('.cap-header');
+    if (header) {
+      const capId = header.dataset.capHeader;
+      if (capId) toggleCap(capId);
     }
   });
 
@@ -1798,14 +1817,14 @@
     }
   });
 
-  // ═══════════════ Acciones TTS ═══════════════
-
   function escucharCapitulo(capId) {
     if (!libroAbierto) return;
     const cap = libroAbierto.capitulos.find(c => c.id === capId);
     if (!cap) return;
     const txt = (cap.resumen || '').trim();
     if (!txt) { toast('Este capítulo no tiene resumen'); return; }
+
+    expandirCap(capId);
 
     const parrafosFrags = dividirResumenEnFragmentos(txt);
     const fragsPlanos = parrafosFrags.flat();
@@ -1822,9 +1841,7 @@
       }
     }
 
-    if (ttsActivo && ttsCapId && ttsCapId !== capId) {
-      detenerCap(ttsCapId);
-    }
+    if (ttsActivo && ttsCapId && ttsCapId !== capId) detenerCap(ttsCapId);
 
     const el = rBody.querySelector(`[data-cap-el="${capId}"]`);
     if (el) el.scrollIntoView({ block: 'start' });
@@ -1845,15 +1862,9 @@
   }
 
   function detenerCap(capId) {
-    if (ttsCapId !== capId) {
-      // por si acaso, detenemos cualquier TTS activo
-      resetTTS();
-      return;
-    }
+    if (ttsCapId !== capId) { resetTTS(); return; }
     resetTTS();
   }
-
-  // ═══════════════ Diálogo de fragmentos ═══════════════
 
   const fragDialog = $('#fragDialog');
   const fragInput = $('#fragInput');
@@ -1861,8 +1872,6 @@
 
   function actualizarFragPreview() {
     if (!fragDialogCapId) return;
-    const cap = libroAbierto?.capitulos.find(c => c.id === fragDialogCapId);
-    if (!cap) return;
     const idx = Math.max(0, Math.min(fragDialogFrags.length - 1, parseInt(fragInput.value || '1', 10) - 1));
     fragInput.value = idx + 1;
     const f = fragDialogFrags[idx] || '';
@@ -1878,7 +1887,7 @@
     const idxActual = Math.max(0, Math.min(fragDialogFrags.length - 1, cap.ttsIndice || 0));
     fragInput.value = idxActual + 1;
     fragInput.max = fragDialogFrags.length;
-    $('#fragInfo').textContent = `Elige el fragmento al que quieres ir. Puedes escribir el número o usar los botones para moverte.`;
+    $('#fragInfo').textContent = 'Elige el fragmento al que quieres ir.';
     $('#fragTotal').textContent = `Total: ${fragDialogFrags.length} fragmentos`;
     actualizarFragPreview();
     fragDialog.showModal();
@@ -1886,7 +1895,6 @@
 
   $('#fragCerrar').addEventListener('click', () => fragDialog.close());
   $('#fragCancelar').addEventListener('click', () => fragDialog.close());
-
   fragInput.addEventListener('input', actualizarFragPreview);
   fragInput.addEventListener('change', actualizarFragPreview);
 
@@ -1908,14 +1916,11 @@
     const capId = fragDialogCapId;
     const frags = fragDialogFrags.slice();
     fragDialog.close();
-    // Detener actual y reproducir desde el nuevo fragmento
     pararTTS();
     ttsCapId = capId;
     hablarFragmentos(frags, capId, idx);
     toast('Reproduciendo desde el fragmento ' + (idx + 1));
   });
-
-  // ═══════════════ Notas ═══════════════
 
   function agregarNota(capId, txt) {
     if (!libroAbierto) return;
@@ -2006,7 +2011,9 @@
   $('#tocList').addEventListener('click', (e) => {
     const item = e.target.closest('.toc-item');
     if (!item) return;
-    const el = document.querySelector(`[data-cap-el="${item.dataset.cap}"]`);
+    const capId = item.dataset.cap;
+    expandirCap(capId);
+    const el = document.querySelector(`[data-cap-el="${capId}"]`);
     if (el) el.scrollIntoView({ block: 'start' });
   });
 
@@ -2120,6 +2127,8 @@
     if (!l) return;
     libroAbierto = l;
 
+    if (!l.abierto) { l.abierto = true; guardar(); }
+
     const cover = $('#rCover');
     cover.innerHTML = '';
     cover.style.background = '';
@@ -2166,19 +2175,17 @@
     reader.showModal();
     requestAnimationFrame(() => {
       setTimeout(() => {
+        rBody.scrollTop = 0;
         if (capDestino) {
+          expandirCap(capDestino);
           const el = document.querySelector(`[data-cap-el="${capDestino}"]`);
           if (el) el.scrollIntoView({ block: 'start' });
-        } else if (l.scrollTop && caps.length) {
-          rBody.scrollTop = l.scrollTop;
         }
         actualizarProgreso();
         elegirMejorVoz();
       }, 60);
     });
   }
-
-  // ═══════════════ Editor (sin cambios funcionales) ═══════════════
 
   const editor = $('#editor');
   const form = $('#formLibro');
@@ -2458,8 +2465,6 @@
     editor.close();
     render();
   });
-
-  // ═══════════════ Sync / menú / ajustes (sin cambios) ═══════════════
 
   const syncDialog = $('#syncDialog');
   let syncToken = localStorage.getItem(SYNC_TOKEN_KEY) || '';
