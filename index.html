@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light" data-font="md" data-icons="md">
 <head>
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 1: HEAD
-     ═══════════════════════════════════════════════════════════════ -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#6366f1" />
@@ -20,10 +17,6 @@
     navigator.serviceWorker.register('sw.js').catch(()=>{});
   }
 </script>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 2: ESTILOS
-     ═══════════════════════════════════════════════════════════════ -->
 <style>
   :root{
     --bg:#f4f4f8; --surface:#ffffff; --surface-2:#fafafc;
@@ -327,15 +320,13 @@
     color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;
   }
 
-  /* SECCIÓN dentro del lector */
   .seccion-bloque{
     background:color-mix(in srgb,var(--seccion) 5%, var(--surface));
     border:1px solid color-mix(in srgb,var(--seccion) 25%, var(--border));
     border-radius:14px;margin-bottom:14px;overflow:hidden;
   }
   .seccion-header{
-    display:flex;align-items:center;gap:10px;
-    padding:12px 16px;
+    display:flex;align-items:center;gap:10px;padding:12px 16px;
     background:color-mix(in srgb,var(--seccion) 10%, var(--surface));
     cursor:pointer;user-select:none;
     border-bottom:1px solid color-mix(in srgb,var(--seccion) 20%, var(--border));
@@ -408,9 +399,9 @@
   .btn-fav.activo{background:color-mix(in srgb,var(--fav) 12%, transparent);color:var(--fav);border-color:color-mix(in srgb,var(--fav) 45%, var(--border))}
   .btn-fav.activo svg{fill:var(--fav)}
 
-  #editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog, #seccionDialog{width:min(720px,96vw);max-height:94vh}
+  #editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog{width:min(720px,96vw);max-height:94vh}
   #fragDialog{width:min(400px,94vw)}
-  @media(max-width:640px){#editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog, #seccionDialog{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+  @media(max-width:640px){#editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
   @media(max-width:640px){#fragDialog{height:auto;max-height:80vh;border-radius:16px;width:92vw}}
   .editor-wrap{display:flex;flex-direction:column;max-height:94vh}
   @media(max-width:640px){.editor-wrap{height:100dvh;max-height:100dvh}}
@@ -466,7 +457,6 @@
   .nota-edit-del:hover{color:var(--danger);border-color:var(--danger)}
   .nota-edit-del svg{width:11px;height:11px}
 
-  /* Sección en editor */
   .seccion-edit{
     background:color-mix(in srgb,var(--seccion) 5%, var(--surface));
     border:1px solid color-mix(in srgb,var(--seccion) 25%, var(--border));
@@ -529,13 +519,13 @@
   .qc-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
   .qc-actions{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
   .qc-actions .btn{flex:1;min-width:140px}
-  .qc-bulk-info{font-size:.8rem;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:9px 12px;margin-top:6px;max-height:200px;overflow-y:auto}
+  .qc-bulk-info{font-size:.8rem;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:9px 12px;margin-top:6px;max-height:260px;overflow-y:auto}
   .qc-bulk-info strong{color:var(--text)}
   .qc-bulk-info ul{margin:6px 0 0;padding-left:18px}
   .qc-bulk-info li{margin:3px 0}
-  .qc-bulk-info li.sec-item{font-weight:700;color:var(--seccion);list-style:none;margin-left:-18px;margin-top:6px}
-  .qc-bulk-info li.cap-item{margin-left:8px}
-
+  .qc-bulk-info li.sec-item{font-weight:700;color:var(--seccion);list-style:none;margin-left:-18px;margin-top:8px;padding-top:6px;border-top:1px solid var(--border)}
+  .qc-bulk-info li.sec-item:first-child{border-top:none;padding-top:0}
+  .qc-bulk-info li.cap-item{margin-left:10px;color:var(--muted)}
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
@@ -644,9 +634,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 3: TOPBAR
-     ═══════════════════════════════════════════════════════════════ -->
 <header class="topbar">
   <div class="container topbar-inner">
     <div class="brand">
@@ -686,9 +673,6 @@
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 4: HERO + TOOLBAR + CHIPS + GRID
-     ═══════════════════════════════════════════════════════════════ -->
 <main class="container">
   <section class="hero">
     <h2 class="hero-title">Mi <span class="grad">Biblioteca</span> Personal</h2>
@@ -741,9 +725,6 @@
   <div id="vacio"></div>
 </main>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 5: LECTOR
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="reader">
   <div class="reader-wrap">
     <header class="reader-head">
@@ -790,9 +771,6 @@
   </div>
 </dialog>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 6: DIÁLOGO DE INTRODUCCIÓN
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="descDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -818,9 +796,6 @@
   </div>
 </dialog>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 7: DIÁLOGO DE AÑADIR CONTENIDO
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="quickCapDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -862,9 +837,9 @@
       </div>
 
       <div data-qc-panel="varios" style="display:none">
-        <p class="hint">Pega el texto completo. Detecta automáticamente secciones y capítulos.<br>
-        <strong>Secciones</strong>: <code>Parte I</code>, <code>SECCIÓN 1</code>, <code>Libro Primero</code>, o un título en su propia línea con MAYÚSCULAS o <code>**negrita**</code>.<br>
-        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>1.</code>, <code># 1</code>, etc.</p>
+        <p class="hint">Pega el texto completo. Detecta secciones y capítulos automáticamente, e <strong>ignora la tabla de contenido</strong> al inicio.<br>
+        <strong>Secciones</strong>: <code>Parte I</code>, <code>Libro Primero</code>, <code>SECCIÓN 1</code>.<br>
+        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>Prólogo</code>, <code>Introducción</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>, <code>1.</code>, etc.</p>
         <div class="field">
           <label for="qcBulkTexto">Texto completo</label>
           <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero con sus secciones y capítulos…" style="min-height:220px"></textarea>
@@ -893,9 +868,6 @@
   </div>
 </dialog>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 8: DIÁLOGO DE FRAGMENTOS
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="fragDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -925,9 +897,6 @@
   </div>
 </dialog>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 9: EDITOR DE LIBRO
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="editor">
   <form id="formLibro" class="editor-wrap">
     <header class="editor-head">
@@ -1019,9 +988,6 @@
   </form>
 </dialog>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 10: SINCRONIZACIÓN
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="syncDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -1057,9 +1023,6 @@
   </div>
 </dialog>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 11: AJUSTES DE VISTA
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="settingsDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -1117,9 +1080,6 @@
   </div>
 </dialog>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 12: GESTIÓN
-     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="importador">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -1161,14 +1121,10 @@
 
 <div id="toast"></div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECCIÓN 13: SCRIPT
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
 (() => {
   'use strict';
 
-  /* ═══════════ CONFIG ═══════════ */
   const LS_KEY = 'biblioteca-libros-v6';
   const DB_NAME = 'biblioteca-db-v3';
   const DB_COVERS = 'covers';
@@ -1366,7 +1322,6 @@
     { titulo:"¿Qué harías tú en mi lugar?", autor:"Julia Llewellyn" }
   ];
 
-  /* ═══════════ ESTADO GLOBAL ═══════════ */
   let libros = [];
   let editandoId = null;
   let puntosSel = 0;
@@ -1374,7 +1329,7 @@
   let portadaPendiente = null;
   let portadaEditorUrl = null;
   let borrarPortadaPendiente = false;
-  let estructuraEditor = []; // mezcla de capítulos sueltos y secciones
+  let estructuraEditor = [];
   const coversCache = new Map();
   let scrollSaveTimer = null;
   let filtroActivo = 'todos';
@@ -1391,7 +1346,6 @@
   let fragDialogCapId = null;
   let fragDialogFrags = [];
 
-  /* ═══════════ UTILIDADES ═══════════ */
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
     ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
   const uid = () => (crypto.randomUUID ? crypto.randomUUID()
@@ -1403,7 +1357,6 @@
     .replace(/^[¡!¿?]+/, '').trim();
 
   function contarLibro(l) {
-    // Recorre capítulos sueltos y capítulos de secciones
     const directos = (l.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
     const secciones = (l.secciones || []);
     let caps = directos.length;
@@ -1420,8 +1373,7 @@
 
   function libroEnProgreso(l) {
     if (l.leido) return false;
-    const directos = l.capitulos || [];
-    for (const c of directos) {
+    for (const c of (l.capitulos || [])) {
       if (c.ttsIndice && c.ttsIndice > 0) return true;
     }
     for (const s of (l.secciones || [])) {
@@ -1454,7 +1406,6 @@
     toastTimer = setTimeout(() => el.classList.remove('show'), 2300);
   }
 
-  /* ═══════════ INDEXEDDB ═══════════ */
   let dbPromise = null;
   function getDB() {
     if (dbPromise) return dbPromise;
@@ -1542,7 +1493,6 @@
     }
   }
 
-  /* ═══════════ PERSISTENCIA ═══════════ */
   function cargar() {
     try {
       const raw = localStorage.getItem(LS_KEY);
@@ -1579,7 +1529,6 @@
     catch { toast('Almacenamiento lleno'); }
   }
 
-  /* ═══════════ FILTROS ═══════════ */
   function aplicarFiltroChip(l, filtro) {
     const c = contarLibro(l);
     switch (filtro) {
@@ -1744,7 +1693,6 @@
     }).join('');
   }
 
-  /* ═══════════ EVENTOS GENERALES ═══════════ */
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-menu]');
     const menuPanel = e.target.closest('.card-menu');
@@ -1809,7 +1757,6 @@
   const reader = $('#reader');
   const rBody = $('#rBody');
 
-  /* ═══════════ TTS ═══════════ */
   function elegirMejorVoz() {
     if (!('speechSynthesis' in window)) return null;
     const voces = window.speechSynthesis.getVoices() || [];
@@ -1933,14 +1880,7 @@
 
   function guardarProgresoTTS() {
     if (!ttsCapId || !libroAbierto) return;
-    // Buscar en capítulos directos o dentro de secciones
-    let cap = (libroAbierto.capitulos || []).find(c => c.id === ttsCapId);
-    if (!cap) {
-      for (const s of (libroAbierto.secciones || [])) {
-        cap = (s.capitulos || []).find(c => c.id === ttsCapId);
-        if (cap) break;
-      }
-    }
+    const { cap } = buscarCap(ttsCapId);
     if (cap) {
       cap.ttsIndice = ttsIndice;
       guardar();
@@ -1991,13 +1931,7 @@
     if (!ttsActivo) return;
     if (ttsIndice >= ttsCola.length) {
       if (ttsCapId) {
-        let cap = libroAbierto?.capitulos?.find(c => c.id === ttsCapId);
-        if (!cap && libroAbierto) {
-          for (const s of (libroAbierto.secciones || [])) {
-            cap = (s.capitulos || []).find(c => c.id === ttsCapId);
-            if (cap) break;
-          }
-        }
+        const { cap } = buscarCap(ttsCapId);
         if (cap) { cap.ttsIndice = 0; guardar(); }
       }
       limpiarResaltado();
@@ -2013,13 +1947,7 @@
     if (mejorVoz) { u.voice = mejorVoz; u.lang = mejorVoz.lang || 'es-ES'; }
     if (ttsCapId) {
       resaltarFragmento(ttsCapId, ttsIndice);
-      let cap = libroAbierto?.capitulos?.find(c => c.id === ttsCapId);
-      if (!cap && libroAbierto) {
-        for (const s of (libroAbierto.secciones || [])) {
-          cap = (s.capitulos || []).find(c => c.id === ttsCapId);
-          if (cap) break;
-        }
-      }
+      const { cap } = buscarCap(ttsCapId);
       if (cap) cap.ttsIndice = ttsIndice;
       actualizarCapHeader(ttsCapId);
     }
@@ -2072,13 +2000,7 @@
   }
 
   function actualizarCapHeader(capId) {
-    let cap = libroAbierto?.capitulos?.find(c => c.id === capId);
-    if (!cap && libroAbierto) {
-      for (const s of (libroAbierto.secciones || [])) {
-        cap = (s.capitulos || []).find(c => c.id === capId);
-        if (cap) break;
-      }
-    }
+    const { cap } = buscarCap(capId);
     if (!cap) return;
     const header = rBody.querySelector(`[data-cap-header="${capId}"]`);
     if (!header) return;
@@ -2089,7 +2011,6 @@
     if (ctrl) ctrl.innerHTML = renderCapControls(cap, totalFrags);
   }
 
-  /* ═══════════ RENDER LECTOR ═══════════ */
   function renderDescripcionHTML(l) {
     const d = (l.descripcion || '').trim();
     if (!d) return '';
@@ -2107,7 +2028,7 @@
     `;
   }
 
-  function renderCapHTML(cap, idx, contexto) {
+  function renderCapHTML(cap, idx) {
     const notas = cap.notas || [];
     const resumen = (cap.resumen || '').trim();
     let resumenHTML = '';
@@ -2165,7 +2086,7 @@
 
   function renderSeccionHTML(sec, idxSec, colapsada = false) {
     const caps = (sec.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
-    const bodyCaps = caps.map((c, i) => renderCapHTML(c, i, {seccion: sec.id})).join('');
+    const bodyCaps = caps.map((c, i) => renderCapHTML(c, i)).join('');
     return `
       <div class="seccion-bloque ${colapsada ? 'colapsada' : ''}" data-sec-el="${sec.id}" data-sec-id="${sec.id}">
         <div class="seccion-header" data-toggle-sec="${sec.id}">
@@ -2210,7 +2131,6 @@
   }
 
   rBody.addEventListener('click', (e) => {
-    // Toggle de sección
     const toggleSec = e.target.closest('[data-toggle-sec]');
     if (toggleSec) {
       e.stopPropagation();
@@ -2279,32 +2199,30 @@
     }
   });
 
+  function buscarCap(capId) {
+    let cap = (libroAbierto?.capitulos || []).find(c => c.id === capId);
+    if (cap) return { cap, sec: null };
+    for (const s of (libroAbierto?.secciones || [])) {
+      cap = (s.capitulos || []).find(c => c.id === capId);
+      if (cap) return { cap, sec: s };
+    }
+    return { cap: null, sec: null };
+  }
+
   function escucharCapitulo(capId) {
     if (!libroAbierto) return;
-    // Buscar capítulo en cualquier lugar
-    let cap = (libroAbierto.capitulos || []).find(c => c.id === capId);
-    let secPadre = null;
-    if (!cap) {
-      for (const s of (libroAbierto.secciones || [])) {
-        cap = (s.capitulos || []).find(c => c.id === capId);
-        if (cap) { secPadre = s; break; }
-      }
-    }
+    const { cap, sec } = buscarCap(capId);
     if (!cap) return;
     const txt = (cap.resumen || '').trim();
     if (!txt) { toast('Este capítulo no tiene resumen'); return; }
-
-    // Expandir la sección padre si existe
-    if (secPadre) {
-      const secEl = rBody.querySelector(`[data-sec-el="${secPadre.id}"]`);
+    if (sec) {
+      const secEl = rBody.querySelector(`[data-sec-el="${sec.id}"]`);
       if (secEl) secEl.classList.remove('colapsada');
     }
     expandirCap(capId);
-
     const parrafosFrags = dividirResumenEnFragmentos(txt);
     const fragsPlanos = parrafosFrags.flat();
     if (!fragsPlanos.length) { toast('No hay texto para leer'); return; }
-
     let inicio = 0;
     if (cap.ttsIndice && cap.ttsIndice > 0 && cap.ttsIndice < fragsPlanos.length) {
       const continuar = confirm(`Este capítulo tiene progreso guardado.\n\nAceptar = continuar desde donde quedaste.\nCancelar = empezar de nuevo.`);
@@ -2315,9 +2233,7 @@
         guardar();
       }
     }
-
     if (ttsActivo && ttsCapId && ttsCapId !== capId) detenerCap(ttsCapId);
-
     const el = rBody.querySelector(`[data-cap-el="${capId}"]`);
     if (el) el.scrollIntoView({ block: 'start' });
     hablarFragmentos(fragsPlanos, capId, inicio);
@@ -2354,13 +2270,7 @@
   }
 
   function abrirFragDialog(capId) {
-    let cap = libroAbierto?.capitulos?.find(c => c.id === capId);
-    if (!cap && libroAbierto) {
-      for (const s of (libroAbierto.secciones || [])) {
-        cap = (s.capitulos || []).find(c => c.id === capId);
-        if (cap) break;
-      }
-    }
+    const { cap } = buscarCap(capId);
     if (!cap) return;
     fragDialogCapId = capId;
     fragDialogFrags = dividirResumenEnFragmentos(cap.resumen || '').flat();
@@ -2392,14 +2302,7 @@
   $('#fragIr').addEventListener('click', () => {
     if (!fragDialogCapId) { fragDialog.close(); return; }
     const idx = Math.max(0, Math.min(fragDialogFrags.length - 1, parseInt(fragInput.value || '1', 10) - 1));
-    // Buscar cap
-    let cap = libroAbierto.capitulos?.find(c => c.id === fragDialogCapId);
-    if (!cap) {
-      for (const s of (libroAbierto.secciones || [])) {
-        cap = (s.capitulos || []).find(c => c.id === fragDialogCapId);
-        if (cap) break;
-      }
-    }
+    const { cap } = buscarCap(fragDialogCapId);
     if (cap) { cap.ttsIndice = idx; guardar(); }
     const capId = fragDialogCapId;
     const frags = fragDialogFrags.slice();
@@ -2409,16 +2312,6 @@
     hablarFragmentos(frags, capId, idx);
     toast('Reproduciendo desde el fragmento ' + (idx + 1));
   });
-
-  function buscarCap(capId) {
-    let cap = (libroAbierto?.capitulos || []).find(c => c.id === capId);
-    if (cap) return { cap, sec: null };
-    for (const s of (libroAbierto?.secciones || [])) {
-      cap = (s.capitulos || []).find(c => c.id === capId);
-      if (cap) return { cap, sec: s };
-    }
-    return { cap: null, sec: null };
-  }
 
   function agregarNota(capId, txt) {
     if (!libroAbierto) return;
@@ -2551,7 +2444,6 @@
     }
   });
 
-  /* ═══════════ INTRODUCCIÓN ═══════════ */
   const descDialog = $('#descDialog');
   const descInput = $('#descInput');
   const descWc = $('#descWc');
@@ -2585,7 +2477,7 @@
     descDialog.close();
   });
 
-  /* ═══════════ AÑADIR CONTENIDO (capítulo / sección / varios / archivo) ═══════════ */
+  /* ═══════════ AÑADIR CONTENIDO ═══════════ */
   const quickCapDialog = $('#quickCapDialog');
   const qcSeccion = $('#qcSeccion');
   const qcTitulo = $('#qcTitulo');
@@ -2594,117 +2486,172 @@
   const qcBulkTexto = $('#qcBulkTexto');
   const qcBulkInfo = $('#qcBulkInfo');
   let qcTabActivo = 'uno';
-  let qcCapsDetectados = []; // array con {tipo:'sec'|'cap', titulo, resumen?, seccionPadre?}
-  let qcSeccionesExistentes = []; // secciones del libro que se pueden asignar
+  let qcCapsDetectados = [];
 
   function actualizarQcWc() {
     if (qcTabActivo === 'uno') {
       const n = nPalabras(qcResumen.value);
       qcWc.textContent = n.toLocaleString('es') + (n === 1 ? ' palabra' : ' palabras');
     } else {
-      const n = qcCapsDetectados.reduce((a, c) => a + nPalabras(c.resumen || ''), 0);
-      const c = qcCapsDetectados.filter(x => x.tipo === 'cap').length;
-      const s = qcCapsDetectados.filter(x => x.tipo === 'sec').length;
-      qcWc.textContent = `${c} capítulo${c === 1 ? '' : 's'} · ${s} sección${s === 1 ? '' : 'es'} · ${n.toLocaleString('es')} palabras`;
+      let totalCaps = 0, totalChars = 0;
+      for (const item of qcCapsDetectados) {
+        if (item.tipo === 'sec') {
+          totalCaps += item.capitulos.length;
+          totalChars += item.capitulos.reduce((a, c) => a + nPalabras(c.resumen), 0);
+        } else {
+          totalCaps += 1;
+          totalChars += nPalabras(item.resumen);
+        }
+      }
+      const secs = qcCapsDetectados.filter(x => x.tipo === 'sec').length;
+      qcWc.textContent = `${secs} sección${secs === 1 ? '' : 'es'} · ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} · ${totalChars.toLocaleString('es')} palabras`;
     }
   }
 
-  /* ═══════════ DETECCIÓN DE SECCIONES Y CAPÍTULOS ═══════════ */
   function detectarEstructura(texto) {
     const lineas = String(texto || '').split('\n');
+    const nLineas = lineas.length;
 
-    // Patrones de marcador
-    const patronesSec = [
-      /^\s*(parte|libro)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|octavo|noveno|d[eé]cimo)\b/i,
-      /^\s*(secci[oó]n)\s+([ivxlcdm]+|\d+)\b/i,
-      /^\s*\*\*[A-ZÁÉÍÓÚÑ][^*]+\*\*\s*$/,
-      /^\s*#\s+(?!\d)/,
-      /^\s*[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s\-\.]{4,80}$/
-    ];
-
-    const patronesCap = [
-      /^\s*(cap[ií]tulo|cap\.?)\s+(\d+|[ivxlcdm]+|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|diecis[eé]is|diecisiete|dieciocho|diecinueve|veinte)\b/i,
-      /^\s*(pr[oó]logo|ep[ií]logo|introducci[oó]n|prefacio|conclusi[oó]n|dedicatoria|nota del autor)\s*$/i,
-      /^\s*#{1,6}\s+\S/,
-      /^\s*\d{1,3}[\.\)]\s+[A-ZÁÉÍÓÚÑ]/,
-      /^\s*\*\*\s*(cap[ií]tulo|parte)/i,
-      /^\s*\[?\s*(cap[ií]tulo|parte|cap\.?)\s*\d+\s*\]?\s*[:.\-—–]?\s*.{0,80}$/i
-    ];
-
-    function limpiarTitulo(t) {
-      return t.trim()
+    function limpiar(t) {
+      return String(t || '').trim()
         .replace(/^\s*#{1,6}\s*/, '')
         .replace(/^\s*\*\*\s*/, '')
         .replace(/\*\*\s*$/, '')
         .replace(/^\[/, '')
         .replace(/\]\s*$/, '')
+        .replace(/\s+/g, ' ')
         .trim();
     }
 
-    function esSeccion(l) {
-      const t = l.trim();
-      if (!t || t.length > 120) return false;
-      for (const p of patronesSec) if (p.test(t)) return true;
-      return false;
-    }
-    function esCapitulo(l) {
-      const t = l.trim();
-      if (!t || t.length > 120) return false;
-      for (const p of patronesCap) if (p.test(t)) return true;
-      return false;
+    function tipoMarcador(linea) {
+      const t = limpiar(linea);
+      if (!t || t.length > 160) return null;
+
+      // Tabla de contenido / Índice
+      if (/^(tabla de contenido|[ií]ndice|indice|contenido|contents|table of contents)$/i.test(t)) {
+        return 'toc';
+      }
+      // Secciones
+      if (/^(parte|libro|secci[oó]n)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|octavo|noveno|d[eé]cimo)\b/i.test(t)) {
+        return 'sec';
+      }
+      // Capítulos
+      if (/^(cap[ií]tulo|cap\.?)\s+([\divxlcdm]+|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|diecis[eé]is|diecisiete|dieciocho|diecinueve|veinte|veintiuno|veintid[oó]s|veintitr[eé]s|veinticuatro|veinticinco|veintis[eé]is|veintisiete|veintiocho|veintinueve|treinta)\b/i.test(t)) {
+        return 'cap';
+      }
+      // Prólogo, epílogo, introducción, etc.
+      if (/^(pr[oó]logo|ep[ií]logo|introducci[oó]n|prefacio|conclusi[oó]n|cierre sexual|cierre|glosario|bibliograf[ií]a|lecturas adicionales|lecturas recomendadas|sobre el autor|agradecimientos|ap[eé]ndice|dedicatoria|nota del autor|nota r[aá]pida)\b/i.test(t)) {
+        return 'cap';
+      }
+      // Markdown
+      if (/^#{1,6}\s+\S/.test(t)) {
+        if (/^#{1,2}\s+(parte|libro|secci[oó]n)\b/i.test(t)) return 'sec';
+        return 'cap';
+      }
+      // Numerado
+      if (/^\d{1,3}[\.\)]\s+[A-ZÁÉÍÓÚÑ]/.test(t)) return 'cap';
+      return null;
     }
 
-    // Buscar todas las líneas marcador
-    const marcadores = [];
-    for (let i = 0; i < lineas.length; i++) {
-      const linea = lineas[i];
-      if (!linea.trim()) continue;
-      if (esSeccion(linea)) {
-        marcadores.push({ tipo: 'sec', idx: i, titulo: limpiarTitulo(linea) });
-      } else if (esCapitulo(linea)) {
-        marcadores.push({ tipo: 'cap', idx: i, titulo: limpiarTitulo(linea) });
+    let inicioProcesamiento = 0;
+    for (let i = 0; i < nLineas; i++) {
+      if (!lineas[i].trim()) continue;
+      if (tipoMarcador(lineas[i]) === 'toc') {
+        for (let j = i + 1; j < nLineas; j++) {
+          if (!tipoMarcador(lineas[j])) continue;
+          let siguienteMarcador = -1;
+          for (let k = j + 1; k < nLineas; k++) {
+            if (tipoMarcador(lineas[k])) { siguienteMarcador = k; break; }
+          }
+          const fin = siguienteMarcador >= 0 ? siguienteMarcador : nLineas;
+          let chars = 0;
+          for (let k = j + 1; k < fin; k++) {
+            if (!tipoMarcador(lineas[k])) chars += lineas[k].trim().length;
+          }
+          if (chars >= 200) {
+            inicioProcesamiento = j;
+            break;
+          }
+        }
+        break;
       }
     }
 
-    if (!marcadores.length) {
+    const marcadores = [];
+    for (let i = inicioProcesamiento; i < nLineas; i++) {
+      const tipo = tipoMarcador(lineas[i]);
+      if (tipo && tipo !== 'toc') {
+        marcadores.push({ idx: i, tipo, titulo: limpiar(lineas[i]) });
+      }
+    }
+
+    if (marcadores.length === 0) {
       const limpio = String(texto || '').trim();
       if (!limpio) return [];
       return [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: limpio }];
     }
 
-    // Recorrer marcadores construyendo estructura
     const estructura = [];
     let seccionActual = null;
 
-    for (let mi = 0; mi < marcadores.length; mi++) {
-      const m = marcadores[mi];
-      const finLinea = mi < marcadores.length - 1 ? marcadores[mi + 1].idx - 1 : lineas.length - 1;
+    for (let i = 0; i < marcadores.length; i++) {
+      const m = marcadores[i];
+      const fin = i < marcadores.length - 1 ? marcadores[i + 1].idx : nLineas;
 
-      // Resumen = todo lo que hay después del marcador en su bloque
-      let resumen = lineas.slice(m.idx + 1, finLinea + 1).join('\n').trim();
-      // Si el marcador tiene texto en la misma línea tras dos puntos, separar
-      if (!resumen || m.titulo.length > 90) {
-        const corte = m.titulo.search(/[:.\-—–]\s/);
-        if (corte > 0 && corte < m.titulo.length - 2) {
-          const resto = m.titulo.slice(corte + 1).trim();
-          m.titulo = m.titulo.slice(0, corte).trim();
-          if (resto) resumen = (resto + '\n\n' + resumen).trim();
+      const lineasResumen = [];
+      for (let j = m.idx + 1; j < fin; j++) {
+        if (!tipoMarcador(lineas[j])) {
+          lineasResumen.push(lineas[j]);
         }
       }
-      // Limpiar título final
-      if (m.titulo.length > 100) m.titulo = m.titulo.slice(0, 100).trim() + '…';
+      while (lineasResumen.length && !lineasResumen[0].trim()) lineasResumen.shift();
+      while (lineasResumen.length && !lineasResumen[lineasResumen.length - 1].trim()) lineasResumen.pop();
+      let resumen = lineasResumen.join('\n').trim();
+
+      let titulo = m.titulo;
+
+      if (m.tipo === 'cap') {
+        const matchColon = titulo.match(/^([^:]{2,90}):\s*(.{40,})$/);
+        if (matchColon) {
+          const base = matchColon[1].trim();
+          const resto = matchColon[2].trim();
+          titulo = base;
+          if (!resumen.startsWith(resto)) {
+            resumen = resto + (resumen ? '\n\n' + resumen : '');
+          }
+        }
+      }
+
+      const esSoloCap = /^(cap[ií]tulo|parte|secci[oó]n)\s+[\divxlcdm]+\s*$/i.test(titulo);
+      if (esSoloCap && resumen) {
+        const rLineas = resumen.split('\n');
+        let idxSub = -1;
+        for (let k = 0; k < Math.min(rLineas.length, 4); k++) {
+          const l = rLineas[k].trim();
+          if (!l) continue;
+          if (l.length >= 3 && l.length <= 90 && !/[.!?]$/.test(l)) {
+            idxSub = k;
+            break;
+          }
+          break;
+        }
+        if (idxSub >= 0) {
+          const subtitulo = rLineas[idxSub].trim();
+          const resto = rLineas.slice(idxSub + 1).join('\n').trim();
+          if (resto.length >= 100) {
+            titulo = titulo + ': ' + subtitulo;
+            resumen = resto;
+          }
+        }
+      }
+
+      if (titulo.length > 120) titulo = titulo.slice(0, 120).trim() + '…';
 
       if (m.tipo === 'sec') {
-        // Comienza nueva sección
-        seccionActual = { tipo: 'sec', titulo: m.titulo, capitulos: [] };
+        seccionActual = { tipo: 'sec', titulo, capitulos: [] };
         estructura.push(seccionActual);
-        // Si la sección tiene texto propio (intro de la sección), lo añadimos como capítulo
-        if (resumen) {
-          seccionActual.capitulos.push({ tipo: 'cap', titulo: m.titulo + ' — Introducción', resumen });
-        }
       } else {
-        // Es un capítulo
-        const cap = { tipo: 'cap', titulo: m.titulo, resumen };
+        const cap = { tipo: 'cap', titulo, resumen };
         if (seccionActual) {
           seccionActual.capitulos.push(cap);
         } else {
@@ -2712,8 +2659,6 @@
         }
       }
     }
-
-    // Normalizar: devolver array plano con jerarquía
     return estructura;
   }
 
@@ -2728,39 +2673,43 @@
     qcCapsDetectados = detectarEstructura(texto);
     const secciones = qcCapsDetectados.filter(x => x.tipo === 'sec');
     const capsSueltos = qcCapsDetectados.filter(x => x.tipo === 'cap');
+    let totalCaps = capsSueltos.length + secciones.reduce((a, s) => a + s.capitulos.length, 0);
 
-    let html = '';
-    const totalCaps = capsSueltos.length + secciones.reduce((a, s) => a + s.capitulos.length, 0);
+    if (totalCaps === 0) {
+      qcBulkInfo.innerHTML = '<strong>No se detectó contenido.</strong>';
+      actualizarQcWc();
+      return;
+    }
+    if (secciones.length === 0 && capsSueltos.length === 1 && capsSueltos[0].resumen.trim() === texto.trim()) {
+      qcBulkInfo.innerHTML = `<strong>No se detectaron marcadores de capítulo.</strong> Se importará todo como un único capítulo. Si quieres dividirlo, separa con líneas como "Capítulo 1", "Capítulo 2", etc.`;
+      actualizarQcWc();
+      return;
+    }
 
-    if (secciones.length === 0 && capsSueltos.length === 1 && capsSueltos[0].resumen === texto.trim()) {
-      html = `<strong>No se detectaron marcadores.</strong> Se importará todo como un solo capítulo.`;
-    } else {
-      html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}<ul>`;
-      let cont = 0;
-      for (const item of qcCapsDetectados) {
-        if (cont >= 20) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
-        if (item.tipo === 'sec') {
-          html += `<li class="sec-item">§ ${esc(item.titulo)} (${item.capitulos.length} cap${item.capitulos.length === 1 ? '' : 's'})</li>`;
-          for (const c of item.capitulos) {
-            if (cont >= 20) break;
-            html += `<li class="cap-item">${esc(c.titulo)} · ${nPalabras(c.resumen).toLocaleString('es')} palabras</li>`;
-            cont++;
-          }
-          cont++;
-        } else {
-          html += `<li class="cap-item">${esc(item.titulo)} · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
+    let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}<ul>`;
+    let cont = 0;
+    for (const item of qcCapsDetectados) {
+      if (cont >= 30) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
+      if (item.tipo === 'sec') {
+        html += `<li class="sec-item">§ ${esc(item.titulo)} (${item.capitulos.length} cap${item.capitulos.length === 1 ? '' : 's'})</li>`;
+        for (const c of item.capitulos) {
+          if (cont >= 30) break;
+          html += `<li class="cap-item">${esc(c.titulo)} · ${nPalabras(c.resumen).toLocaleString('es')} palabras</li>`;
           cont++;
         }
+        cont++;
+      } else {
+        html += `<li class="cap-item">${esc(item.titulo)} · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
+        cont++;
       }
-      html += '</ul>';
     }
+    html += '</ul>';
     qcBulkInfo.innerHTML = html;
     actualizarQcWc();
   }
   qcBulkTexto.addEventListener('input', actualizarBulkInfo);
   qcResumen.addEventListener('input', actualizarQcWc);
 
-  // Cambio de pestaña
   document.querySelectorAll('.qc-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.qc-tab').forEach(t => t.classList.remove('active'));
@@ -2773,11 +2722,34 @@
     });
   });
 
-  // Pegar del portapapeles en tab "uno"
+  function quizasSugerirMulti(texto) {
+    if (texto.length < 1500) return false;
+    const det = detectarEstructura(texto);
+    let totalCaps = 0;
+    for (const item of det) {
+      totalCaps += item.tipo === 'sec' ? item.capitulos.length : 1;
+    }
+    if (totalCaps <= 1) return false;
+    const usar = confirm(
+      `El texto tiene ${texto.length.toLocaleString('es')} caracteres y se detectaron ${totalCaps} capítulos.\n\n` +
+      `¿Quieres importarlo como varios capítulos? Se abrirá la pestaña "Importar varios" con la vista previa.`
+    );
+    if (!usar) return false;
+    document.querySelectorAll('.qc-tab').forEach(t => t.classList.toggle('active', t.dataset.qcTab === 'varios'));
+    document.querySelectorAll('[data-qc-panel]').forEach(p => {
+      p.style.display = p.dataset.qcPanel === 'varios' ? '' : 'none';
+    });
+    qcTabActivo = 'varios';
+    qcBulkTexto.value = texto;
+    actualizarBulkInfo();
+    return true;
+  }
+
   $('#qcPegar').addEventListener('click', async () => {
     try {
       const txt = await navigator.clipboard.readText();
       if (!txt) { toast('El portapapeles está vacío'); return; }
+      if (quizasSugerirMulti(txt)) return;
       qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + txt;
       actualizarQcWc();
       toast('Pegado');
@@ -2786,13 +2758,13 @@
     }
   });
 
-  // Subir archivo .txt en tab "uno"
   $('#qcSubir').addEventListener('click', () => $('#qcFile').click());
   $('#qcFile').addEventListener('change', async (e) => {
     const f = e.target.files?.[0]; e.target.value = '';
     if (!f) return;
     try {
       const txt = await f.text();
+      if (quizasSugerirMulti(txt)) return;
       qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + txt;
       actualizarQcWc();
       toast('Archivo cargado');
@@ -2801,7 +2773,6 @@
     }
   });
 
-  // Pegar del portapapeles en tab "varios"
   $('#qcBulkPegar').addEventListener('click', async () => {
     try {
       const txt = await navigator.clipboard.readText();
@@ -2814,7 +2785,6 @@
     }
   });
 
-  // Subir archivo .txt en tab "varios"
   $('#qcBulkSubir').addEventListener('click', () => $('#qcBulkFile').click());
   $('#qcBulkFile').addEventListener('change', async (e) => {
     const f = e.target.files?.[0]; e.target.value = '';
@@ -2836,10 +2806,9 @@
     qcBulkTexto.value = '';
     qcBulkInfo.innerHTML = '';
     qcCapsDetectados = [];
-    // Poblar sección existente si las hay
+    qcSeccion.value = '';
     const secciones = libroAbierto.secciones || [];
     if (secciones.length) {
-      // Cargar opciones en datalist
       const datalist = document.getElementById('seccionesDatalist') || (() => {
         const dl = document.createElement('datalist');
         dl.id = 'seccionesDatalist';
@@ -2866,7 +2835,6 @@
   $('#qcCancelar').addEventListener('click', () => quickCapDialog.close());
 
   function insertarEnLibroYRender(nuevosItems) {
-    // nuevosItems: array de {tipo:'cap'|'sec', titulo, resumen?, capitulos?}
     if (!libroAbierto || !nuevosItems.length) return;
     const l = libros.find(x => x.id === libroAbierto.id);
     if (!l) return;
@@ -2878,7 +2846,7 @@
         l.secciones.push({
           id: uid(),
           titulo: item.titulo,
-          capitulos: item.capitulos.map(c => ({
+          capitulos: (item.capitulos || []).map(c => ({
             id: uid(),
             titulo: c.titulo,
             resumen: c.resumen || '',
@@ -2900,25 +2868,17 @@
     libroAbierto = l;
     guardar();
 
-    // Re-renderizar solo los nuevos elementos
     const capsNuevos = l.capitulos.slice(-nuevosItems.filter(x => x.tipo === 'cap').length);
     const secNuevas = l.secciones.slice(-nuevosItems.filter(x => x.tipo === 'sec').length);
 
     let html = '';
-    // Capítulos directos
     let baseIdx = l.capitulos.length - capsNuevos.length;
-    capsNuevos.forEach((c, i) => {
-      html += renderCapHTML(c, baseIdx + i);
-    });
-    // Secciones
+    capsNuevos.forEach((c, i) => { html += renderCapHTML(c, baseIdx + i); });
     let baseSecIdx = l.secciones.length - secNuevas.length;
-    secNuevas.forEach((s, i) => {
-      html += renderSeccionHTML(s, baseSecIdx + i);
-    });
+    secNuevas.forEach((s, i) => { html += renderSeccionHTML(s, baseSecIdx + i); });
 
     rBody.insertAdjacentHTML('beforeend', html);
 
-    // Expandir el primero de los nuevos
     if (capsNuevos.length) expandirCap(capsNuevos[0].id);
     setTimeout(() => {
       const first = capsNuevos[0] || secNuevas[0];
@@ -2940,22 +2900,17 @@
       if (!titulo) { qcTitulo.focus(); return; }
       const resumen = qcResumen.value.trim();
       const secTitulo = qcSeccion.value.trim();
-
       quickCapDialog.close();
-
       if (secTitulo) {
-        // Buscar si ya existe la sección con ese título
         const l = libros.find(x => x.id === libroAbierto.id);
         let sec = (l.secciones || []).find(s => normalizar(s.titulo) === normalizar(secTitulo));
         if (!sec) {
-          // Crear nueva sección con este capítulo
           insertarEnLibroYRender([{
             tipo: 'sec',
             titulo: secTitulo,
             capitulos: [{ titulo, resumen }]
           }]);
         } else {
-          // Añadir capítulo a la sección existente
           sec.capitulos = sec.capitulos || [];
           sec.capitulos.push({ id: uid(), titulo, resumen, notas: [], ttsIndice: 0 });
           guardar();
@@ -2970,9 +2925,14 @@
       if (!texto.trim()) { toast('Pega o sube el texto primero'); return; }
       const detectado = detectarEstructura(texto);
       if (!detectado.length) { toast('No hay texto para importar'); return; }
+      let totalCaps = 0;
+      for (const item of detectado) {
+        totalCaps += item.tipo === 'sec' ? item.capitulos.length : 1;
+      }
+      if (totalCaps === 0) { toast('No se detectó contenido válido'); return; }
       quickCapDialog.close();
       insertarEnLibroYRender(detectado);
-      toast(`${detectado.length} elemento${detectado.length === 1 ? '' : 's'} añadido${detectado.length === 1 ? '' : 's'}`);
+      toast(`${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} añadido${totalCaps === 1 ? '' : 's'}`);
     }
   });
 
@@ -2992,8 +2952,6 @@
     $('#tocLabel').textContent = `Índice · ${secciones.length} sección${secciones.length === 1 ? '' : 'es'} · ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}`;
 
     let html = '';
-
-    // Capítulos directos primero
     directos.forEach((c, idx) => {
       const n = (c.notas || []).length;
       html += `
@@ -3004,7 +2962,6 @@
         </div>`;
     });
 
-    // Secciones con sus capítulos
     secciones.forEach((s, idxSec) => {
       const caps = (s.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
       html += `
@@ -3029,7 +2986,6 @@
 
   async function abrirLector(id) {
     resetTTS();
-
     const l = libros.find(x => x.id === id);
     if (!l) return;
     libroAbierto = l;
@@ -3079,9 +3035,7 @@
     } else {
       rBody.classList.remove('sin-texto');
       let html = descripcionHTML;
-      // Capítulos directos primero
       html += directos.map((cap, idx) => renderCapHTML(cap, idx)).join('');
-      // Luego las secciones
       html += secciones.map((sec, idx) => renderSeccionHTML(sec, idx)).join('');
       rBody.innerHTML = html;
     }
@@ -3096,7 +3050,6 @@
     });
   }
 
-  /* ═══════════ EDITOR DE LIBRO ═══════════ */
   const editor = $('#editor');
   const form = $('#formLibro');
 
@@ -3211,7 +3164,7 @@
             <div class="seccion-edit-head">
               <span class="seccion-edit-num">§</span>
               <input type="text" class="sec-titulo-input" data-sec-titulo="${item.id}"
-                     placeholder="Título de la sección (ej. El día del árbol)"
+                     placeholder="Título de la sección"
                      value="${esc(item.titulo || '')}" />
               <button type="button" class="chapter-del" data-sec-del="${item.id}" title="Eliminar sección">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -3221,7 +3174,7 @@
               ${(item.capitulos || []).map((c, i) => renderCapEditor(c, 'sec:' + item.id, i)).join('')}
               <button type="button" class="seccion-edit-addcap" data-sec-addcap="${item.id}">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                Añadir capítulo a esta sección
+                Añadir capítulo
               </button>
             </div>
           </div>
@@ -3232,7 +3185,6 @@
     });
     cont.innerHTML = html;
 
-    // Eventos de títulos
     cont.querySelectorAll('[data-cap-titulo]').forEach(inp => {
       inp.addEventListener('input', () => {
         const cap = buscarCapEnEditor(inp.dataset.capTitulo, inp.dataset.path);
@@ -3261,7 +3213,6 @@
         renderEditorCaps();
       });
     });
-    // Notas
     cont.querySelectorAll('[data-nota-edit]').forEach(inp => {
       inp.addEventListener('input', () => {
         const cap = buscarCapEnEditor(inp.dataset.notaEdit, inp.dataset.path);
@@ -3281,8 +3232,7 @@
       btn.addEventListener('click', () => {
         const cap = buscarCapEnEditor(btn.dataset.notaAdd, btn.dataset.path);
         if (!cap) return;
-        const path = btn.dataset.path;
-        const inp = cont.querySelector(`[data-nota-new="${cap.id}"][data-path="${path}"]`);
+        const inp = cont.querySelector(`[data-nota-new="${cap.id}"][data-path="${btn.dataset.path}"]`);
         const txt = (inp?.value || '').trim();
         if (!txt) return;
         cap.notas = cap.notas || [];
@@ -3304,7 +3254,6 @@
         }
       });
     });
-    // Secciones
     cont.querySelectorAll('[data-sec-titulo]').forEach(inp => {
       inp.addEventListener('input', () => {
         const sec = estructuraEditor.find(x => x.tipo === 'sec' && x.id === inp.dataset.secTitulo);
@@ -3332,9 +3281,7 @@
   }
 
   function buscarCapEnEditor(capId, path) {
-    if (path === 'direct') {
-      return estructuraEditor.find(x => x.tipo === 'cap' && x.id === capId);
-    }
+    if (path === 'direct') return estructuraEditor.find(x => x.tipo === 'cap' && x.id === capId);
     if (path.startsWith('sec:')) {
       const secId = path.slice(4);
       const sec = estructuraEditor.find(x => x.tipo === 'sec' && x.id === secId);
@@ -3355,31 +3302,20 @@
     refrescarCoverEditor();
     $('#edUrlPortada').value = '';
 
-    // Copiar estructura al editor (preservando ttsIndice)
     estructuraEditor = [];
     if (libro) {
-      // Capítulos directos primero (manteniendo su orden original)
-      const directosCopia = (libro.capitulos || []).map(c => ({
-        tipo: 'cap',
-        id: c.id || uid(),
-        titulo: c.titulo || '',
-        resumen: c.resumen || '',
-        notas: Array.isArray(c.notas) ? c.notas.slice() : [],
-        ttsIndice: c.ttsIndice || 0
+      const directos = (libro.capitulos || []).map(c => ({
+        tipo: 'cap', id: c.id || uid(), titulo: c.titulo || '', resumen: c.resumen || '',
+        notas: Array.isArray(c.notas) ? c.notas.slice() : [], ttsIndice: c.ttsIndice || 0
       }));
-      const seccionesCopia = (libro.secciones || []).map(s => ({
-        tipo: 'sec',
-        id: s.id || uid(),
-        titulo: s.titulo || '',
+      const secciones = (libro.secciones || []).map(s => ({
+        tipo: 'sec', id: s.id || uid(), titulo: s.titulo || '',
         capitulos: (s.capitulos || []).map(c => ({
-          id: c.id || uid(),
-          titulo: c.titulo || '',
-          resumen: c.resumen || '',
-          notas: Array.isArray(c.notas) ? c.notas.slice() : [],
-          ttsIndice: c.ttsIndice || 0
+          id: c.id || uid(), titulo: c.titulo || '', resumen: c.resumen || '',
+          notas: Array.isArray(c.notas) ? c.notas.slice() : [], ttsIndice: c.ttsIndice || 0
         }))
       }));
-      estructuraEditor = [...directosCopia, ...seccionesCopia];
+      estructuraEditor = [...directos, ...secciones];
     }
     renderEditorCaps();
 
@@ -3510,7 +3446,6 @@
     const titulo = $('#fTitulo').value.trim();
     if (!titulo) { $('#fTitulo').focus(); return; }
 
-    // Separar estructuraEditor en capítulos y secciones finales
     const capsFinales = [];
     const seccionesFinales = [];
     estructuraEditor.forEach(item => {
@@ -3518,27 +3453,17 @@
         const capsSec = (item.capitulos || [])
           .filter(c => (c.titulo||'').trim() || (c.resumen||'').trim() || (c.notas||[]).length)
           .map(c => ({
-            id: c.id,
-            titulo: c.titulo.trim(),
-            resumen: c.resumen,
-            notas: (c.notas || []).filter(n => n.trim()),
-            ttsIndice: c.ttsIndice || 0
+            id: c.id, titulo: c.titulo.trim(), resumen: c.resumen,
+            notas: (c.notas || []).filter(n => n.trim()), ttsIndice: c.ttsIndice || 0
           }));
         if ((item.titulo||'').trim() || capsSec.length) {
-          seccionesFinales.push({
-            id: item.id,
-            titulo: item.titulo.trim(),
-            capitulos: capsSec
-          });
+          seccionesFinales.push({ id: item.id, titulo: item.titulo.trim(), capitulos: capsSec });
         }
       } else {
         if ((item.titulo||'').trim() || (item.resumen||'').trim() || (item.notas||[]).length) {
           capsFinales.push({
-            id: item.id,
-            titulo: item.titulo.trim(),
-            resumen: item.resumen,
-            notas: (item.notas || []).filter(n => n.trim()),
-            ttsIndice: item.ttsIndice || 0
+            id: item.id, titulo: item.titulo.trim(), resumen: item.resumen,
+            notas: (item.notas || []).filter(n => n.trim()), ttsIndice: item.ttsIndice || 0
           });
         }
       }
@@ -3582,7 +3507,6 @@
     render();
   });
 
-  /* ═══════════ SINCRONIZACIÓN ═══════════ */
   const syncDialog = $('#syncDialog');
   let syncToken = localStorage.getItem(SYNC_TOKEN_KEY) || '';
   let syncGistId = localStorage.getItem(SYNC_GIST_KEY) || '';
@@ -3776,7 +3700,6 @@
     }
   });
 
-  /* ═══════════ MENÚ DE GESTIÓN ═══════════ */
   const menu = $('#importador');
   $('#btnMenu').addEventListener('click', () => {
     $('#fImportar').value = '';
@@ -3940,7 +3863,6 @@
   $('#busqueda').addEventListener('input', render);
   $('#orden').addEventListener('change', render);
 
-  /* ═══════════ AJUSTES DE VISTA ═══════════ */
   const settingsDialog = $('#settingsDialog');
 
   function aplicarConfiguracionVisual() {
@@ -3994,7 +3916,6 @@
     toast('Tamaño de iconos cambiado');
   });
 
-  /* ═══════════ INIT ═══════════ */
   async function init() {
     cargar();
     await precargarCovers();
