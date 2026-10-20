@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light" data-font="md" data-icons="md">
 <head>
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 1: HEAD (metadatos, manifest, estilos)
+     ═══════════════════════════════════════════════════════════════ -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#6366f1" />
@@ -17,6 +20,10 @@
     navigator.serviceWorker.register('sw.js').catch(()=>{});
   }
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 2: ESTILOS
+     ═══════════════════════════════════════════════════════════════ -->
 <style>
   :root{
     --bg:#f4f4f8; --surface:#ffffff; --surface-2:#fafafc;
@@ -111,15 +118,17 @@
   .icon-btn.fav:hover{color:var(--fav);border-color:color-mix(in srgb,var(--fav) 45%, var(--border))}
   .icon-btn.fav.activo{color:var(--fav);border-color:color-mix(in srgb,var(--fav) 45%, var(--border));background:color-mix(in srgb,var(--fav) 8%, var(--surface))}
   .icon-btn.fav.activo svg{fill:var(--fav)}
-  .hero{padding:28px 0 4px}
+
+  /* HERO (simplificado: solo título y 2 stats) */
+  .hero{padding:26px 0 6px}
   .hero-title{margin:0;font-size:clamp(1.5rem,4.4vw,2.3rem);line-height:1.15;letter-spacing:-.03em;font-weight:800}
   .grad{background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero-sub{margin:8px 0 0;color:var(--muted);font-size:.92rem;max-width:52ch}
-  .stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+  .stats{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
   .stat{background:var(--surface);border:1px solid var(--border);border-radius:13px;
     padding:9px 14px;display:flex;flex-direction:column;gap:1px;box-shadow:var(--shadow-sm);min-width:88px}
   .stat strong{font-size:1.1rem;letter-spacing:-.02em;line-height:1.2}
   .stat span{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
   .toolbar{display:flex;gap:9px;margin:20px 0 16px;flex-wrap:wrap}
   .search-wrap{position:relative;flex:1;min-width:220px}
   .search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;width:var(--icon-sm);height:var(--icon-sm)}
@@ -141,16 +150,44 @@
   }
   .view-toggle button.active{background:var(--surface-2);color:var(--text)}
   .view-toggle button svg{width:var(--icon-sm);height:var(--icon-sm)}
+
+  /* CHIPS CON CONTADOR */
   .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
   .chip{
     font:inherit;font-size:.78rem;font-weight:600;
-    padding:6px 11px;border-radius:20px;border:1px solid var(--border);
+    padding:6px 4px 6px 11px;border-radius:20px;border:1px solid var(--border);
     background:var(--surface);color:var(--muted);cursor:pointer;transition:.16s;
     white-space:nowrap;
+    display:inline-flex;align-items:center;gap:6px;
   }
   .chip:hover{color:var(--text);border-color:color-mix(in srgb,var(--accent) 40%, var(--border))}
   .chip.active{background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);border-color:var(--accent)}
   .chip.chip-fav.active{background:color-mix(in srgb,var(--fav) 14%, transparent);color:var(--fav);border-color:color-mix(in srgb,var(--fav) 50%, var(--border))}
+  .chip-count{
+    font-size:.7rem;font-weight:800;
+    min-width:22px;
+    height:20px;
+    padding:0 6px;
+    border-radius:11px;
+    background:var(--surface-2);
+    color:var(--muted);
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid var(--border);
+    line-height:1;
+  }
+  .chip.active .chip-count{
+    background:color-mix(in srgb,var(--accent) 25%, transparent);
+    color:var(--accent);
+    border-color:color-mix(in srgb,var(--accent) 45%, transparent);
+  }
+  .chip.chip-fav.active .chip-count{
+    background:color-mix(in srgb,var(--fav) 25%, transparent);
+    color:var(--fav);
+    border-color:color-mix(in srgb,var(--fav) 45%, transparent);
+  }
+
   main{padding-bottom:70px}
   .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
   .grid.list-view{grid-template-columns:1fr;gap:10px}
@@ -201,7 +238,6 @@
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
   .author{margin:2px 0 0;font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-  /* PILLS UNIFORMES */
   .meta-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
   .pill{
     font-size:.66rem;font-weight:700;
@@ -304,7 +340,6 @@
   .reader-body{overflow-y:auto;padding:16px 16px 24px;flex:1;min-height:0;scroll-behavior:smooth;position:relative}
   .reader-body.sin-texto{font-family:inherit;font-size:.92rem;color:var(--muted);font-style:italic;text-align:center;padding-top:60px}
 
-  /* Descripción / intro del libro */
   .descripcion-libro{
     background:var(--surface-2);
     border:1px solid var(--border);
@@ -327,30 +362,6 @@
     white-space:pre-wrap;
     overflow-wrap:anywhere;
   }
-  .descripcion-texto.vacio{
-    font-family:inherit;
-    font-size:.85rem;
-    color:var(--muted);
-    font-style:italic;
-  }
-  .descripcion-btn{
-    font:inherit;
-    font-size:.72rem;
-    font-weight:700;
-    background:transparent;
-    color:var(--accent);
-    border:1px solid color-mix(in srgb,var(--accent) 35%, var(--border));
-    border-radius:8px;
-    padding:5px 9px;
-    cursor:pointer;
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
-    margin-top:8px;
-    transition:.15s;
-  }
-  .descripcion-btn:hover{background:color-mix(in srgb,var(--accent) 10%, transparent)}
-  .descripcion-btn svg{width:11px;height:11px}
 
   .cap{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;scroll-margin-top:8px}
   .cap.actual{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%, transparent)}
@@ -499,7 +510,6 @@
     .topbar-actions{gap:6px}
     .hero{padding:22px 0 4px}
     .hero-title{font-size:1.35rem}
-    .hero-sub{font-size:.85rem}
     .stats{gap:7px}
     .stat{flex:1;min-width:0;padding:8px 10px;border-radius:11px}
     .stat strong{font-size:.98rem}
@@ -510,7 +520,8 @@
     .view-toggle{order:3;flex-shrink:0}
     .chips{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;margin-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .chips::-webkit-scrollbar{display:none}
-    .chips .chip{font-size:.72rem;padding:6px 10px;flex-shrink:0}
+    .chips .chip{font-size:.72rem;padding:6px 3px 6px 10px;flex-shrink:0}
+    .chips .chip-count{font-size:.66rem;min-width:20px;height:18px}
     .grid:not(.list-view){grid-template-columns:repeat(2, minmax(0,1fr));gap:10px}
     .grid:not(.list-view) .card{padding:10px;gap:8px;border-radius:14px;flex-direction:column;align-items:stretch}
     .grid:not(.list-view) .card-top{flex-direction:column;padding-right:0;gap:8px;align-items:stretch}
@@ -589,6 +600,9 @@
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 3: TOPBAR
+     ═══════════════════════════════════════════════════════════════ -->
 <header class="topbar">
   <div class="container topbar-inner">
     <div class="brand">
@@ -628,15 +642,15 @@
   </div>
 </header>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 4: HERO + TOOLBAR + CHIPS + GRID
+     ═══════════════════════════════════════════════════════════════ -->
 <main class="container">
   <section class="hero">
     <h2 class="hero-title">Tus lecturas, <span class="grad">bien contadas</span>.</h2>
-    <p class="hero-sub">Resúmenes por capítulo, notas, TTS y sincronización con GitHub.</p>
     <div class="stats">
       <div class="stat"><strong id="sLibros">0</strong><span>Libros</span></div>
       <div class="stat"><strong id="sLeidos">0</strong><span>Leídos</span></div>
-      <div class="stat"><strong id="sCaps">0</strong><span>Capítulos</span></div>
-      <div class="stat"><strong id="sPalabras">0</strong><span>Palabras</span></div>
     </div>
   </section>
 
@@ -667,21 +681,24 @@
   </div>
 
   <div class="chips" id="chips">
-    <button class="chip active" data-filter="todos">Todos</button>
-    <button class="chip chip-fav" data-filter="favoritos">❤ Favoritos</button>
-    <button class="chip" data-filter="leidos">Leídos</button>
-    <button class="chip" data-filter="en-progreso">En progreso</button>
-    <button class="chip" data-filter="no-leidos">No leídos</button>
-    <button class="chip" data-filter="con-caps">Con capítulos</button>
-    <button class="chip" data-filter="sin-caps">Sin capítulos</button>
-    <button class="chip" data-filter="con-notas">Con notas</button>
-    <button class="chip" data-filter="con-portada">Con portada</button>
+    <button class="chip active" data-filter="todos">Todos <span class="chip-count" data-count="todos">0</span></button>
+    <button class="chip chip-fav" data-filter="favoritos">❤ Favoritos <span class="chip-count" data-count="favoritos">0</span></button>
+    <button class="chip" data-filter="leidos">Leídos <span class="chip-count" data-count="leidos">0</span></button>
+    <button class="chip" data-filter="en-progreso">En progreso <span class="chip-count" data-count="en-progreso">0</span></button>
+    <button class="chip" data-filter="no-leidos">No leídos <span class="chip-count" data-count="no-leidos">0</span></button>
+    <button class="chip" data-filter="con-caps">Con capítulos <span class="chip-count" data-count="con-caps">0</span></button>
+    <button class="chip" data-filter="sin-caps">Sin capítulos <span class="chip-count" data-count="sin-caps">0</span></button>
+    <button class="chip" data-filter="con-notas">Con notas <span class="chip-count" data-count="con-notas">0</span></button>
+    <button class="chip" data-filter="con-portada">Con portada <span class="chip-count" data-count="con-portada">0</span></button>
   </div>
 
   <div class="grid" id="grid"></div>
   <div id="vacio"></div>
 </main>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 5: DIÁLOGO DEL LECTOR
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="reader">
   <div class="reader-wrap">
     <header class="reader-head">
@@ -728,6 +745,9 @@
   </div>
 </dialog>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 6: DIÁLOGO DE INTRODUCCIÓN
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="descDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -753,6 +773,9 @@
   </div>
 </dialog>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 7: DIÁLOGO DE CAPÍTULO RÁPIDO
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="quickCapDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -781,6 +804,9 @@
   </div>
 </dialog>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 8: DIÁLOGO DE FRAGMENTOS
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="fragDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -810,6 +836,9 @@
   </div>
 </dialog>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 9: EDITOR DE LIBRO
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="editor">
   <form id="formLibro" class="editor-wrap">
     <header class="editor-head">
@@ -894,6 +923,9 @@
   </form>
 </dialog>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 10: DIÁLOGO DE SINCRONIZACIÓN
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="syncDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -929,6 +961,9 @@
   </div>
 </dialog>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 11: DIÁLOGO DE AJUSTES DE VISTA
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="settingsDialog">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -986,6 +1021,9 @@
   </div>
 </dialog>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 12: DIÁLOGO DE GESTIÓN (importar/exportar/borrar)
+     ═══════════════════════════════════════════════════════════════ -->
 <dialog id="importador">
   <div class="editor-wrap">
     <header class="editor-head">
@@ -1027,6 +1065,9 @@
 
 <div id="toast"></div>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECCIÓN 13: SCRIPT — CONFIG, DATOS, UTILIDADES, INDEXEDDB
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
 (() => {
   'use strict';
@@ -1425,9 +1466,9 @@
     catch { toast('Almacenamiento lleno'); }
   }
 
-  function aplicarFiltroChip(l) {
+  function aplicarFiltroChip(l, filtro) {
     const c = contarLibro(l);
-    switch (filtroActivo) {
+    switch (filtro) {
       case 'favoritos': return l.favorito === true;
       case 'leidos': return l.leido === true;
       case 'en-progreso': return libroEnProgreso(l);
@@ -1436,6 +1477,7 @@
       case 'sin-caps': return c.caps === 0;
       case 'con-notas': return c.notas > 0;
       case 'con-portada': return l.hasCover === true;
+      case 'todos':
       default: return true;
     }
   }
@@ -1448,7 +1490,7 @@
     const orden = $('#orden').value;
 
     let out = libros.filter(l => {
-      if (!aplicarFiltroChip(l)) return false;
+      if (!aplicarFiltroChip(l, filtroActivo)) return false;
       if (!q) return true;
       if ((l.titulo||'').toLowerCase().includes(q)) return true;
       if ((l.autor||'').toLowerCase().includes(q)) return true;
@@ -1474,15 +1516,25 @@
     return out.sort(cmp);
   }
 
+  /* ════════════════════════════════════════════════════════
+     CONTADORES DE CHIPS: cuenta cuántos libros pertenecen
+     a cada filtro y lo pinta en el chip correspondiente.
+     ════════════════════════════════════════════════════════ */
+  function renderContadoresChips() {
+    const filtros = ['todos','favoritos','leidos','en-progreso','no-leidos',
+                     'con-caps','sin-caps','con-notas','con-portada'];
+    filtros.forEach(f => {
+      const n = libros.filter(l => aplicarFiltroChip(l, f)).length;
+      const el = document.querySelector(`.chip-count[data-count="${f}"]`);
+      if (el) el.textContent = n;
+    });
+  }
+
   function renderStats() {
     const total = libros.length;
     const leidos = libros.filter(l => l.leido === true).length;
-    const totalCaps = libros.reduce((a, l) => a + contarLibro(l).caps, 0);
-    const palabras = libros.reduce((a, l) => a + contarLibro(l).palabras, 0);
     $('#sLibros').textContent = total;
     $('#sLeidos').textContent = leidos;
-    $('#sCaps').textContent = totalCaps;
-    $('#sPalabras').textContent = palabras.toLocaleString('es');
   }
 
   function renderCoverHTML(l, cls = '') {
@@ -1495,6 +1547,7 @@
 
   function render() {
     renderStats();
+    renderContadoresChips();
     const lista = listaFiltrada();
 
     if (!lista.length) {
@@ -1510,7 +1563,6 @@
     grid.innerHTML = lista.map((l, i) => {
       const c = contarLibro(l);
       let preview = '';
-      // Prioridad del preview: descripción > primer resumen de capítulo
       if ((l.descripcion || '').trim()) {
         preview = l.descripcion.replace(/\s+/g,' ').trim();
       } else {
@@ -1631,6 +1683,9 @@
   const reader = $('#reader');
   const rBody = $('#rBody');
 
+  /* ════════════════════════════════════════════════════════
+     TTS: selección de voz, división de texto, reproducción
+     ════════════════════════════════════════════════════════ */
   function elegirMejorVoz() {
     if (!('speechSynthesis' in window)) return null;
     const voces = window.speechSynthesis.getVoices() || [];
@@ -1729,12 +1784,6 @@
     rBody.querySelectorAll('.tts-frag.tts-activo').forEach(el => el.classList.remove('tts-activo'));
   }
 
-  // ════════════════════════════════════════════════════════
-  // CENTRADO INTELIGENTE: el fragmento activo se queda al
-  // centro de la vista mientras hay contenido suficiente
-  // arriba y abajo. Solo en los últimos fragmentos del
-  // capítulo deja que la página baje normalmente.
-  // ════════════════════════════════════════════════════════
   function resaltarFragmento(capId, i) {
     limpiarResaltado();
     if (!capId) return;
@@ -1745,17 +1794,13 @@
 
     span.classList.add('tts-activo');
 
-    // Contar fragmentos totales del capítulo
     const totalFrags = capEl.querySelectorAll('.tts-frag').length;
     const faltan = totalFrags - 1 - i;
-    // Si estamos en los últimos 2 fragmentos del capítulo, dejar el scroll "natural"
     const esFinal = faltan <= 1;
 
     if (esFinal) {
-      // Al final: comportamiento natural, deja que baje hasta el fondo
       span.scrollIntoView({ block: 'end', behavior: 'smooth' });
     } else {
-      // En medio: centrar el fragmento verticalmente
       const rect = span.getBoundingClientRect();
       const bodyRect = rBody.getBoundingClientRect();
       const spanCenter = rect.top + rect.height / 2 - bodyRect.top;
@@ -1907,6 +1952,9 @@
     if (ctrl) ctrl.innerHTML = renderCapControls(cap, totalFrags);
   }
 
+  /* ════════════════════════════════════════════════════════
+     RENDER DE CAPÍTULOS Y DESCRIPCIÓN
+     ════════════════════════════════════════════════════════ */
   function renderDescripcionHTML(l) {
     const d = (l.descripcion || '').trim();
     if (!d) return '';
@@ -2285,7 +2333,9 @@
     }
   });
 
-  // Descripción / introducción del libro desde el lector
+  /* ════════════════════════════════════════════════════════
+     DESCRIPCIÓN / INTRODUCCIÓN
+     ════════════════════════════════════════════════════════ */
   const descDialog = $('#descDialog');
   const descInput = $('#descInput');
   const descWc = $('#descWc');
@@ -2313,14 +2363,15 @@
       libroAbierto = libros[i];
       guardar();
       render();
-      // Re-renderizar el lector para mostrar la nueva introducción
       abrirLector(libroAbierto.id);
       toast('Introducción guardada');
     }
     descDialog.close();
   });
 
-  // Añadir capítulo rápido
+  /* ════════════════════════════════════════════════════════
+     AÑADIR CAPÍTULO RÁPIDO
+     ════════════════════════════════════════════════════════ */
   const quickCapDialog = $('#quickCapDialog');
   const qcTitulo = $('#qcTitulo');
   const qcResumen = $('#qcResumen');
@@ -2375,6 +2426,7 @@
       if (el) el.scrollIntoView({ block: 'start' });
     }, 100);
     renderTOC(libroAbierto);
+    render();
     toast('Capítulo añadido');
   });
 
@@ -2464,6 +2516,9 @@
     });
   }
 
+  /* ════════════════════════════════════════════════════════
+     EDITOR DE LIBRO
+     ════════════════════════════════════════════════════════ */
   const editor = $('#editor');
   const form = $('#formLibro');
 
@@ -2819,7 +2874,9 @@
     render();
   });
 
-  // Sincronización
+  /* ════════════════════════════════════════════════════════
+     SINCRONIZACIÓN CON GITHUB
+     ════════════════════════════════════════════════════════ */
   const syncDialog = $('#syncDialog');
   let syncToken = localStorage.getItem(SYNC_TOKEN_KEY) || '';
   let syncGistId = localStorage.getItem(SYNC_GIST_KEY) || '';
@@ -3011,6 +3068,9 @@
     }
   });
 
+  /* ════════════════════════════════════════════════════════
+     MENÚ DE GESTIÓN (importar/exportar/borrar)
+     ════════════════════════════════════════════════════════ */
   const menu = $('#importador');
   $('#btnMenu').addEventListener('click', () => {
     $('#fImportar').value = '';
@@ -3172,6 +3232,9 @@
   $('#busqueda').addEventListener('input', render);
   $('#orden').addEventListener('change', render);
 
+  /* ════════════════════════════════════════════════════════
+     AJUSTES DE VISTA
+     ════════════════════════════════════════════════════════ */
   const settingsDialog = $('#settingsDialog');
 
   function aplicarConfiguracionVisual() {
@@ -3225,6 +3288,9 @@
     toast('Tamaño de iconos cambiado');
   });
 
+  /* ════════════════════════════════════════════════════════
+     INIT
+     ════════════════════════════════════════════════════════ */
   async function init() {
     cargar();
     await precargarCovers();
