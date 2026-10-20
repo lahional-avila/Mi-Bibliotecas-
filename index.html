@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#6366f1" />
 <title>Biblioteca · Mis resúmenes</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%236366f1'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><rect width='512' height='512' rx='96' fill='url(%23bg)'/><path d='M 100 200 Q 180 180 256 200 L 256 380 Q 180 360 100 380 Z' fill='%23fef9c3'/><path d='M 256 200 Q 332 180 412 200 L 412 380 Q 332 360 256 380 Z' fill='%23fde68a'/><line x1='130' y1='240' x2='230' y2='228' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='130' y1='290' x2='230' y2='278' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='130' y1='340' x2='230' y2='328' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='282' y1='228' x2='368' y2='238' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='282' y1='278' x2='368' y2='288' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><line x1='282' y1='328' x2='368' y2='338' stroke='%23a16207' stroke-width='7' opacity='.35' stroke-linecap='round'/><path d='M 380 200 L 380 340 L 396 322 L 412 340 L 412 200 Z' fill='%23ef4444'/><line x1='256' y1='200' x2='256' y2='380' stroke='%2392400e' stroke-width='6' opacity='.55'/></svg>" />
 <link rel="manifest" href="manifest.json" />
 <script>
   try{
@@ -201,6 +202,8 @@
   .pill.cap{background:color-mix(in srgb,var(--accent) 12%, transparent);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%, transparent)}
   .pill.nota{background:color-mix(in srgb,var(--nota) 16%, transparent);color:#a16207;border-color:color-mix(in srgb,var(--nota) 40%, transparent)}
   .pill.libro{background:color-mix(in srgb,var(--ok) 12%, transparent);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 35%, transparent)}
+  .pill.progreso{background:color-mix(in srgb,#0ea5e9 16%, transparent);color:#0284c7;border-color:color-mix(in srgb,#0ea5e9 40%, transparent)}
+  [data-theme="dark"] .pill.progreso{background:color-mix(in srgb,#0ea5e9 20%, transparent);color:#38bdf8;border-color:color-mix(in srgb,#0ea5e9 42%, transparent)}
   .preview{margin:0;font-size:.84rem;color:var(--muted);
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
   .preview.vacio{font-style:italic;opacity:.7}
@@ -247,7 +250,7 @@
   .cap-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)}
   .cap-num{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.9rem;flex-shrink:0}
   .cap-titulo{flex:1;min-width:0;font-size:1rem;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere}
-  .tts-resume{font-size:.66rem;background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);padding:2px 7px;border-radius:10px;font-weight:800;white-space:nowrap;flex-shrink:0}
+  .tts-resume{font-size:.7rem;background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);padding:2px 8px;border-radius:10px;font-weight:800;white-space:nowrap;flex-shrink:0}
   .cap-actions{display:flex;gap:4px;flex-shrink:0}
   .cap-actions .icon-btn.sm{width:28px;height:28px;border-radius:7px;background:var(--surface)}
   .cap-resumen{font-family:var(--serif);font-size:1.04rem;line-height:1.8;white-space:normal;overflow-wrap:anywhere;color:var(--text)}
@@ -535,6 +538,7 @@
   <div class="chips" id="chips">
     <button class="chip active" data-filter="todos">Todos</button>
     <button class="chip" data-filter="leidos">Leídos</button>
+    <button class="chip" data-filter="en-progreso">En progreso</button>
     <button class="chip" data-filter="no-leidos">No leídos</button>
     <button class="chip" data-filter="con-caps">Con capítulos</button>
     <button class="chip" data-filter="sin-caps">Sin capítulos</button>
@@ -1059,6 +1063,17 @@
     return { caps: capsValidos.length, palabras, notas };
   }
 
+  // Un libro está "En progreso" si no está marcado como leído y tiene algún avance
+  // (scroll del lector o progreso de TTS en algún capítulo).
+  function libroEnProgreso(l) {
+    if (l.leido) return false;
+    if ((l.progreso || 0) > 2 && (l.progreso || 0) < 99) return true;
+    for (const c of (l.capitulos || [])) {
+      if (c.ttsIndice && c.ttsIndice > 0) return true;
+    }
+    return false;
+  }
+
   const PALETA = [
     ['#6366f1','#8b5cf6'], ['#0ea5e9','#06b6d4'], ['#f59e0b','#ef4444'],
     ['#10b981','#059669'], ['#ec4899','#f43f5e'], ['#8b5cf6','#d946ef'],
@@ -1223,6 +1238,7 @@
     const c = contarLibro(l);
     switch (filtroActivo) {
       case 'leidos': return l.leido === true;
+      case 'en-progreso': return libroEnProgreso(l);
       case 'no-leidos': return l.leido !== true;
       case 'con-caps': return c.caps > 0;
       case 'sin-caps': return c.caps === 0;
@@ -1305,7 +1321,7 @@
       for (const cap of (l.capitulos||[])) {
         if ((cap.resumen||'').trim()) { preview = cap.resumen.replace(/\s+/g,' ').trim(); break; }
       }
-      const tieneProgreso = l.progreso > 2 && l.progreso < 99;
+      const enProgreso = libroEnProgreso(l);
 
       return `
         <article class="card ${l.leido ? 'read' : ''}" data-id="${l.id}" tabindex="0" role="button" style="animation-delay:${Math.min(i*20, 200)}ms">
@@ -1316,6 +1332,7 @@
               <h3>${esc(l.titulo)}</h3>
               ${l.autor && l.autor !== '—' ? `<p class="author">${esc(l.autor)}</p>` : ''}
               <div class="meta-row">
+                ${enProgreso ? `<span class="pill progreso">En progreso</span>` : ''}
                 ${c.caps > 0 ? `<span class="pill cap">${c.caps} cap${c.caps > 1 ? 's' : ''}</span>` : `<span class="pill">Sin capítulos</span>`}
                 ${c.notas > 0 ? `<span class="pill nota">${c.notas} nota${c.notas > 1 ? 's' : ''}</span>` : ''}
                 ${l.hasBookFile ? `<span class="pill libro">Libro</span>` : ''}
@@ -1325,7 +1342,7 @@
           </div>
           ${preview ? `<p class="preview">${esc(preview)}</p>` : `<p class="preview vacio">Sin resumen todavía</p>`}
           <div class="card-foot">
-            <span class="fecha">${c.palabras.toLocaleString('es')} palabras${tieneProgreso ? ` · ${l.progreso}%` : ''}</span>
+            <span class="fecha">${c.palabras.toLocaleString('es')} palabras</span>
             <div class="card-actions">
               <button class="icon-btn sm" data-action="editar" aria-label="Editar">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
@@ -1605,7 +1622,7 @@
 
     let inicio = 0;
     if (cap.ttsIndice && cap.ttsIndice > 0 && cap.ttsIndice < fragsPlanos.length) {
-      const continuar = confirm(`Este capítulo tiene progreso guardado (fragmento ${cap.ttsIndice + 1} de ${fragsPlanos.length}).\n\nAceptar = continuar desde ahí.\nCancelar = empezar de nuevo.`);
+      const continuar = confirm(`Este capítulo tiene progreso guardado.\n\nAceptar = continuar desde donde quedaste.\nCancelar = empezar de nuevo.`);
       if (continuar) {
         inicio = cap.ttsIndice;
       } else {
@@ -1737,7 +1754,7 @@
       }).join('');
     }
     const progresoBadge = (cap.ttsIndice > 0 && totalFrags > 0 && cap.ttsIndice < totalFrags)
-      ? `<span class="tts-resume" title="Progreso guardado">↻ ${cap.ttsIndice + 1}/${totalFrags}</span>`
+      ? `<span class="tts-resume" title="Progreso guardado">↻</span>`
       : '';
     return `
       <section class="cap" data-cap-el="${cap.id}" data-cap-id="${cap.id}">
