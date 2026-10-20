@@ -247,7 +247,6 @@
   .reader-body{overflow-y:auto;padding:16px 16px 24px;flex:1;min-height:0;scroll-behavior:smooth;position:relative}
   .reader-body.sin-texto{font-family:inherit;font-size:.92rem;color:var(--muted);font-style:italic;text-align:center;padding-top:60px}
 
-  /* ============ CAPÍTULOS COLAPSABLES ============ */
   .cap{
     background:var(--surface-2);
     border:1px solid var(--border);
@@ -349,6 +348,11 @@
   .cover-mini img{width:100%;height:100%;object-fit:cover;display:block}
   .cover-btns{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
   .cover-btns .btn{width:100%;padding:6px 9px;font-size:.78rem}
+  .cover-url-row{display:flex;gap:5px;margin-top:2px}
+  .cover-url-row input{flex:1;min-width:0;font:inherit;font-size:.75rem;padding:6px 8px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);outline:none}
+  .cover-url-row input:focus{border-color:var(--accent)}
+  .cover-url-row button{padding:6px 10px;font-size:.72rem;font-weight:700;border-radius:7px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;flex-shrink:0}
+  .cover-url-row button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
   .rating{display:flex;gap:2px;align-items:center}
   .rating button{background:none;border:none;padding:2px 3px;cursor:pointer;font-size:1.45rem;line-height:1;color:var(--border);transition:color .13s,transform .1s;border-radius:4px}
   .rating button:hover{transform:scale(1.15)}
@@ -635,6 +639,10 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
         Portada
       </button>
+      <button class="btn btn-ghost btn-sm" id="rPegarPortada" title="Pegar portada del portapapeles">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+        Pegar
+      </button>
       <button class="btn btn-ghost btn-sm" id="rSubirLibro" title="Subir archivo del libro">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
         Subir libro
@@ -713,6 +721,14 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               Subir imagen
             </button>
+            <button type="button" class="btn btn-ghost" id="edPegarPortada">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+              Pegar del portapapeles
+            </button>
+            <div class="cover-url-row">
+              <input type="text" id="edUrlPortada" placeholder="O pega URL de imagen…" />
+              <button type="button" id="edCargarUrl">Cargar</button>
+            </div>
             <button type="button" class="btn btn-ghost" id="edBorrarPortada" hidden>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>
               Quitar portada
@@ -1131,9 +1147,12 @@
     return { caps: capsValidos.length, palabras, notas };
   }
 
+  // ════════════════════════════════════════════════════════════
+  // CORRECCIÓN: "En progreso" solo si hay avance real de TTS
+  // en algún capítulo (le dio play y avanzó al menos un fragmento).
+  // ════════════════════════════════════════════════════════════
   function libroEnProgreso(l) {
     if (l.leido) return false;
-    if (l.abierto) return true;
     for (const c of (l.capitulos || [])) {
       if (c.ttsIndice && c.ttsIndice > 0) return true;
     }
@@ -1305,7 +1324,7 @@
     switch (filtroActivo) {
       case 'leidos': return l.leido === true;
       case 'en-progreso': return libroEnProgreso(l);
-      case 'no-leidos': return l.leido !== true && !l.abierto;
+      case 'no-leidos': return l.leido !== true && !libroEnProgreso(l);
       case 'con-caps': return c.caps > 0;
       case 'sin-caps': return c.caps === 0;
       case 'con-notas': return c.notas > 0;
@@ -1735,13 +1754,11 @@
     if (!capEl) return;
     capEl.classList.add('expanded');
   }
-
   function colapsarCap(capId) {
     const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
     if (!capEl) return;
     capEl.classList.remove('expanded');
   }
-
   function toggleCap(capId) {
     const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
     if (!capEl) return;
@@ -1991,7 +2008,6 @@
     const max = rBody.scrollHeight - rBody.clientHeight;
     const pct = max > 0 ? Math.min(100, Math.round((rBody.scrollTop / max) * 100)) : 0;
     $('#rProgressFill').style.width = pct + '%';
-    libroAbierto.progreso = pct;
   }
 
   function guardarScroll() {
@@ -2046,6 +2062,76 @@
       abrirLector(libros[i].id);
       render();
       toast(libros[i].leido ? 'Marcado como leído' : 'Marcado como no leído');
+    }
+  });
+
+  // ════════════════════════════════════════════════════════════
+  // PEGAR IMAGEN DESDE EL PORTAPAPELES / URL
+  // ════════════════════════════════════════════════════════════
+  async function obtenerBlobPortapapeles() {
+    if (!navigator.clipboard) throw new Error('Portapapeles no disponible en este navegador');
+    let items = null;
+    try {
+      items = await navigator.clipboard.read();
+    } catch (err) {
+      // Puede ser que solo haya texto (URL) o que el permiso se denegara
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text && /^https?:\/\//i.test(text.trim())) {
+          return await descargarImagenDesdeUrl(text.trim());
+        }
+      } catch {}
+      throw new Error('No se pudo leer el portapapeles. ¿Copiaste una imagen o su URL?');
+    }
+    for (const item of items) {
+      for (const type of item.types) {
+        if (type.startsWith('image/')) {
+          return await item.getType(type);
+        }
+      }
+    }
+    // No había imagen; probar texto (URL)
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && /^https?:\/\//i.test(text.trim())) {
+        return await descargarImagenDesdeUrl(text.trim());
+      }
+    } catch {}
+    throw new Error('El portapapeles no contiene una imagen');
+  }
+
+  async function descargarImagenDesdeUrl(url) {
+    url = String(url || '').trim();
+    if (!/^https?:\/\//i.test(url)) throw new Error('URL inválida');
+    let res;
+    try {
+      res = await fetch(url, { mode: 'cors' });
+    } catch {
+      throw new Error('No se pudo descargar (CORS). Prueba subiendo la imagen desde el archivo.');
+    }
+    if (!res.ok) throw new Error('No se pudo descargar la imagen (' + res.status + ')');
+    const blob = await res.blob();
+    if (!blob.type.startsWith('image/')) throw new Error('La URL no es una imagen');
+    return blob;
+  }
+
+  $('#rPegarPortada').addEventListener('click', async () => {
+    if (!libroAbierto) return;
+    try {
+      toast('Leyendo portapapeles…');
+      const blob = await obtenerBlobPortapapeles();
+      await setCover(libroAbierto.id, blob);
+      const i = libros.findIndex(x => x.id === libroAbierto.id);
+      if (i > -1) libros[i].hasCover = true;
+      guardar();
+      render();
+      const id = libroAbierto.id;
+      resetTTS();
+      reader.close(); libroAbierto = null;
+      abrirLector(id);
+      toast('Portada pegada');
+    } catch (err) {
+      toast('No se pudo pegar: ' + err.message);
     }
   });
 
@@ -2126,8 +2212,6 @@
     const l = libros.find(x => x.id === id);
     if (!l) return;
     libroAbierto = l;
-
-    if (!l.abierto) { l.abierto = true; guardar(); }
 
     const cover = $('#rCover');
     cover.innerHTML = '';
@@ -2359,6 +2443,7 @@
     $('#fAutor').value = libro ? (libro.autor || '').replace(/^—$/, '') : '';
     pintarRating(libro ? (libro.puntos||0) : 0);
     refrescarCoverEditor();
+    $('#edUrlPortada').value = '';
 
     capitulosEditor = libro && Array.isArray(libro.capitulos)
       ? libro.capitulos.map(c => ({
@@ -2395,8 +2480,38 @@
     const t = $('#fTitulo').value.trim() || 'libro';
     const a = $('#fAutor').value.trim();
     window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(`${t} ${a} portada libro`.trim()), '_blank', 'noopener');
-    toast('Guarda la imagen y pulsa "Subir imagen"');
+    toast('Mantén presionada la imagen y elige "Copiar imagen", luego pulsa "Pegar del portapapeles"');
   });
+
+  $('#edPegarPortada').addEventListener('click', async () => {
+    try {
+      toast('Leyendo portapapeles…');
+      const blob = await obtenerBlobPortapapeles();
+      portadaPendiente = new File([blob], 'portada.jpg', { type: blob.type || 'image/jpeg' });
+      borrarPortadaPendiente = false;
+      refrescarCoverEditor();
+      toast('Imagen pegada');
+    } catch (err) {
+      toast('No se pudo pegar: ' + err.message);
+    }
+  });
+
+  $('#edCargarUrl').addEventListener('click', async () => {
+    const url = $('#edUrlPortada').value.trim();
+    if (!url) { toast('Pega una URL primero'); return; }
+    try {
+      toast('Descargando imagen…');
+      const blob = await descargarImagenDesdeUrl(url);
+      portadaPendiente = new File([blob], 'portada.jpg', { type: blob.type || 'image/jpeg' });
+      borrarPortadaPendiente = false;
+      refrescarCoverEditor();
+      $('#edUrlPortada').value = '';
+      toast('Imagen cargada desde URL');
+    } catch (err) {
+      toast('Error: ' + err.message);
+    }
+  });
+
   $('#edSubirPortada').addEventListener('click', () => $('#edFilePortada').click());
   $('#edFilePortada').addEventListener('change', (e) => {
     const f = e.target.files?.[0]; e.target.value = '';
