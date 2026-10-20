@@ -32,16 +32,16 @@
     --icon-sm: 16px;
     --icon-md: 20px;
     --icon-lg: 24px;
-    --card-cover-w: 52px;
-    --card-cover-h: 72px;
+    --card-cover-w: 72px;
+    --card-cover-h: 100px;
   }
   [data-font="sm"]{ --font-base: 14px; }
   [data-font="md"]{ --font-base: 16px; }
   [data-font="lg"]{ --font-base: 18px; }
   [data-font="xl"]{ --font-base: 20px; }
-  [data-icons="sm"]{ --icon-sm: 14px; --icon-md: 16px; --icon-lg: 20px; --card-cover-w: 44px; --card-cover-h: 60px; }
-  [data-icons="md"]{ --icon-sm: 16px; --icon-md: 20px; --icon-lg: 24px; --card-cover-w: 52px; --card-cover-h: 72px; }
-  [data-icons="lg"]{ --icon-sm: 18px; --icon-md: 24px; --icon-lg: 30px; --card-cover-w: 60px; --card-cover-h: 84px; }
+  [data-icons="sm"]{ --icon-sm: 14px; --icon-md: 16px; --icon-lg: 20px; --card-cover-w: 56px; --card-cover-h: 80px; }
+  [data-icons="md"]{ --icon-sm: 16px; --icon-md: 20px; --icon-lg: 24px; --card-cover-w: 72px; --card-cover-h: 100px; }
+  [data-icons="lg"]{ --icon-sm: 18px; --icon-md: 24px; --icon-lg: 30px; --card-cover-w: 88px; --card-cover-h: 122px; }
   [data-theme="dark"]{
     --bg:#0a0a10; --surface:#14141d; --surface-2:#1a1a24;
     --text:#f2f2f7; --muted:#9aa0ae; --border:#262632;
@@ -187,14 +187,14 @@
   .grid.list-view .fecha{font-size:.7rem}
   .grid.list-view .badge-read{position:static;border-radius:6px;padding:2px 6px;font-size:.6rem;margin-left:6px}
   .cover{
-    width:var(--card-cover-w);height:var(--card-cover-h);border-radius:4px 9px 9px 4px;flex-shrink:0;
+    width:var(--card-cover-w);height:var(--card-cover-h);border-radius:4px 10px 10px 4px;flex-shrink:0;
     background:linear-gradient(145deg,var(--c1,#6366f1),var(--c2,#8b5cf6));
     display:grid;place-items:center;color:#fff;
-    font-family:var(--serif);font-size:1.45rem;font-weight:700;
+    font-family:var(--serif);font-size:1.6rem;font-weight:700;
     position:relative;overflow:hidden;
-    box-shadow:inset -6px 0 11px -6px rgba(0,0,0,.55), 0 5px 12px -6px rgba(0,0,0,.55);
+    box-shadow:inset -7px 0 12px -7px rgba(0,0,0,.55), 0 6px 14px -7px rgba(0,0,0,.55);
   }
-  .cover::after{content:'';position:absolute;left:5px;top:0;bottom:0;width:1.5px;background:rgba(255,255,255,.3);pointer-events:none}
+  .cover::after{content:'';position:absolute;left:6px;top:0;bottom:0;width:1.5px;background:rgba(255,255,255,.3);pointer-events:none}
   .cover img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
   .card.read{background:color-mix(in srgb,var(--ok) 4%, var(--surface))}
   .badge-read{
@@ -273,12 +273,18 @@
   dialog::backdrop{background:rgba(10,10,16,.55);backdrop-filter:blur(4px)}
   dialog[open]{animation:pop .18s ease}
   @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
-  #reader{width:min(820px,100vw);max-height:100vh;height:100vh;max-height:100dvh;border-radius:0}
+  #reader{width:min(820px,100vw);max-height:100vh;height:100vh;max-height:100dvh;border-radius:0;overflow:hidden;position:relative}
   @media(min-width:768px){#reader{height:auto;max-height:92vh;border-radius:18px;width:min(820px,94vw)}}
   .reader-wrap{display:flex;flex-direction:column;height:100%;max-height:100dvh}
   @media(min-width:768px){.reader-wrap{max-height:92vh}}
-  .reader-head{display:flex;gap:12px;align-items:flex-start;padding:16px 20px;border-bottom:1px solid var(--border);position:relative;flex-shrink:0}
-  .reader-head .cover{width:58px;height:80px;font-size:1.7rem}
+  .reader-head{
+    display:flex;gap:12px;align-items:flex-start;padding:16px 20px;
+    border-bottom:1px solid var(--border);position:relative;flex-shrink:0;
+    background:linear-gradient(135deg,
+      color-mix(in srgb, var(--cat-c1, var(--surface)) 14%, var(--surface)),
+      color-mix(in srgb, var(--cat-c2, var(--surface)) 8%, var(--surface)));
+  }
+  .reader-head .cover{width:72px;height:100px;font-size:2rem}
   .reader-meta{flex:1;min-width:0}
   .reader-meta h2{margin:0;font-family:var(--serif);font-size:clamp(1.1rem,3vw,1.4rem);line-height:1.22;letter-spacing:-.02em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .reader-meta .autor{margin-top:3px;font-size:.85rem;white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
@@ -301,16 +307,20 @@
   .toc-item .notas-toc{font-size:.7rem;background:color-mix(in srgb,var(--nota) 20%, transparent);color:#a16207;padding:1px 6px;border-radius:10px;font-weight:700}
 
   .reader-progress{height:3px;background:var(--border);flex-shrink:0;overflow:hidden}
-  .reader-progress .fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0;transition:width .15s}
+  .reader-progress .fill{
+    height:100%;width:0;transition:width .15s;
+    background:linear-gradient(90deg, var(--cat-c1, var(--accent)), var(--cat-c2, var(--accent-2)));
+  }
   .reader-body{overflow-y:auto;padding:16px 16px 24px;flex:1;min-height:0;scroll-behavior:smooth;position:relative}
   .reader-body.sin-texto{font-family:inherit;font-size:.92rem;color:var(--muted);font-style:italic;text-align:center;padding-top:60px}
 
   .descripcion-libro{
     background:var(--surface-2);border:1px solid var(--border);border-radius:14px;
-    padding:16px;margin-bottom:16px;border-left:3px solid var(--accent);
+    padding:16px;margin-bottom:16px;
+    border-left:3px solid var(--cat-c1, var(--accent));
   }
   .descripcion-label{
-    font-size:.7rem;font-weight:800;color:var(--accent);
+    font-size:.7rem;font-weight:800;color:var(--cat-c1, var(--accent));
     text-transform:uppercase;letter-spacing:.08em;
     margin-bottom:6px;display:flex;align-items:center;gap:6px;
   }
@@ -416,7 +426,7 @@
   .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%, transparent)}
   .field textarea{resize:vertical;min-height:90px;line-height:1.6}
   .cover-row{display:flex;gap:11px;align-items:stretch}
-  .cover-mini{width:56px;height:80px;border-radius:4px 9px 9px 4px;background:var(--surface-2);border:1px solid var(--border);overflow:hidden;display:grid;place-items:center;color:var(--muted);font-size:.62rem;text-align:center;flex-shrink:0;position:relative;font-weight:600;padding:2px}
+  .cover-mini{width:72px;height:100px;border-radius:4px 10px 10px 4px;background:var(--surface-2);border:1px solid var(--border);overflow:hidden;display:grid;place-items:center;color:var(--muted);font-size:.62rem;text-align:center;flex-shrink:0;position:relative;font-weight:600;padding:2px;transition:background .2s}
   .cover-mini img{width:100%;height:100%;object-fit:cover;display:block}
   .cover-btns{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
   .cover-btns .btn{width:100%;padding:6px 9px;font-size:.78rem}
@@ -502,7 +512,7 @@
   .settings-options button:hover{background:var(--surface-2)}
   .settings-options button.active{background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);border-color:var(--accent)}
   .settings-preview{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);margin-top:8px}
-  .settings-preview .cover{width:var(--card-cover-w);height:var(--card-cover-h);font-size:1.3rem}
+  .settings-preview .cover{width:var(--card-cover-w);height:var(--card-cover-h);font-size:1.5rem}
   .settings-preview .preview-text{flex:1;min-width:0}
   .settings-preview .preview-text strong{display:block;font-size:.95rem;line-height:1.3}
   .settings-preview .preview-text span{display:block;font-size:.78rem;color:var(--muted)}
@@ -526,6 +536,7 @@
   .qc-bulk-info li.sec-item{font-weight:700;color:var(--seccion);list-style:none;margin-left:-18px;margin-top:8px;padding-top:6px;border-top:1px solid var(--border)}
   .qc-bulk-info li.sec-item:first-child{border-top:none;padding-top:0}
   .qc-bulk-info li.cap-item{margin-left:10px;color:var(--muted)}
+  .qc-bulk-info li.intro-item{margin-left:10px;color:var(--accent);font-weight:700}
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
@@ -554,7 +565,7 @@
     .grid:not(.list-view){grid-template-columns:repeat(2, minmax(0,1fr));gap:10px}
     .grid:not(.list-view) .card{padding:10px;gap:8px;border-radius:14px;flex-direction:column;align-items:stretch}
     .grid:not(.list-view) .card-top{flex-direction:column;padding-right:0;gap:8px;align-items:stretch}
-    .grid:not(.list-view) .cover{width:100%;height:120px;border-radius:6px 6px 4px 4px;font-size:2rem}
+    .grid:not(.list-view) .cover{width:100%;height:170px;border-radius:6px 6px 4px 4px;font-size:2.4rem}
     .grid:not(.list-view) .cover::after{display:none}
     .grid:not(.list-view) .card-head h3{font-size:.82rem;-webkit-line-clamp:2;line-height:1.25}
     .grid:not(.list-view) .author{font-size:.68rem}
@@ -572,7 +583,7 @@
     .grid.list-view{grid-template-columns:1fr;gap:8px}
     .grid.list-view .card{flex-direction:row;align-items:center;gap:11px;padding:11px 12px}
     .grid.list-view .card-top{flex:1;padding-right:36px;gap:11px;align-items:center}
-    .grid.list-view .cover{width:42px;height:58px;font-size:1.1rem}
+    .grid.list-view .cover{width:52px;height:72px;font-size:1.3rem}
     .grid.list-view .card-head h3{font-size:.86rem;-webkit-line-clamp:1}
     .grid.list-view .author{font-size:.7rem}
     .grid.list-view .meta-row{margin-top:2px;gap:3px}
@@ -587,8 +598,8 @@
     .view-toggle button svg{width:18px;height:18px}
     .view-toggle button.active{box-shadow:inset 0 0 0 1.5px var(--accent)}
     .row2{grid-template-columns:1fr}
-    .reader-head{padding:14px 16px;gap:8px}
-    .reader-head .cover{width:44px;height:62px;font-size:1.3rem}
+    .reader-head{padding:14px 16px;gap:10px}
+    .reader-head .cover{width:52px;height:72px;font-size:1.6rem}
     .reader-head-actions{gap:4px}
     .reader-head-actions .icon-btn{width:32px;height:32px;border-radius:8px}
     .reader-head-actions .icon-btn svg{width:16px;height:16px}
@@ -613,7 +624,7 @@
     .settings-options{display:grid;grid-template-columns:1fr 1fr;gap:6px}
     .settings-options button{width:100%;justify-content:center;padding:9px 8px;font-size:.76rem}
     .settings-preview{padding:11px;gap:9px}
-    .settings-preview .cover{width:36px;height:50px;font-size:1rem}
+    .settings-preview .cover{width:44px;height:62px;font-size:1.2rem}
     .settings-preview .preview-text strong{font-size:.85rem}
     .settings-preview .preview-text span{font-size:.7rem}
     .descripcion-libro{padding:13px;margin-bottom:12px}
@@ -807,7 +818,7 @@
     <div class="editor-body">
       <div class="qc-tabs">
         <button type="button" class="qc-tab active" data-qc-tab="uno">Un capítulo</button>
-        <button type="button" class="qc-tab" data-qc-tab="varios">Importar varios</button>
+        <button type="button" class="qc-tab" data-qc-tab="varios">Importar libro (.txt)</button>
       </div>
 
       <div data-qc-panel="uno">
@@ -837,9 +848,10 @@
       </div>
 
       <div data-qc-panel="varios" style="display:none">
-        <p class="hint">Pega el texto completo. Detecta secciones y capítulos automáticamente, e <strong>ignora la tabla de contenido</strong> al inicio.<br>
+        <p class="hint">Pega el libro completo. Detecta secciones y capítulos automáticamente, e <strong>ignora la tabla de contenido</strong> al inicio.<br>
         <strong>Secciones</strong>: <code>Parte I</code>, <code>Libro Primero</code>, <code>SECCIÓN 1</code>.<br>
-        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>Prólogo</code>, <code>Introducción</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>, <code>1.</code>, etc.</p>
+        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>, <code>1.</code>, etc.<br>
+        <strong>Introducción</strong> y <strong>Prefacio</strong> se auto-asignan como introducción del libro.</p>
         <div class="field">
           <label for="qcBulkTexto">Texto completo</label>
           <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero con sus secciones y capítulos…" style="min-height:220px"></textarea>
@@ -915,6 +927,10 @@
           <label for="fAutor">Autor</label>
           <input id="fAutor" placeholder="Ej. Gabriel García Márquez" />
         </div>
+      </div>
+      <div class="field">
+        <label for="fCategoria">Categoría / color</label>
+        <select id="fCategoria"></select>
       </div>
       <div class="field">
         <label for="fDescripcion">Introducción (opcional)</label>
@@ -1125,7 +1141,7 @@
 (() => {
   'use strict';
 
-  const LS_KEY = 'biblioteca-libros-v6';
+  const LS_KEY = 'biblioteca-libros-v7';
   const DB_NAME = 'biblioteca-db-v3';
   const DB_COVERS = 'covers';
   const SYNC_TOKEN_KEY = 'biblioteca-sync-token';
@@ -1133,6 +1149,46 @@
   const SYNC_LAST_KEY = 'biblioteca-sync-last';
   const $ = (s) => document.querySelector(s);
 
+  /* ═══════════════ CATEGORÍAS ═══════════════ */
+  const CATEGORIAS = [
+    { id:'general',   nombre:'General',              c1:'#6366f1', c2:'#8b5cf6', keywords:[] },
+    { id:'ficcion',   nombre:'Ficción',              c1:'#ec4899', c2:'#f43f5e', keywords:['novela','cuento','relato','ficcion','cien anos','crimen y castigo','dracula','it','resplandor','doctor sueno','rabia','demian','metamorfosis','extranjero','odisea','divina comedia','principito','jane eyre','guerra y paz','memorias del subsuelo','el doble','el tunel','el pozo','la vegetariana','la casa de hojas','sherlock','holmes','viajes en el tiempo','paradoja','todos vosotros zombis','historias de fantasmas','fantasmas','relatos de una mujer','juan salvador gaviota','caballero de la armadura','alquimista','caballo de troya','biombo del infierno','el horla','ladron de mentiras','sabueso','baskerville'] },
+    { id:'ciencia',   nombre:'Ciencia',               c1:'#0ea5e9', c2:'#06b6d4', keywords:['cosmos','fisica','cuantica','astrofisica','astrobiologia','neurociencia','cerebro','agujero negro','tiempo','universo','evolucion','gen','biologia','anatomia','gray','astronomia','ciencia','tejido del cosmos','realidad','seis piezas','orden del tiempo','surfear el espacio','breve historia','ideas fundamentales','mente del emperador','desde la eternidad','algo profundamente','testosterona','cuerpo habla','gen egoista'] },
+    { id:'filosofia', nombre:'Filosofía',             c1:'#8b5cf6', c2:'#d946ef', keywords:['meditaciones','estoico','seneca','maquiavelo','schopenhauer','nietzsche','camus','sisifo','mito','filosofia','arte de la guerra','sun tzu','cartes','platon','aristoteles','being logical','dialectica','eristica','ser logico'] },
+    { id:'psicologia',nombre:'Psicología',            c1:'#10b981', c2:'#059669', keywords:['psicologia','mente','emocional','sociopata','narcisista','trauma','terapia','psicoanalisis','freud','jung','conducta','comportamiento','gaslighting','gas','luz','manipulacion','oscura','psicologica','chantaje','limites','asertividad','comunicacion no violenta','empatia','inteligencia emocional','juegos en que','pensar rapido','despacio','por que mentimos','sin conciencia','serie de eventos','mente de los justos','generacion ansiosa','transformacion','mente moderna','reforma del pensamiento','sociedad del cansancio','yo y el ello','interpretacion de los suenos','psicologia femenina','psicologia criminal','psicologia'] },
+    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','seductor','carisma','confianza','motivacion','proposito','manifestacion','milagro','secreto','magia','fluir','flow','poder del ahora','placebo','eres tu','sobrenatural','deja de ser','desarrolle su cerebro','piense y hagase rico','si lo crees','plan fenix','traguese','sapo','basta ya','tipo lindo','no me puedes lastimar','sutil arte','importe una mierda','todo esta jodido','modelos','metodo','hombre racional','pildora roja','hombre superior','camino del hombre','camino del lobo','mujeres son de marte','5 lenguajes','lenguajes del amor','siete reglas','oro para vivir','maneras de amar','cuestion de limites','como ganar amigos','influir','influencia','persuasion','pequeno libro','500 palabras','rompe la barrera','saber conversar','supercomunicadores','tenemos que hablar','vendele','como suprimir','preocupaciones','arte de no amargarse','arte de pensar','pensar con claridad','como ser culto','como explicar','fisica cuantica','gato zombi','365 dias','mas culto','como pensar','aprender a aprender','ser mas culto','ser un hombre mas seductor','consejos','12 reglas','21 lecciones','siglo xxi','sapiens','animales a dioses','homo deus','breve historia de casi todo','padre rico','dinero','mentalidad millonaria'] },
+    { id:'historia',  nombre:'Historia',              c1:'#a16207', c2:'#78350f', keywords:['historia','guerra y paz','imperio','revolucion','siglo','antigua','roma','grecia','egipto','cristianismo','religion','libro de enoc','san cipriano','diego portales','encina','manuel carreno','carreno','manual de carreno','comportate','decidido'] },
+    { id:'biografia', nombre:'Biografía',             c1:'#3b82f6', c2:'#6366f1', keywords:['memorias','diario','autobiografia','vida de','biografia'] },
+    { id:'negocios',  nombre:'Negocios',              c1:'#14b8a6', c2:'#0ea5e9', keywords:['negocio','empresa','economia','marketing','ventas','inversion','finanzas','emprendedor','liderazgo','creatividad','ciencia de crear','ed catmull','economista callejero'] },
+    { id:'terror',    nombre:'Terror',                c1:'#1f2937', c2:'#7f1d1d', keywords:['terror','horror','fantasma','zombi','muerto','oscuro','ligotti','lovecraft','king','dracula','miedo','resplandor','doctor sueno','it de stephen','rabia','fantasmas','peter straub','pozo','biombo del infierno','horla','maupassant','canciones de un sonador'] },
+    { id:'poesia',    nombre:'Poesía',                c1:'#db2777', c2:'#f472b6', keywords:['poesia','poema','verso','cantar','oda'] }
+  ];
+
+  function detectarCategoria(titulo, autor) {
+    const t = normalizar((titulo || '') + ' ' + (autor || ''));
+    let best = { cat: CATEGORIAS[0], score: 0 };
+    for (const cat of CATEGORIAS) {
+      let score = 0;
+      for (const kw of cat.keywords) {
+        const k = normalizar(kw);
+        if (k && t.includes(k)) score += k.length;
+      }
+      if (score > best.score) best = { cat, score };
+    }
+    return best.cat.id;
+  }
+
+  function getCategoria(id) {
+    return CATEGORIAS.find(c => c.id === id) || CATEGORIAS[0];
+  }
+
+  function colorLibro(l) {
+    const catId = l.categoria || detectarCategoria(l.titulo, l.autor);
+    const cat = getCategoria(catId);
+    return [cat.c1, cat.c2];
+  }
+
+  /* ═══════════════ LIBROS PRECARGADOS ═══════════════ */
   const LIBROS_PRECARGADOS = [
     { titulo:"12 reglas para vivir", autor:"Jordan Peterson" },
     { titulo:"200 consejos para ser un hombre más seductor", autor:"Ángel Daro" },
@@ -1329,6 +1385,7 @@
   let portadaPendiente = null;
   let portadaEditorUrl = null;
   let borrarPortadaPendiente = false;
+  let categoriaManual = false;
   let estructuraEditor = [];
   const coversCache = new Map();
   let scrollSaveTimer = null;
@@ -1382,19 +1439,6 @@
       }
     }
     return false;
-  }
-
-  const PALETA = [
-    ['#6366f1','#8b5cf6'], ['#0ea5e9','#06b6d4'], ['#f59e0b','#ef4444'],
-    ['#10b981','#059669'], ['#ec4899','#f43f5e'], ['#8b5cf6','#d946ef'],
-    ['#14b8a6','#0ea5e9'], ['#f97316','#eab308'], ['#3b82f6','#6366f1'],
-    ['#a855f7','#ec4899'], ['#84cc16','#22c55e'], ['#f43f5e','#a855f7']
-  ];
-  function gradiente(titulo) {
-    const t = String(titulo || '?');
-    let h = 0;
-    for (let i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) >>> 0;
-    return PALETA[h % PALETA.length];
   }
 
   let toastTimer = null;
@@ -1503,6 +1547,7 @@
           if (!Array.isArray(l.secciones)) l.secciones = [];
           if (typeof l.favorito !== 'boolean') l.favorito = false;
           if (typeof l.descripcion !== 'string') l.descripcion = '';
+          if (!l.categoria) l.categoria = detectarCategoria(l.titulo, l.autor);
           if ('hasBookFile' in l) delete l.hasBookFile;
           if ('resumen' in l) delete l.resumen;
         });
@@ -1516,6 +1561,7 @@
       capitulos: [],
       secciones: [],
       descripcion: '',
+      categoria: detectarCategoria(b.titulo, b.autor),
       puntos: 0,
       leido: false,
       favorito: false,
@@ -1607,7 +1653,7 @@
   }
 
   function renderCoverHTML(l, cls = '') {
-    const [c1, c2] = gradiente(l.titulo);
+    const [c1, c2] = colorLibro(l);
     const inicial = esc(((l.titulo||'?').trim()[0]||'?').toUpperCase());
     const url = coversCache.get(l.id);
     if (url) return `<div class="cover ${cls}"><img src="${url}" alt=""></div>`;
@@ -1631,6 +1677,7 @@
     grid.className = 'grid' + (vistaActual === 'list' ? ' list-view' : '');
     grid.innerHTML = lista.map((l, i) => {
       const c = contarLibro(l);
+      const cat = getCategoria(l.categoria || detectarCategoria(l.titulo, l.autor));
       let preview = '';
       if ((l.descripcion || '').trim()) {
         preview = l.descripcion.replace(/\s+/g,' ').trim();
@@ -1676,6 +1723,7 @@
               <h3>${esc(l.titulo)}</h3>
               ${l.autor && l.autor !== '—' ? `<p class="author">${esc(l.autor)}</p>` : ''}
               <div class="meta-row">
+                <span class="pill" style="background:color-mix(in srgb, ${cat.c1} 15%, transparent);color:${cat.c1};border-color:color-mix(in srgb, ${cat.c1} 40%, transparent)">${cat.nombre}</span>
                 ${l.favorito ? `<span class="pill fav">❤ Fav</span>` : ''}
                 ${enProgreso ? `<span class="pill progreso">En progreso</span>` : ''}
                 ${c.secciones > 0 ? `<span class="pill sec">${c.secciones} sec</span>` : ''}
@@ -2498,13 +2546,16 @@
         if (item.tipo === 'sec') {
           totalCaps += item.capitulos.length;
           totalChars += item.capitulos.reduce((a, c) => a + nPalabras(c.resumen), 0);
+        } else if (item.tipo === 'intro') {
+          totalChars += nPalabras(item.resumen);
         } else {
           totalCaps += 1;
           totalChars += nPalabras(item.resumen);
         }
       }
       const secs = qcCapsDetectados.filter(x => x.tipo === 'sec').length;
-      qcWc.textContent = `${secs} sección${secs === 1 ? '' : 'es'} · ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} · ${totalChars.toLocaleString('es')} palabras`;
+      const intros = qcCapsDetectados.filter(x => x.tipo === 'intro').length;
+      qcWc.textContent = `${secs} sección${secs === 1 ? '' : 'es'} · ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros ? ' · intro ✓' : ''} · ${totalChars.toLocaleString('es')} palabras`;
     }
   }
 
@@ -2527,28 +2578,26 @@
       const t = limpiar(linea);
       if (!t || t.length > 160) return null;
 
-      // Tabla de contenido / Índice
       if (/^(tabla de contenido|[ií]ndice|indice|contenido|contents|table of contents)$/i.test(t)) {
         return 'toc';
       }
-      // Secciones
+      // Introducción / prefacio → auto-descripcion
+      if (/^(introducci[oó]n|prefacio|proemio)\s*$/i.test(t)) {
+        return 'intro';
+      }
       if (/^(parte|libro|secci[oó]n)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|octavo|noveno|d[eé]cimo)\b/i.test(t)) {
         return 'sec';
       }
-      // Capítulos
       if (/^(cap[ií]tulo|cap\.?)\s+([\divxlcdm]+|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|diecis[eé]is|diecisiete|dieciocho|diecinueve|veinte|veintiuno|veintid[oó]s|veintitr[eé]s|veinticuatro|veinticinco|veintis[eé]is|veintisiete|veintiocho|veintinueve|treinta)\b/i.test(t)) {
         return 'cap';
       }
-      // Prólogo, epílogo, introducción, etc.
-      if (/^(pr[oó]logo|ep[ií]logo|introducci[oó]n|prefacio|conclusi[oó]n|cierre sexual|cierre|glosario|bibliograf[ií]a|lecturas adicionales|lecturas recomendadas|sobre el autor|agradecimientos|ap[eé]ndice|dedicatoria|nota del autor|nota r[aá]pida)\b/i.test(t)) {
+      if (/^(pr[oó]logo|ep[ií]logo|prefacio|conclusi[oó]n|cierre sexual|cierre|glosario|bibliograf[ií]a|lecturas adicionales|lecturas recomendadas|sobre el autor|agradecimientos|ap[eé]ndice|dedicatoria|nota del autor|nota r[aá]pida)\b/i.test(t)) {
         return 'cap';
       }
-      // Markdown
       if (/^#{1,6}\s+\S/.test(t)) {
         if (/^#{1,2}\s+(parte|libro|secci[oó]n)\b/i.test(t)) return 'sec';
         return 'cap';
       }
-      // Numerado
       if (/^\d{1,3}[\.\)]\s+[A-ZÁÉÍÓÚÑ]/.test(t)) return 'cap';
       return null;
     }
@@ -2650,6 +2699,8 @@
       if (m.tipo === 'sec') {
         seccionActual = { tipo: 'sec', titulo, capitulos: [] };
         estructura.push(seccionActual);
+      } else if (m.tipo === 'intro') {
+        estructura.push({ tipo: 'intro', titulo, resumen });
       } else {
         const cap = { tipo: 'cap', titulo, resumen };
         if (seccionActual) {
@@ -2672,21 +2723,22 @@
     }
     qcCapsDetectados = detectarEstructura(texto);
     const secciones = qcCapsDetectados.filter(x => x.tipo === 'sec');
+    const intros = qcCapsDetectados.filter(x => x.tipo === 'intro');
     const capsSueltos = qcCapsDetectados.filter(x => x.tipo === 'cap');
     let totalCaps = capsSueltos.length + secciones.reduce((a, s) => a + s.capitulos.length, 0);
 
-    if (totalCaps === 0) {
+    if (totalCaps === 0 && intros.length === 0) {
       qcBulkInfo.innerHTML = '<strong>No se detectó contenido.</strong>';
       actualizarQcWc();
       return;
     }
-    if (secciones.length === 0 && capsSueltos.length === 1 && capsSueltos[0].resumen.trim() === texto.trim()) {
+    if (secciones.length === 0 && capsSueltos.length === 1 && capsSueltos[0].resumen.trim() === texto.trim() && intros.length === 0) {
       qcBulkInfo.innerHTML = `<strong>No se detectaron marcadores de capítulo.</strong> Se importará todo como un único capítulo. Si quieres dividirlo, separa con líneas como "Capítulo 1", "Capítulo 2", etc.`;
       actualizarQcWc();
       return;
     }
 
-    let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}<ul>`;
+    let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros.length ? ', <span style="color:var(--accent)">'+intros.length+' introducción</span>' : ''}<ul>`;
     let cont = 0;
     for (const item of qcCapsDetectados) {
       if (cont >= 30) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
@@ -2698,6 +2750,8 @@
           cont++;
         }
         cont++;
+      } else if (item.tipo === 'intro') {
+        html += `<li class="intro-item">📖 Introducción → se asignará al libro · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
       } else {
         html += `<li class="cap-item">${esc(item.titulo)} · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
         cont++;
@@ -2727,12 +2781,13 @@
     const det = detectarEstructura(texto);
     let totalCaps = 0;
     for (const item of det) {
-      totalCaps += item.tipo === 'sec' ? item.capitulos.length : 1;
+      if (item.tipo === 'sec') totalCaps += item.capitulos.length;
+      else if (item.tipo === 'cap') totalCaps += 1;
     }
     if (totalCaps <= 1) return false;
     const usar = confirm(
       `El texto tiene ${texto.length.toLocaleString('es')} caracteres y se detectaron ${totalCaps} capítulos.\n\n` +
-      `¿Quieres importarlo como varios capítulos? Se abrirá la pestaña "Importar varios" con la vista previa.`
+      `¿Quieres importarlo como varios capítulos? Se abrirá la pestaña "Importar libro" con la vista previa.`
     );
     if (!usar) return false;
     document.querySelectorAll('.qc-tab').forEach(t => t.classList.toggle('active', t.dataset.qcTab === 'varios'));
@@ -2854,7 +2909,7 @@
             ttsIndice: 0
           }))
         });
-      } else {
+      } else if (item.tipo === 'cap') {
         l.capitulos.push({
           id: uid(),
           titulo: item.titulo,
@@ -2875,7 +2930,7 @@
     let baseIdx = l.capitulos.length - capsNuevos.length;
     capsNuevos.forEach((c, i) => { html += renderCapHTML(c, baseIdx + i); });
     let baseSecIdx = l.secciones.length - secNuevas.length;
-    secNuevas.forEach((s, i) => { html += renderSeccionHTML(s, baseSecIdx + i); });
+    secNuevas.forEach((s, i) => { html += renderSeccionHTML(s, baseSecIdx + i, true); });
 
     rBody.insertAdjacentHTML('beforeend', html);
 
@@ -2925,14 +2980,41 @@
       if (!texto.trim()) { toast('Pega o sube el texto primero'); return; }
       const detectado = detectarEstructura(texto);
       if (!detectado.length) { toast('No hay texto para importar'); return; }
+
+      // Extract intro → descripcion
+      const intros = detectado.filter(x => x.tipo === 'intro');
+      const contenido = detectado.filter(x => x.tipo !== 'intro');
+
       let totalCaps = 0;
-      for (const item of detectado) {
+      for (const item of contenido) {
         totalCaps += item.tipo === 'sec' ? item.capitulos.length : 1;
       }
-      if (totalCaps === 0) { toast('No se detectó contenido válido'); return; }
+
       quickCapDialog.close();
-      insertarEnLibroYRender(detectado);
-      toast(`${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} añadido${totalCaps === 1 ? '' : 's'}`);
+
+      if (intros.length) {
+        const l = libros.find(x => x.id === libroAbierto.id);
+        if (l) {
+          const textoIntro = intros.map(i => i.resumen).filter(Boolean).join('\n\n');
+          if (textoIntro) {
+            l.descripcion = textoIntro;
+            libroAbierto = l;
+            guardar();
+            toast('Introducción asignada al libro');
+          }
+        }
+      }
+
+      if (contenido.length) {
+        insertarEnLibroYRender(contenido);
+      }
+
+      if (intros.length) {
+        abrirLector(libroAbierto.id);
+      }
+
+      if (totalCaps === 0 && intros.length === 0) { toast('No se detectó contenido válido'); return; }
+      toast(`${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} añadido${totalCaps === 1 ? '' : 's'}${intros.length ? ' · intro importada' : ''}`);
     }
   });
 
@@ -2990,6 +3072,11 @@
     if (!l) return;
     libroAbierto = l;
 
+    // Category color on reader
+    const cat = getCategoria(l.categoria || detectarCategoria(l.titulo, l.autor));
+    reader.style.setProperty('--cat-c1', cat.c1);
+    reader.style.setProperty('--cat-c2', cat.c2);
+
     const cover = $('#rCover');
     cover.innerHTML = '';
     cover.style.background = '';
@@ -3000,7 +3087,7 @@
       img.src = url;
       cover.appendChild(img);
     } else {
-      const [c1, c2] = gradiente(l.titulo);
+      const [c1, c2] = colorLibro(l);
       cover.style.background = `linear-gradient(145deg, ${c1}, ${c2})`;
       cover.style.setProperty('--c1', c1);
       cover.style.setProperty('--c2', c2);
@@ -3012,6 +3099,7 @@
 
     const c = contarLibro(l);
     const sub = [];
+    sub.push(`<span style="background:color-mix(in srgb, ${cat.c1} 18%, transparent);color:${cat.c1};padding:1px 7px;border-radius:10px;font-weight:700">${cat.nombre}</span>`);
     if (l.favorito) sub.push(`<span style="color:var(--fav);font-weight:700">❤ Favorito</span>`);
     if (l.puntos > 0) sub.push(`<span style="color:var(--star)">${estrellas(l.puntos)}</span>`);
     if (c.secciones > 0) sub.push(`<span>${c.secciones} sec · ${c.caps} cap</span>`);
@@ -3036,7 +3124,7 @@
       rBody.classList.remove('sin-texto');
       let html = descripcionHTML;
       html += directos.map((cap, idx) => renderCapHTML(cap, idx)).join('');
-      html += secciones.map((sec, idx) => renderSeccionHTML(sec, idx)).join('');
+      html += secciones.map((sec, idx) => renderSeccionHTML(sec, idx, true)).join('');
       rBody.innerHTML = html;
     }
 
@@ -3101,10 +3189,10 @@
       mini.style.color = '';
       $('#edBorrarPortada').hidden = false;
     } else {
-      const t = $('#fTitulo').value || '?';
-      const [c1, c2] = gradiente(t);
+      const catId = $('#fCategoria').value || 'general';
+      const cat = getCategoria(catId);
       mini.innerHTML = 'Sin portada';
-      mini.style.background = `linear-gradient(145deg, ${c1}, ${c2})`;
+      mini.style.background = `linear-gradient(145deg, ${cat.c1}, ${cat.c2})`;
       mini.style.color = 'rgba(255,255,255,.85)';
       $('#edBorrarPortada').hidden = true;
     }
@@ -3294,10 +3382,13 @@
     editandoId = libro ? libro.id : null;
     portadaPendiente = null;
     borrarPortadaPendiente = false;
+    categoriaManual = false;
     $('#editorTitulo').textContent = libro ? 'Editar libro' : 'Nuevo libro';
     $('#fTitulo').value = libro ? (libro.titulo||'') : '';
     $('#fAutor').value = libro ? (libro.autor || '').replace(/^—$/, '') : '';
     $('#fDescripcion').value = libro ? (libro.descripcion || '') : '';
+    const catInicial = libro ? (libro.categoria || detectarCategoria(libro.titulo, libro.autor)) : 'general';
+    $('#fCategoria').value = catInicial;
     pintarRating(libro ? (libro.puntos||0) : 0);
     refrescarCoverEditor();
     $('#edUrlPortada').value = '';
@@ -3323,7 +3414,27 @@
     setTimeout(() => { if (!libro) $('#fTitulo').focus(); }, 50);
   }
 
-  $('#fTitulo').addEventListener('input', refrescarCoverEditor);
+  function initCategoriasSelect() {
+    const sel = $('#fCategoria');
+    sel.innerHTML = CATEGORIAS.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+  }
+
+  $('#fTitulo').addEventListener('input', () => {
+    if (!categoriaManual) {
+      $('#fCategoria').value = detectarCategoria($('#fTitulo').value, $('#fAutor').value);
+      refrescarCoverEditor();
+    }
+  });
+  $('#fAutor').addEventListener('input', () => {
+    if (!categoriaManual) {
+      $('#fCategoria').value = detectarCategoria($('#fTitulo').value, $('#fAutor').value);
+    }
+  });
+  $('#fCategoria').addEventListener('change', () => {
+    categoriaManual = true;
+    refrescarCoverEditor();
+  });
+
   $('#btnNuevo').addEventListener('click', () => abrirEditor(null));
   $('#edCerrar').addEventListener('click', () => editor.close());
   $('#edCancelar').addEventListener('click', () => editor.close());
@@ -3473,6 +3584,7 @@
       titulo,
       autor: $('#fAutor').value.trim(),
       descripcion: $('#fDescripcion').value.trim(),
+      categoria: $('#fCategoria').value || 'general',
       puntos: puntosSel,
       capitulos: capsFinales,
       secciones: seccionesFinales
@@ -3578,6 +3690,7 @@
     libros.forEach(l => {
       if (typeof l.favorito !== 'boolean') l.favorito = false;
       if (typeof l.descripcion !== 'string') l.descripcion = '';
+      if (!l.categoria) l.categoria = detectarCategoria(l.titulo, l.autor);
       if (!Array.isArray(l.capitulos)) l.capitulos = [];
       if (!Array.isArray(l.secciones)) l.secciones = [];
       if ('hasBookFile' in l) delete l.hasBookFile;
@@ -3742,6 +3855,7 @@
       libros.forEach(l => {
         if (typeof l.favorito !== 'boolean') l.favorito = false;
         if (typeof l.descripcion !== 'string') l.descripcion = '';
+        if (!l.categoria) l.categoria = detectarCategoria(l.titulo, l.autor);
         if (!Array.isArray(l.capitulos)) l.capitulos = [];
         if (!Array.isArray(l.secciones)) l.secciones = [];
         if ('hasBookFile' in l) delete l.hasBookFile;
@@ -3797,8 +3911,12 @@
       if (!p || !p.titulo) return;
       const k = (normalizar(p.titulo) + '|' + normalizar(p.autor)).toLowerCase();
       if (existentes.has(k)) { dup++; return; }
-      libros.push({ id: uid(), titulo: p.titulo, autor: p.autor, capitulos: [], secciones: [], descripcion: '', puntos: 0,
-                    leido: false, favorito: false, fecha: Date.now(), scrollTop: 0 });
+      libros.push({
+        id: uid(), titulo: p.titulo, autor: p.autor,
+        capitulos: [], secciones: [], descripcion: '',
+        categoria: detectarCategoria(p.titulo, p.autor),
+        puntos: 0, leido: false, favorito: false, fecha: Date.now(), scrollTop: 0
+      });
       existentes.add(k); ok++;
     });
     if (ok) { guardar(); render(); toast(`${ok} añadidos${dup ? ` · ${dup} duplicados` : ''}`); }
@@ -3917,6 +4035,7 @@
   });
 
   async function init() {
+    initCategoriasSelect();
     cargar();
     await precargarCovers();
     aplicarConfiguracionVisual();
