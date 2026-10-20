@@ -7,16 +7,14 @@
 <title>Biblioteca · Mis resúmenes</title>
 <link rel="manifest" href="manifest.json" />
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
-<script>
   try{
     document.documentElement.dataset.theme = localStorage.getItem('tema') || 'light';
     document.documentElement.dataset.font = localStorage.getItem('fontSize') || 'md';
     document.documentElement.dataset.icons = localStorage.getItem('iconSize') || 'md';
   }catch(e){}
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  }
 </script>
 <style>
   :root{
@@ -108,8 +106,6 @@
   .icon-btn.sm{width:32px;height:32px;border-radius:9px}
   .icon-btn.sm svg{width:var(--icon-sm);height:var(--icon-sm)}
   .icon-btn.danger:hover{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%, var(--border))}
-  [data-theme="light"] .icon-sun{display:none}
-  [data-theme="dark"] .icon-moon{display:none}
   .hero{padding:28px 0 4px}
   .hero-title{margin:0;font-size:clamp(1.5rem,4.4vw,2.3rem);line-height:1.15;letter-spacing:-.03em;font-weight:800}
   .grad{background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -162,9 +158,7 @@
   @media(hover:hover){
     .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--accent) 32%, var(--border))}
   }
-  .grid.list-view .card{
-    flex-direction:row;align-items:center;gap:14px;padding:12px 15px;
-  }
+  .grid.list-view .card{flex-direction:row;align-items:center;gap:14px;padding:12px 15px}
   .grid.list-view .card-top{flex:1;padding-right:0;gap:14px;align-items:center}
   .grid.list-view .cover{width:var(--card-cover-w);height:var(--card-cover-h);font-size:1.5rem}
   .grid.list-view .card-head{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
@@ -172,15 +166,9 @@
   .grid.list-view .author{font-size:.78rem}
   .grid.list-view .meta-row{margin-top:3px}
   .grid.list-view .preview{display:none}
-  .grid.list-view .card-foot{
-    border-top:none;padding-top:0;margin-top:0;flex-shrink:0;
-    flex-direction:column;align-items:flex-end;gap:4px;
-  }
+  .grid.list-view .card-foot{border-top:none;padding-top:0;margin-top:0;flex-shrink:0;flex-direction:column;align-items:flex-end;gap:4px}
   .grid.list-view .fecha{font-size:.7rem}
-  .grid.list-view .badge-read{
-    position:static;border-radius:6px;padding:2px 6px;font-size:.6rem;
-    margin-left:6px;
-  }
+  .grid.list-view .badge-read{position:static;border-radius:6px;padding:2px 6px;font-size:.6rem;margin-left:6px}
   .grid.list-view .card-actions{display:none}
   .cover{
     width:var(--card-cover-w);height:var(--card-cover-h);border-radius:4px 9px 9px 4px;flex-shrink:0;
@@ -209,7 +197,6 @@
   .author{margin:2px 0 0;font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .meta-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
   .pill{font-size:.68rem;padding:2px 7px;border-radius:20px;background:var(--surface-2);color:var(--muted);border:1px solid var(--border);font-weight:600}
-  .pill.ok{background:color-mix(in srgb,var(--ok) 14%, transparent);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 35%, transparent)}
   .pill.star{background:color-mix(in srgb,var(--star) 14%, transparent);color:var(--star);border-color:color-mix(in srgb,var(--star) 35%, transparent)}
   .pill.cap{background:color-mix(in srgb,var(--accent) 12%, transparent);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%, transparent)}
   .pill.nota{background:color-mix(in srgb,var(--nota) 16%, transparent);color:#a16207;border-color:color-mix(in srgb,var(--nota) 40%, transparent)}
@@ -225,10 +212,7 @@
     background:var(--surface);border:1px dashed var(--border);border-radius:18px}
   .empty h3{margin:0 0 6px;color:var(--text);font-size:1rem}
   .empty p{margin:0;font-size:.88rem}
-  dialog{
-    border:none;padding:0;margin:auto;color:var(--text);font-family:inherit;
-    background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);
-  }
+  dialog{border:none;padding:0;margin:auto;color:var(--text);font-family:inherit;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg)}
   dialog::backdrop{background:rgba(10,10,16,.55);backdrop-filter:blur(4px)}
   dialog[open]{animation:pop .18s ease}
   @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
@@ -236,15 +220,10 @@
   @media(min-width:768px){#reader{height:auto;max-height:92vh;border-radius:18px;width:min(820px,94vw)}}
   .reader-wrap{display:flex;flex-direction:column;height:100%;max-height:100dvh}
   @media(min-width:768px){.reader-wrap{max-height:92vh}}
-  .reader-head{
-    display:flex;gap:12px;align-items:flex-start;padding:16px 20px;
-    border-bottom:1px solid var(--border);position:relative;flex-shrink:0;
-  }
+  .reader-head{display:flex;gap:12px;align-items:flex-start;padding:16px 20px;border-bottom:1px solid var(--border);position:relative;flex-shrink:0}
   .reader-head .cover{width:58px;height:80px;font-size:1.7rem}
   .reader-meta{flex:1;min-width:0}
-  .reader-meta h2{margin:0;font-family:var(--serif);font-size:clamp(1.1rem,3vw,1.4rem);
-    line-height:1.22;letter-spacing:-.02em;overflow-wrap:anywhere;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .reader-meta h2{margin:0;font-family:var(--serif);font-size:clamp(1.1rem,3vw,1.4rem);line-height:1.22;letter-spacing:-.02em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .reader-meta .autor{margin-top:3px;font-size:.85rem;white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
   .reader-sub{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 8px;font-size:.72rem;color:var(--muted);align-items:center}
   .reader-toc{background:var(--surface-2);border-bottom:1px solid var(--border);flex-shrink:0;max-height:0;overflow:hidden;transition:max-height .25s ease}
@@ -294,6 +273,8 @@
   .tts-speed input{width:80px;accent-color:var(--accent)}
   .tts-voice-name{font-size:.68rem;color:var(--muted);padding:0 16px 6px;background:var(--surface-2);display:flex;align-items:center;gap:5px;flex-shrink:0;flex-wrap:wrap}
   .tts-voice-name svg{width:11px;height:11px}
+  .tts-progress{font-size:.7rem;color:var(--accent);padding:0 16px 6px;background:var(--surface-2);font-weight:600;display:none}
+  .tts-progress.show{display:block}
   .reader-foot{display:flex;gap:7px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
   .reader-foot .btn{padding:8px 12px;font-size:.82rem}
   .reader-foot .spacer{flex:1}
@@ -381,7 +362,6 @@
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
-  /* ============ RESPONSIVE MEJORADO ============ */
   @media(max-width:640px){
     .brand-sub{display:none}
     .brand h1{font-size:.94rem}
@@ -400,73 +380,36 @@
     .search-wrap{order:1;flex-basis:100%}
     .toolbar select{order:2;flex:1;width:auto;min-width:0;font-size:.82rem;padding:9px 30px 9px 11px}
     .view-toggle{order:3;flex-shrink:0}
-    .chips{
-      overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;margin-bottom:12px;
-      -webkit-overflow-scrolling:touch;scrollbar-width:none;
-    }
+    .chips{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;margin-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .chips::-webkit-scrollbar{display:none}
     .chips .chip{font-size:.72rem;padding:6px 10px;flex-shrink:0}
-    .grid:not(.list-view){
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:10px;
-    }
-    .grid:not(.list-view) .card{
-      padding:10px;gap:8px;border-radius:14px;
-      flex-direction:column;align-items:stretch;
-    }
-    .grid:not(.list-view) .card-top{
-      flex-direction:column;padding-right:0;gap:8px;align-items:stretch;
-    }
-    .grid:not(.list-view) .cover{
-      width:100%;height:120px;border-radius:6px 6px 4px 4px;
-      font-size:2rem;
-    }
+    .grid:not(.list-view){grid-template-columns:repeat(2, minmax(0,1fr));gap:10px}
+    .grid:not(.list-view) .card{padding:10px;gap:8px;border-radius:14px;flex-direction:column;align-items:stretch}
+    .grid:not(.list-view) .card-top{flex-direction:column;padding-right:0;gap:8px;align-items:stretch}
+    .grid:not(.list-view) .cover{width:100%;height:120px;border-radius:6px 6px 4px 4px;font-size:2rem}
     .grid:not(.list-view) .cover::after{display:none}
-    .grid:not(.list-view) .card-head h3{
-      font-size:.82rem;-webkit-line-clamp:2;line-height:1.25;
-    }
+    .grid:not(.list-view) .card-head h3{font-size:.82rem;-webkit-line-clamp:2;line-height:1.25}
     .grid:not(.list-view) .author{font-size:.68rem}
     .grid:not(.list-view) .meta-row{gap:3px;margin-top:4px}
     .grid:not(.list-view) .pill{font-size:.58rem;padding:1px 5px}
     .grid:not(.list-view) .preview{display:none}
-    .grid:not(.list-view) .card-foot{
-      padding-top:7px;border-top:none;margin-top:auto;
-      flex-direction:column;align-items:flex-start;gap:3px;
-    }
+    .grid:not(.list-view) .card-foot{padding-top:7px;border-top:none;margin-top:auto;flex-direction:column;align-items:flex-start;gap:3px}
     .grid:not(.list-view) .fecha{font-size:.62rem;line-height:1.2}
     .grid:not(.list-view) .card-actions{display:none}
-    .grid:not(.list-view) .badge-read{
-      top:6px;right:6px;padding:2px 6px;font-size:.56rem;
-      border-radius:6px;border-bottom-left-radius:6px;
-    }
+    .grid:not(.list-view) .badge-read{top:6px;right:6px;padding:2px 6px;font-size:.56rem;border-radius:6px;border-bottom-left-radius:6px}
     .grid:not(.list-view) .badge-read svg{width:8px;height:8px}
-    .grid.list-view{
-      grid-template-columns:1fr;gap:8px;
-    }
-    .grid.list-view .card{
-      flex-direction:row;align-items:center;gap:11px;padding:11px 12px;
-    }
-    .grid.list-view .card-top{
-      flex:1;padding-right:36px;gap:11px;align-items:center;
-    }
-    .grid.list-view .cover{
-      width:42px;height:58px;font-size:1.1rem;
-    }
+    .grid.list-view{grid-template-columns:1fr;gap:8px}
+    .grid.list-view .card{flex-direction:row;align-items:center;gap:11px;padding:11px 12px}
+    .grid.list-view .card-top{flex:1;padding-right:36px;gap:11px;align-items:center}
+    .grid.list-view .cover{width:42px;height:58px;font-size:1.1rem}
     .grid.list-view .card-head h3{font-size:.86rem;-webkit-line-clamp:1}
     .grid.list-view .author{font-size:.7rem}
     .grid.list-view .meta-row{margin-top:2px;gap:3px}
     .grid.list-view .pill{font-size:.58rem;padding:1px 5px}
-    .grid.list-view .card-foot{
-      flex-direction:column;align-items:flex-end;gap:3px;
-      padding-top:0;border-top:none;margin-top:0;flex-shrink:0;
-    }
+    .grid.list-view .card-foot{flex-direction:column;align-items:flex-end;gap:3px;padding-top:0;border-top:none;margin-top:0;flex-shrink:0}
     .grid.list-view .fecha{font-size:.6rem;text-align:right;white-space:normal}
     .grid.list-view .card-actions{display:none}
-    .grid.list-view .badge-read{
-      position:absolute;top:50%;right:8px;transform:translateY(-50%);
-      padding:2px 6px;font-size:.54rem;border-radius:6px;
-      border-bottom-left-radius:6px;margin:0;
-    }
+    .grid.list-view .badge-read{position:absolute;top:50%;right:8px;transform:translateY(-50%);padding:2px 6px;font-size:.54rem;border-radius:6px;border-bottom-left-radius:6px;margin:0}
     .grid.list-view .preview{display:none}
     .view-toggle{padding:2px;border-radius:10px}
     .view-toggle button{padding:8px 10px;border-radius:8px}
@@ -640,6 +583,7 @@
       </div>
     </div>
     <div class="tts-voice-name" id="ttsVoiceName"></div>
+    <div class="tts-progress" id="ttsProgress"></div>
     <div class="reader-body" id="rBody"></div>
     <footer class="reader-foot">
       <button class="btn btn-leido" id="rLeido">
@@ -763,18 +707,9 @@
       </div>
       <div id="syncStatus"></div>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <button type="button" class="btn btn-primary" id="btnSyncUpload" style="width:100%">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
-          Subir mis datos a GitHub
-        </button>
-        <button type="button" class="btn btn-ghost" id="btnSyncDownload" style="width:100%">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-          Descargar datos desde GitHub
-        </button>
-        <button type="button" class="btn btn-ghost" id="btnSyncAuto" style="width:100%">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
-          Sincronizar (el más reciente gana)
-        </button>
+        <button type="button" class="btn btn-primary" id="btnSyncUpload" style="width:100%">Subir mis datos a GitHub</button>
+        <button type="button" class="btn btn-ghost" id="btnSyncDownload" style="width:100%">Descargar datos desde GitHub</button>
+        <button type="button" class="btn btn-ghost" id="btnSyncAuto" style="width:100%">Sincronizar (el más reciente gana)</button>
       </div>
       <p class="hint" style="margin-top:8px">El token se guarda solo en este dispositivo. Nunca se sube a ningún sitio.</p>
     </div>
@@ -855,17 +790,11 @@
     <div class="editor-body">
       <div>
         <p class="hint"><strong>Exportar respaldo</strong> — descarga un JSON con todos tus libros, capítulos, notas y portadas.</p>
-        <button type="button" class="btn btn-ghost" id="btnExportar" style="width:100%">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-          Exportar respaldo (.json)
-        </button>
+        <button type="button" class="btn btn-ghost" id="btnExportar" style="width:100%">Exportar respaldo (.json)</button>
       </div>
       <div>
         <p class="hint"><strong>Importar respaldo</strong> — carga un JSON exportado. Reemplaza todo.</p>
-        <button type="button" class="btn btn-ghost" id="btnImportarBackup" style="width:100%">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
-          Importar respaldo (.json)
-        </button>
+        <button type="button" class="btn btn-ghost" id="btnImportarBackup" style="width:100%">Importar respaldo (.json)</button>
         <input type="file" id="fileBackup" accept=".json,application/json" hidden />
       </div>
       <div>
@@ -1430,6 +1359,10 @@
   let ttsVelocidad = 1.0;
   let mejorVoz = null;
   let capActualId = null;
+  let ttsCola = [];
+  let ttsIndice = 0;
+  let ttsGeneracion = 0;
+  let ttsActivo = false;
 
   function elegirMejorVoz() {
     if (!('speechSynthesis' in window)) return null;
@@ -1673,10 +1606,15 @@
           </button>
         </div>
       `).join('');
-      engancharEventosCaps();
+      engacharEventosCapsSafe();
     }
     renderTOC(libroAbierto);
     render();
+  }
+
+  function engacharEventosCapsSafe() {
+    // Re-enganchar tras re-render
+    engancharEventosCaps();
   }
 
   function cerrarLector() {
@@ -1807,38 +1745,146 @@
     } catch { toast('Error al descargar'); }
   });
 
+  // ═══════════════ TTS con división en trozos ═══════════════
+
+  function dividirTextoEnTrozos(texto, maxLen = 180) {
+    const limpio = String(texto || '').replace(/\s+/g, ' ').trim();
+    if (!limpio) return [];
+    const oraciones = limpio.match(/[^.!?…]+[.!?…]+[\s]*|[^.!?…]+$/g) || [limpio];
+    const trozos = [];
+    let actual = '';
+
+    function trocearLargo(txt) {
+      let restante = txt.trim();
+      while (restante.length > maxLen) {
+        let corte = restante.lastIndexOf(' ', maxLen);
+        if (corte < maxLen * 0.6) corte = maxLen;
+        trozos.push(restante.slice(0, corte).trim());
+        restante = restante.slice(corte).trim();
+      }
+      return restante;
+    }
+
+    for (const or of oraciones) {
+      const orLimpia = or.trim();
+      if (!orLimpia) continue;
+      if ((actual + ' ' + orLimpia).trim().length <= maxLen) {
+        actual = (actual + ' ' + orLimpia).trim();
+      } else {
+        if (actual) trozos.push(actual);
+        if (orLimpia.length > maxLen) {
+          actual = trocearLargo(orLimpia);
+        } else {
+          actual = orLimpia;
+        }
+      }
+    }
+    if (actual) trozos.push(actual);
+    return trozos;
+  }
+
+  function pararTTS() {
+    ttsGeneracion++;
+    ttsActivo = false;
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch {}
+    }
+    ttsUtterance = null;
+    ttsCola = [];
+    ttsIndice = 0;
+    ttsPausado = false;
+  }
+
   function resetTTS() {
     pararTTS();
     $('#ttsPlay').hidden = false;
     $('#ttsPause').hidden = true;
     $('#ttsStop').hidden = true;
     $('#ttsPause span').textContent = 'Pausar';
-    ttsPausado = false;
+    $('#ttsPause').classList.remove('active');
+    $('#ttsProgress').classList.remove('show');
+    $('#ttsProgress').textContent = '';
   }
-  function pararTTS() {
-    if ('speechSynthesis' in window) {
-      try { window.speechSynthesis.cancel(); } catch {}
+
+  function hablar(texto) {
+    if (!('speechSynthesis' in window)) {
+      toast('Tu navegador no soporta lectura por voz');
+      return;
     }
+    const limpio = String(texto || '').trim();
+    if (!limpio) { toast('No hay texto para leer'); return; }
+
+    ttsGeneracion++;
+    const gen = ttsGeneracion;
+    try { window.speechSynthesis.cancel(); } catch {}
     ttsUtterance = null;
     ttsPausado = false;
-  }
-  function hablar(texto) {
-    if (!('speechSynthesis' in window)) { toast('Tu navegador no soporta TTS'); return; }
-    if (!texto.trim()) { toast('No hay texto para leer'); return; }
-    pararTTS();
-    const u = new SpeechSynthesisUtterance(texto);
-    u.lang = 'es-ES';
-    u.rate = ttsVelocidad;
-    u.pitch = 1;
+    ttsActivo = true;
+
     if (!mejorVoz) elegirMejorVoz();
-    if (mejorVoz) { u.voice = mejorVoz; u.lang = mejorVoz.lang || 'es-ES'; }
-    u.onend = () => resetTTS();
-    u.onerror = () => resetTTS();
-    ttsUtterance = u;
-    window.speechSynthesis.speak(u);
+    ttsCola = dividirTextoEnTrozos(limpio, 180);
+    ttsIndice = 0;
+
+    if (!ttsCola.length) { toast('No hay texto para leer'); return; }
+
     $('#ttsPlay').hidden = true;
     $('#ttsPause').hidden = false;
     $('#ttsStop').hidden = false;
+    $('#ttsPause span').textContent = 'Pausar';
+    $('#ttsPause').classList.remove('active');
+    $('#ttsProgress').classList.add('show');
+    $('#ttsProgress').textContent = `Preparando audio… (${ttsCola.length} fragmentos)`;
+
+    setTimeout(() => {
+      if (gen !== ttsGeneracion) return;
+      reproducirTrozo(gen);
+    }, 120);
+  }
+
+  function reproducirTrozo(gen) {
+    if (gen !== ttsGeneracion) return;
+    if (!ttsActivo) return;
+    if (ttsIndice >= ttsCola.length) {
+      resetTTS();
+      toast('Lectura terminada');
+      return;
+    }
+
+    const trozo = ttsCola[ttsIndice];
+    const u = new SpeechSynthesisUtterance(trozo);
+    u.lang = 'es-ES';
+    u.rate = ttsVelocidad;
+    u.pitch = 1;
+    if (mejorVoz) { u.voice = mejorVoz; u.lang = mejorVoz.lang || 'es-ES'; }
+
+    const numActual = ttsIndice + 1;
+    const total = ttsCola.length;
+
+    u.onstart = () => {
+      if (gen !== ttsGeneracion) return;
+      $('#ttsProgress').textContent = `Leyendo fragmento ${numActual} de ${total}`;
+    };
+
+    u.onend = () => {
+      if (gen !== ttsGeneracion) return;
+      ttsIndice++;
+      setTimeout(() => reproducirTrozo(gen), 40);
+    };
+
+    u.onerror = (e) => {
+      if (gen !== ttsGeneracion) return;
+      if (e.error === 'interrupted' || e.error === 'canceled') return;
+      ttsIndice++;
+      setTimeout(() => reproducirTrozo(gen), 40);
+    };
+
+    ttsUtterance = u;
+    try {
+      window.speechSynthesis.speak(u);
+    } catch (err) {
+      toast('Error al reproducir voz');
+      resetTTS();
+    }
   }
 
   function escucharCapitulo(capId) {
@@ -1849,7 +1895,9 @@
     const el = rBody.querySelector(`[data-cap-el="${capId}"]`);
     if (el) { el.classList.add('actual'); el.scrollIntoView({ block: 'start' }); }
     capActualId = capId;
-    hablar((cap.resumen || '').trim());
+    const txt = (cap.resumen || '').trim();
+    if (!txt) { toast('Este capítulo no tiene resumen'); return; }
+    hablar(txt);
     toast('Leyendo: ' + (cap.titulo || 'capítulo'));
   }
 
@@ -1859,7 +1907,7 @@
       .filter(c => (c.resumen||'').trim())
       .map(c => (c.titulo ? c.titulo + '. ' : '') + c.resumen);
     if (!caps.length) { toast('No hay resúmenes para leer'); return; }
-    hablar(caps.join('\n\n'));
+    hablar(caps.join(' '));
   }
 
   $('#ttsPlay').addEventListener('click', () => {
@@ -1882,14 +1930,22 @@
     }
   });
 
-  $('#ttsStop').addEventListener('click', () => resetTTS());
+  $('#ttsStop').addEventListener('click', () => {
+    resetTTS();
+  });
 
   $('#ttsSpeed').addEventListener('input', (e) => {
     ttsVelocidad = parseFloat(e.target.value);
     $('#ttsSpeedVal').textContent = ttsVelocidad.toFixed(1) + '×';
-    if (ttsUtterance && 'speechSynthesis' in window && !ttsPausado) {
-      if (capActualId) escucharCapitulo(capActualId);
-      else escucharTodo();
+    // Si está leyendo, reiniciar el fragmento actual con la nueva velocidad
+    if (ttsActivo && !ttsPausado && ttsCola.length > 0) {
+      ttsGeneracion++;
+      const gen = ttsGeneracion;
+      try { window.speechSynthesis.cancel(); } catch {}
+      setTimeout(() => {
+        if (gen !== ttsGeneracion) return;
+        reproducirTrozo(gen);
+      }, 120);
     }
   });
 
@@ -2339,7 +2395,7 @@
       const fechaLocal = syncLast ? new Date(syncLast) : new Date(0);
 
       if (fechaRemota > fechaLocal) {
-        if (!confirm(`GitHub tiene datos más recientes.\n¿Descargarlos y reemplazar los locales?`)) return;
+        if (!confirm('GitHub tiene datos más recientes.\n¿Descargarlos y reemplazar los locales?')) return;
         setSyncStatus('info', 'Descargando versión más reciente…');
         await bajarDeSync();
         setSyncStatus('ok', '✓ Sincronizado: versión de GitHub aplicada');
