@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#6366f1" />
 <title>Biblioteca · Mis resúmenes</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
 <link rel="manifest" href="manifest.json?v=3" />
 <script>
   try{
@@ -176,7 +175,6 @@
   .grid.list-view .card-foot{border-top:none;padding-top:0;margin-top:0;flex-shrink:0;flex-direction:column;align-items:flex-end;gap:4px}
   .grid.list-view .fecha{font-size:.7rem}
   .grid.list-view .badge-read{position:static;border-radius:6px;padding:2px 6px;font-size:.6rem;margin-left:6px}
-  .grid.list-view .card-actions{display:flex}
   .cover{
     width:var(--card-cover-w);height:var(--card-cover-h);border-radius:4px 9px 9px 4px;flex-shrink:0;
     background:linear-gradient(145deg,var(--c1,#6366f1),var(--c2,#8b5cf6));
@@ -197,7 +195,7 @@
     box-shadow:0 2px 6px rgba(16,185,129,.35);
   }
   .badge-read svg{width:10px;height:10px}
-  .card-top{display:flex;gap:12px;align-items:flex-start;padding-right:52px}
+  .card-top{display:flex;gap:12px;align-items:flex-start;padding-right:44px}
   .card-head{min-width:0;flex:1}
   .card-head h3{margin:0;font-size:.98rem;line-height:1.3;letter-spacing:-.015em;font-weight:700;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
@@ -216,7 +214,41 @@
   .card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;
     margin-top:auto;padding-top:11px;border-top:1px solid var(--border)}
   .fecha{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .card-actions{display:flex;gap:5px;flex-shrink:0}
+
+  /* Menú de tarjeta (3 puntitos) */
+  .card-menu-btn{
+    position:absolute;top:8px;right:8px;z-index:4;
+    width:30px;height:30px;border-radius:8px;
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--muted);cursor:pointer;
+    display:grid;place-items:center;
+    transition:.15s;box-shadow:var(--shadow-sm);
+  }
+  .card-menu-btn:hover{color:var(--text);border-color:var(--accent)}
+  .card-menu-btn svg{width:16px;height:16px}
+  .card-menu{
+    position:absolute;top:42px;right:8px;z-index:5;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:10px;box-shadow:var(--shadow-md);
+    display:none;flex-direction:column;overflow:hidden;min-width:150px;
+    animation:pop .15s ease;
+  }
+  .card-menu.open{display:flex}
+  .card-menu button{
+    font:inherit;font-size:.84rem;font-weight:600;
+    background:none;border:none;color:var(--text);
+    padding:10px 13px;text-align:left;cursor:pointer;
+    display:flex;align-items:center;gap:8px;
+    transition:background-color .15s;
+  }
+  .card-menu button:hover{background:var(--surface-2)}
+  .card-menu button svg{width:15px;height:15px;color:var(--muted)}
+  .card-menu button.danger{color:var(--danger)}
+  .card-menu button.danger svg{color:var(--danger)}
+  .card-menu button.fav-accion{color:var(--fav)}
+  .card-menu button.fav-accion svg{color:var(--fav)}
+  .card-menu .sep{height:1px;background:var(--border);margin:2px 0}
+
   .empty{text-align:center;padding:56px 22px;color:var(--muted);
     background:var(--surface);border:1px dashed var(--border);border-radius:18px}
   .empty h3{margin:0 0 6px;color:var(--text);font-size:1rem}
@@ -291,17 +323,18 @@
   .nota-add input:focus{border-color:var(--nota);box-shadow:0 0 0 3px color-mix(in srgb,var(--nota) 20%, transparent)}
   .nota-add button{font:inherit;font-size:.8rem;font-weight:700;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;flex-shrink:0;transition:.15s}
   .nota-add button:hover{background:var(--nota);color:#fff;border-color:var(--nota)}
-  .reader-foot{display:flex;gap:7px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
-  .reader-foot .btn{padding:8px 12px;font-size:.82rem;flex:1;min-width:0}
-  .reader-foot .btn svg{flex-shrink:0}
-  .btn-leido{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;font-weight:700}
+
+  .reader-foot{display:flex;gap:8px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
+  .reader-foot .btn{padding:9px 14px;font-size:.84rem;flex:1;min-width:0;font-weight:700}
+  .btn-leido{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none}
   .btn-leido.activo{background:var(--surface);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 50%, var(--border))}
-  .btn-fav{background:var(--surface);color:var(--muted);border:1px solid var(--border);font-weight:700}
+  .btn-fav{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
   .btn-fav.activo{background:color-mix(in srgb,var(--fav) 12%, transparent);color:var(--fav);border-color:color-mix(in srgb,var(--fav) 45%, var(--border))}
   .btn-fav.activo svg{fill:var(--fav)}
-  #editor, #importador, #syncDialog, #settingsDialog, #fragDialog{width:min(720px,96vw);max-height:94vh}
+
+  #editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog{width:min(720px,96vw);max-height:94vh}
   #fragDialog{width:min(400px,94vw)}
-  @media(max-width:640px){#editor, #importador, #syncDialog, #settingsDialog, #fragDialog{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+  @media(max-width:640px){#editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
   @media(max-width:640px){#fragDialog{height:auto;max-height:80vh;border-radius:16px;width:92vw}}
   .editor-wrap{display:flex;flex-direction:column;max-height:94vh}
   @media(max-width:640px){.editor-wrap{height:100dvh;max-height:100dvh}}
@@ -387,6 +420,7 @@
   .frag-preview strong{font-style:normal;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
+  .reader-head-actions{display:flex;gap:6px;flex-shrink:0}
 
   @media(max-width:640px){
     .brand-sub{display:none}
@@ -421,14 +455,15 @@
     .grid:not(.list-view) .preview{display:none}
     .grid:not(.list-view) .card-foot{padding-top:7px;border-top:none;margin-top:auto;flex-direction:column;align-items:flex-start;gap:3px}
     .grid:not(.list-view) .fecha{font-size:.62rem;line-height:1.2}
-    .grid:not(.list-view) .card-actions{display:flex;position:absolute;top:8px;left:8px;z-index:3}
-    .grid:not(.list-view) .card-actions .icon-btn{width:28px;height:28px;background:rgba(255,255,255,.9);border-color:transparent;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-    [data-theme="dark"] .grid:not(.list-view) .card-actions .icon-btn{background:rgba(20,20,29,.9)}
-    .grid:not(.list-view) .badge-read{top:6px;right:6px;padding:2px 6px;font-size:.56rem;border-radius:6px;border-bottom-left-radius:6px}
+    .grid:not(.list-view) .card-menu-btn{top:6px;right:6px;width:26px;height:26px;background:rgba(255,255,255,.9)}
+    [data-theme="dark"] .grid:not(.list-view) .card-menu-btn{background:rgba(20,20,29,.9)}
+    .grid:not(.list-view) .card-menu-btn svg{width:14px;height:14px}
+    .grid:not(.list-view) .card-menu{top:34px;right:6px;min-width:140px}
+    .grid:not(.list-view) .badge-read{top:6px;right:38px;padding:2px 6px;font-size:.56rem;border-radius:6px;border-bottom-left-radius:6px}
     .grid:not(.list-view) .badge-read svg{width:8px;height:8px}
     .grid.list-view{grid-template-columns:1fr;gap:8px}
     .grid.list-view .card{flex-direction:row;align-items:center;gap:11px;padding:11px 12px}
-    .grid.list-view .card-top{flex:1;padding-right:70px;gap:11px;align-items:center}
+    .grid.list-view .card-top{flex:1;padding-right:36px;gap:11px;align-items:center}
     .grid.list-view .cover{width:42px;height:58px;font-size:1.1rem}
     .grid.list-view .card-head h3{font-size:.86rem;-webkit-line-clamp:1}
     .grid.list-view .author{font-size:.7rem}
@@ -436,7 +471,7 @@
     .grid.list-view .pill{font-size:.58rem;padding:1px 5px}
     .grid.list-view .card-foot{flex-direction:column;align-items:flex-end;gap:3px;padding-top:0;border-top:none;margin-top:0;flex-shrink:0}
     .grid.list-view .fecha{font-size:.6rem;text-align:right;white-space:normal}
-    .grid.list-view .badge-read{position:absolute;top:50%;right:8px;transform:translateY(-50%);padding:2px 6px;font-size:.54rem;border-radius:6px;border-bottom-left-radius:6px;margin:0}
+    .grid.list-view .badge-read{position:absolute;top:50%;right:40px;transform:translateY(-50%);padding:2px 6px;font-size:.54rem;border-radius:6px;border-bottom-left-radius:6px;margin:0}
     .grid.list-view .preview{display:none}
     .view-toggle{padding:2px;border-radius:10px}
     .view-toggle button{padding:8px 10px;border-radius:8px}
@@ -444,10 +479,14 @@
     .view-toggle button svg{width:18px;height:18px}
     .view-toggle button.active{box-shadow:inset 0 0 0 1.5px var(--accent)}
     .row2{grid-template-columns:1fr}
-    .reader-head{padding:14px 16px}
+    .reader-head{padding:14px 16px;gap:8px}
+    .reader-head .cover{width:44px;height:62px;font-size:1.3rem}
+    .reader-head-actions{gap:4px}
+    .reader-head-actions .icon-btn{width:32px;height:32px;border-radius:8px}
+    .reader-head-actions .icon-btn svg{width:16px;height:16px}
     .reader-body{padding:12px 12px 20px}
     .reader-foot{padding:10px 10px}
-    .reader-foot .btn{flex:1;min-width:0;padding:8px 8px;font-size:.76rem}
+    .reader-foot .btn{flex:1;min-width:0;padding:9px 8px;font-size:.78rem}
     .editor-body{padding:14px 16px}
     .editor-foot{padding:11px 16px}
     .editor-actions{flex:1}
@@ -582,9 +621,14 @@
         <p class="autor" id="rAutor"></p>
         <div class="reader-sub" id="rSub"></div>
       </div>
-      <button class="icon-btn" id="rCerrar" aria-label="Cerrar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
+      <div class="reader-head-actions">
+        <button class="icon-btn" id="rAddCap" title="Añadir capítulo rápido">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button class="icon-btn" id="rCerrar" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
     </header>
     <div class="reader-toc" id="rToc">
       <div class="toc-toggle" id="tocToggle">
@@ -604,13 +648,34 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         <span id="rFavoritoTxt">Favorito</span>
       </button>
-      <button class="btn btn-ghost" id="rEditar" title="Editar libro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-        Editar
+    </footer>
+  </div>
+</dialog>
+
+<dialog id="quickCapDialog">
+  <div class="editor-wrap">
+    <header class="editor-head">
+      <h2>Añadir capítulo</h2>
+      <button type="button" class="icon-btn" id="qcCerrar" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
-      <button class="btn btn-danger" id="rEliminar" title="Eliminar libro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>
-      </button>
+    </header>
+    <div class="editor-body">
+      <div class="field">
+        <label for="qcTitulo">Título del capítulo</label>
+        <input id="qcTitulo" placeholder="Ej. Capítulo 9 — El final" />
+      </div>
+      <div class="field">
+        <label for="qcResumen">Resumen</label>
+        <textarea id="qcResumen" placeholder="Pega aquí el resumen del capítulo…" style="min-height:140px"></textarea>
+      </div>
+    </div>
+    <footer class="editor-foot">
+      <span class="wc" id="qcWc">0 palabras</span>
+      <div class="editor-actions">
+        <button type="button" class="btn btn-ghost" id="qcCancelar">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="qcGuardar">Añadir</button>
+      </div>
     </footer>
   </div>
 </dialog>
@@ -861,6 +926,18 @@
 (() => {
   'use strict';
 
+  // ════════════════════════════════════════════════════════
+  // IMPORTANTE: se mantiene la clave v6 para no perder datos.
+  // El código migra automáticamente los campos nuevos.
+  // ════════════════════════════════════════════════════════
+  const LS_KEY = 'biblioteca-libros-v6';
+  const DB_NAME = 'biblioteca-db-v3';
+  const DB_COVERS = 'covers';
+  const SYNC_TOKEN_KEY = 'biblioteca-sync-token';
+  const SYNC_GIST_KEY = 'biblioteca-sync-gist';
+  const SYNC_LAST_KEY = 'biblioteca-sync-last';
+  const $ = (s) => document.querySelector(s);
+
   const LIBROS_PRECARGADOS = [
     { titulo:"12 reglas para vivir", autor:"Jordan Peterson" },
     { titulo:"200 consejos para ser un hombre más seductor", autor:"Ángel Daro" },
@@ -1050,14 +1127,6 @@
     { titulo:"¿Qué harías tú en mi lugar?", autor:"Julia Llewellyn" }
   ];
 
-  const LS_KEY = 'biblioteca-libros-v7';
-  const DB_NAME = 'biblioteca-db-v3';
-  const DB_COVERS = 'covers';
-  const SYNC_TOKEN_KEY = 'biblioteca-sync-token';
-  const SYNC_GIST_KEY = 'biblioteca-sync-gist';
-  const SYNC_LAST_KEY = 'biblioteca-sync-last';
-  const $ = (s) => document.querySelector(s);
-
   let libros = [];
   let editandoId = null;
   let puntosSel = 0;
@@ -1070,6 +1139,7 @@
   let scrollSaveTimer = null;
   let filtroActivo = 'todos';
   let vistaActual = 'grid';
+  let menuAbierto = null;
 
   let ttsPausado = false;
   let ttsVelocidad = 1.0;
@@ -1230,7 +1300,6 @@
             }
           }
           if (typeof l.favorito !== 'boolean') l.favorito = false;
-          // Limpiar campo antiguo hasBookFile
           if ('hasBookFile' in l) delete l.hasBookFile;
         });
         return;
@@ -1324,6 +1393,7 @@
   function render() {
     renderStats();
     const lista = listaFiltrada();
+    menuAbierto = null;
 
     if (!lista.length) {
       grid.innerHTML = '';
@@ -1346,6 +1416,24 @@
       return `
         <article class="card ${l.leido ? 'read' : ''}" data-id="${l.id}" tabindex="0" role="button" style="animation-delay:${Math.min(i*20, 200)}ms">
           ${l.leido ? `<div class="badge-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>LEÍDO</div>` : ''}
+          <button class="card-menu-btn" data-menu="${l.id}" aria-label="Más opciones">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+          </button>
+          <div class="card-menu" data-menu-panel="${l.id}">
+            <button data-action="editar" data-id="${l.id}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+              Editar
+            </button>
+            <button class="fav-accion" data-action="fav" data-id="${l.id}">
+              <svg viewBox="0 0 24 24" fill="${l.favorito?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              ${l.favorito ? 'Quitar favorito' : 'Marcar favorito'}
+            </button>
+            <div class="sep"></div>
+            <button class="danger" data-action="borrar" data-id="${l.id}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>
+              Eliminar
+            </button>
+          </div>
           <div class="card-top">
             ${renderCoverHTML(l)}
             <div class="card-head">
@@ -1363,21 +1451,35 @@
           ${preview ? `<p class="preview">${esc(preview)}</p>` : `<p class="preview vacio">Sin resumen todavía</p>`}
           <div class="card-foot">
             <span class="fecha">${c.palabras.toLocaleString('es')} palabras</span>
-            <div class="card-actions">
-              <button class="icon-btn sm fav ${l.favorito ? 'activo' : ''}" data-action="fav" aria-label="Favorito" title="Marcar como favorito">
-                <svg viewBox="0 0 24 24" fill="${l.favorito ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </button>
-              <button class="icon-btn sm" data-action="editar" aria-label="Editar" title="Editar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-              </button>
-              <button class="icon-btn sm danger" data-action="borrar" aria-label="Eliminar" title="Eliminar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>
-              </button>
-            </div>
           </div>
         </article>`;
     }).join('');
   }
+
+  // Cerrar menús al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-menu]');
+    const menuPanel = e.target.closest('.card-menu');
+    const action = e.target.closest('[data-action]');
+
+    if (btn) {
+      e.stopPropagation();
+      const id = btn.dataset.menu;
+      const panel = grid.querySelector(`[data-menu-panel="${id}"]`);
+      if (!panel) return;
+      const estabaAbierto = panel.classList.contains('open');
+      document.querySelectorAll('.card-menu.open').forEach(p => p.classList.remove('open'));
+      if (!estabaAbierto) {
+        panel.classList.add('open');
+        menuAbierto = id;
+      }
+      return;
+    }
+    if (menuPanel) return;
+    if (action) return;
+    document.querySelectorAll('.card-menu.open').forEach(p => p.classList.remove('open'));
+    menuAbierto = null;
+  });
 
   $('#viewToggle').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-view]');
@@ -1407,6 +1509,7 @@
     if (libroAbierto && libroAbierto.id === id) {
       libroAbierto = libros[i];
       actualizarBotonFavorito();
+      abrirLector(id);
     }
   }
 
@@ -1459,45 +1562,76 @@
     setTimeout(elegirMejorVoz, 2000);
   }
 
-  function dividirTextoEnTrozos(texto, maxLen = 180) {
+  // ════════════════════════════════════════════════════════
+  // DIVISIÓN ROBUSTA: solo corta en fin de oración seguido
+  // de espacio/salto/paréntesis de cierre. Nunca a mitad
+  // de palabra. Mejora la lectura y evita fragmentos sueltos.
+  // ════════════════════════════════════════════════════════
+  function dividirTextoEnTrozos(texto, maxLen = 220) {
     const limpio = String(texto || '').replace(/\s+/g, ' ').trim();
     if (!limpio) return [];
-    const oraciones = limpio.match(/[^.!?…]+[.!?…]+[\s]*|[^.!?…]+$/g) || [limpio];
+
+    // Busca fin de oración: punto/!/?/… seguido de espacio o paréntesis/coma de cierre.
+    // No incluye puntos suspensivos dentro de la misma frase.
+    const oraciones = [];
+    let buf = '';
+    for (let i = 0; i < limpio.length; i++) {
+      const c = limpio[i];
+      buf += c;
+      if (c === '.' || c === '!' || c === '?' || c === '…') {
+        // Mirar caracteres siguientes para evitar cortes en abreviaturas y decimales
+        const next = limpio[i+1];
+        const prev = limpio[i-1];
+        // Si es punto, exigir que el siguiente sea espacio/salto/cierre o fin, y que el anterior no sea dígito
+        if (c === '.') {
+          if (prev && /\d/.test(prev) && next && /\d/.test(next)) continue; // decimal
+          if (next && !/[\s\)\]\"'»”]/.test(next)) continue; // no es fin
+        }
+        // Tras el signo, puede haber cierres
+        let j = i + 1;
+        while (j < limpio.length && /[\)\]\"'»”]/.test(limpio[j])) {
+          buf += limpio[j];
+          j++;
+        }
+        if (j >= limpio.length || /\s/.test(limpio[j])) {
+          oraciones.push(buf.trim());
+          buf = '';
+          i = j - 1;
+        }
+      }
+    }
+    if (buf.trim()) oraciones.push(buf.trim());
+
     const trozos = [];
     let actual = '';
-
-    function trocearLargo(txt) {
-      let restante = txt.trim();
-      while (restante.length > maxLen) {
-        let corte = restante.lastIndexOf(' ', maxLen);
-        if (corte < maxLen * 0.6) corte = maxLen;
-        trozos.push(restante.slice(0, corte).trim());
-        restante = restante.slice(corte).trim();
-      }
-      return restante;
-    }
-
     for (const or of oraciones) {
-      const orLimpia = or.trim();
-      if (!orLimpia) continue;
-      if ((actual + ' ' + orLimpia).trim().length <= maxLen) {
-        actual = (actual + ' ' + orLimpia).trim();
+      if (!or) continue;
+      if ((actual + ' ' + or).trim().length <= maxLen) {
+        actual = (actual + ' ' + or).trim();
       } else {
         if (actual) trozos.push(actual);
-        if (orLimpia.length > maxLen) {
-          actual = trocearLargo(orLimpia);
+        if (or.length > maxLen) {
+          // Corte por palabras, nunca a mitad de palabra
+          let restante = or;
+          while (restante.length > maxLen) {
+            let corte = restante.lastIndexOf(' ', maxLen);
+            if (corte < maxLen * 0.55) corte = maxLen;
+            trozos.push(restante.slice(0, corte).trim());
+            restante = restante.slice(corte).trim();
+          }
+          actual = restante;
         } else {
-          actual = orLimpia;
+          actual = or;
         }
       }
     }
     if (actual) trozos.push(actual);
-    return trozos;
+    return trozos.filter(t => t.length > 0);
   }
 
   function dividirResumenEnFragmentos(resumen) {
     const parrafos = String(resumen || '').split(/\n+/).map(p => p.trim()).filter(Boolean);
-    return parrafos.map(p => dividirTextoEnTrozos(p, 180));
+    return parrafos.map(p => dividirTextoEnTrozos(p, 220));
   }
 
   function limpiarResaltado() {
@@ -1998,22 +2132,6 @@
   });
 
   $('#rCerrar').addEventListener('click', cerrarLector);
-  $('#rEditar').addEventListener('click', () => {
-    const l = libroAbierto;
-    guardarScroll();
-    resetTTS();
-    reader.close();
-    libroAbierto = null;
-    if (l) abrirEditor(l);
-  });
-  $('#rEliminar').addEventListener('click', () => {
-    const l = libroAbierto;
-    if (!l) return;
-    resetTTS();
-    reader.close();
-    libroAbierto = null;
-    borrar(l.id);
-  });
 
   $('#rFavorito').addEventListener('click', () => {
     if (!libroAbierto) return;
@@ -2032,6 +2150,74 @@
       render();
       toast(libros[i].leido ? 'Marcado como leído' : 'Marcado como no leído');
     }
+  });
+
+  // ════════════════════════════════════════════════════════
+  // AÑADIR CAPÍTULO RÁPIDO DESDE EL LECTOR
+  // No recarga el libro completo: solo añade y re-renderiza.
+  // No pierde el progreso TTS de los demás capítulos.
+  // ════════════════════════════════════════════════════════
+  const quickCapDialog = $('#quickCapDialog');
+  const qcTitulo = $('#qcTitulo');
+  const qcResumen = $('#qcResumen');
+  const qcWc = $('#qcWc');
+
+  function actualizarQcWc() {
+    const n = nPalabras(qcResumen.value);
+    qcWc.textContent = n.toLocaleString('es') + (n === 1 ? ' palabra' : ' palabras');
+  }
+  qcResumen.addEventListener('input', actualizarQcWc);
+
+  function abrirQuickCap() {
+    if (!libroAbierto) return;
+    qcTitulo.value = `Capítulo ${(libroAbierto.capitulos || []).length + 1}`;
+    qcResumen.value = '';
+    actualizarQcWc();
+    quickCapDialog.showModal();
+    setTimeout(() => qcTitulo.select(), 50);
+  }
+
+  $('#rAddCap').addEventListener('click', abrirQuickCap);
+  $('#qcCerrar').addEventListener('click', () => quickCapDialog.close());
+  $('#qcCancelar').addEventListener('click', () => quickCapDialog.close());
+
+  $('#qcGuardar').addEventListener('click', () => {
+    if (!libroAbierto) return;
+    const titulo = qcTitulo.value.trim();
+    if (!titulo) { qcTitulo.focus(); return; }
+    const resumen = qcResumen.value.trim();
+    const nuevoCap = {
+      id: uid(),
+      titulo,
+      resumen,
+      notas: [],
+      ttsIndice: 0
+    };
+    // Guardar el índice del libro abierto para conservar la lista
+    const l = libros.find(x => x.id === libroAbierto.id);
+    if (l) {
+      if (!Array.isArray(l.capitulos)) l.capitulos = [];
+      l.capitulos.push(nuevoCap);
+      libroAbierto = l;
+      guardar();
+    }
+    quickCapDialog.close();
+    // Re-renderizar solo el cuerpo del lector, sin cerrar ni recargar el libro
+    const caps = (libroAbierto.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
+    const todas = libroAbierto.capitulos || [];
+    // Añadimos al DOM el nuevo capítulo al final
+    const idx = todas.findIndex(c => c.id === nuevoCap.id);
+    const html = renderCapHTML(nuevoCap, idx);
+    rBody.insertAdjacentHTML('beforeend', html);
+    // Expandir el nuevo capítulo
+    expandirCap(nuevoCap.id);
+    // Scroll al nuevo capítulo
+    setTimeout(() => {
+      const el = rBody.querySelector(`[data-cap-el="${nuevoCap.id}"]`);
+      if (el) el.scrollIntoView({ block: 'start' });
+    }, 100);
+    renderTOC(libroAbierto);
+    toast('Capítulo añadido');
   });
 
   function renderTOC(l) {
@@ -2097,7 +2283,7 @@
     const caps = (l.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
     if (!caps.length) {
       rBody.classList.add('sin-texto');
-      rBody.innerHTML = 'Este libro todavía no tiene capítulos.<br><br>Pulsa «Editar» para añadir el primero.';
+      rBody.innerHTML = 'Este libro todavía no tiene capítulos.<br><br>Pulsa el botón + de arriba para añadir el primero.';
     } else {
       rBody.classList.remove('sin-texto');
       rBody.innerHTML = caps.map((cap, idx) => renderCapHTML(cap, idx)).join('');
@@ -2118,6 +2304,7 @@
     });
   }
 
+  // El resto: editor completo, sincronización, ajustes, importador
   const editor = $('#editor');
   const form = $('#formLibro');
 
@@ -2297,7 +2484,8 @@
           id: c.id || uid(),
           titulo: c.titulo || '',
           resumen: c.resumen || '',
-          notas: Array.isArray(c.notas) ? c.notas.slice() : []
+          notas: Array.isArray(c.notas) ? c.notas.slice() : [],
+          ttsIndice: c.ttsIndice || 0
         }))
       : [];
     renderEditorCaps();
@@ -2313,7 +2501,7 @@
 
   $('#edAddCap').addEventListener('click', () => {
     const n = capitulosEditor.length + 1;
-    capitulosEditor.push({ id: uid(), titulo: `Capítulo ${n}`, resumen: '', notas: [] });
+    capitulosEditor.push({ id: uid(), titulo: `Capítulo ${n}`, resumen: '', notas: [], ttsIndice: 0 });
     renderEditorCaps();
     setTimeout(() => {
       const last = $('#chaptersList').lastElementChild;
@@ -2424,16 +2612,20 @@
     const titulo = $('#fTitulo').value.trim();
     if (!titulo) { $('#fTitulo').focus(); return; }
 
+    // IMPORTANTE: al editar, conservar el ttsIndice de cada capítulo por id
     const capsFinales = capitulosEditor
       .filter(c => (c.titulo||'').trim() || (c.resumen||'').trim() || (c.notas||[]).length)
       .map(c => {
         const prev = libroAbierto?.capitulos.find(x => x.id === c.id);
+        const idxPrevio = prev?.ttsIndice || 0;
+        const idxActual = c.ttsIndice || idxPrevio;
+        // Si el resumen cambió, el índice puede quedar fuera de rango. Lo validamos al leer.
         return {
           id: c.id,
           titulo: c.titulo.trim(),
           resumen: c.resumen,
           notas: (c.notas || []).filter(n => n.trim()),
-          ttsIndice: prev?.ttsIndice || 0
+          ttsIndice: idxActual
         };
       });
 
@@ -2473,6 +2665,7 @@
     render();
   });
 
+  // Sincronización
   const syncDialog = $('#syncDialog');
   let syncToken = localStorage.getItem(SYNC_TOKEN_KEY) || '';
   let syncGistId = localStorage.getItem(SYNC_GIST_KEY) || '';
@@ -2516,7 +2709,7 @@
         if (blob) portadas[l.id] = await blobToBase64(blob);
       } catch {}
     }
-    const data = { version: 7, exportado: new Date().toISOString(), libros, portadas };
+    const data = { version: 8, exportado: new Date().toISOString(), libros, portadas };
     await ghRequest('PATCH', `/gists/${syncGistId}`, {
       files: { 'biblioteca.json': { content: JSON.stringify(data) } }
     });
@@ -2681,7 +2874,7 @@
         if (blob) portadas[l.id] = await blobToBase64(blob);
       } catch {}
     }
-    const data = { version: 7, exportado: new Date().toISOString(), libros, portadas };
+    const data = { version: 8, exportado: new Date().toISOString(), libros, portadas };
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -2791,30 +2984,33 @@
     toast('Libro eliminado');
   }
 
+  // Manejo de acciones del menú de tarjeta
   grid.addEventListener('click', (e) => {
-    const card = e.target.closest('.card');
-    if (!card) return;
-    const id = card.dataset.id;
-    const accion = e.target.closest('[data-action]');
-    if (accion) {
+    const actionBtn = e.target.closest('[data-action]');
+    if (actionBtn) {
       e.stopPropagation();
-      if (accion.dataset.action === 'fav') {
-        toggleFavorito(id);
-      } else if (accion.dataset.action === 'editar') {
+      const id = actionBtn.dataset.id;
+      const action = actionBtn.dataset.action;
+      document.querySelectorAll('.card-menu.open').forEach(p => p.classList.remove('open'));
+      if (action === 'fav') toggleFavorito(id);
+      else if (action === 'editar') {
         const l = libros.find(x => x.id === id);
         if (l) abrirEditor(l);
-      } else if (accion.dataset.action === 'borrar') {
-        borrar(id);
-      }
+      } else if (action === 'borrar') borrar(id);
       return;
     }
-    abrirLector(id);
+    // Click en la tarjeta (no en el menú)
+    const card = e.target.closest('.card');
+    if (!card) return;
+    if (e.target.closest('[data-menu]')) return;
+    if (e.target.closest('.card-menu')) return;
+    abrirLector(card.dataset.id);
   });
 
   grid.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     const card = e.target.closest('.card');
-    if (!card || e.target.closest('[data-action]')) return;
+    if (!card || e.target.closest('[data-action]') || e.target.closest('[data-menu]')) return;
     e.preventDefault();
     abrirLector(card.dataset.id);
   });
