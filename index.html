@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="es" data-theme="light" data-font="md" data-icons="md">
 <head>
@@ -6,8 +5,12 @@ html
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#6366f1" />
 <title>Mi Biblioteca Personal</title>
+
+<!-- ═══ Favicon + iconos PWA ═══ -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
-<link rel="manifest" href="manifest.json?v=3" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
+<link rel="manifest" href="manifest.json?v=4" />
+
 <script>
   try{
     document.documentElement.dataset.theme = localStorage.getItem('tema') || 'light';
@@ -15,9 +18,12 @@ html
     document.documentElement.dataset.icons = localStorage.getItem('iconSize') || 'md';
   }catch(e){}
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js?v=4').catch(()=>{});
+    });
   }
 </script>
+
 <style>
   :root{
     --bg:#f4f4f8; --surface:#ffffff; --surface-2:#fafafc;
@@ -344,7 +350,6 @@ html
     display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden;
   }
 
-  /* ═══ Diálogo Introducción (lector suelto) ═══ */
   #descReader{width:min(720px,94vw);max-height:92vh}
   @media(max-width:640px){#descReader{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
   .desc-reader-wrap{display:flex;flex-direction:column;max-height:92vh}
@@ -575,34 +580,6 @@ html
   .qc-bulk-info li.sec-item:first-child{border-top:none;padding-top:0}
   .qc-bulk-info li.cap-item{margin-left:10px;color:var(--muted)}
   .qc-bulk-info li.intro-item{margin-left:10px;color:var(--accent);font-weight:700}
-
-  /* ═══ Traducción ═══ */
-  .qc-translate-box{
-    background:color-mix(in srgb,var(--accent) 8%, var(--surface-2));
-    border:1px solid color-mix(in srgb,var(--accent) 30%, var(--border));
-    border-radius:10px;padding:11px 13px;margin-top:6px;
-    display:flex;flex-direction:column;gap:6px;
-  }
-  .qc-translate-box label{
-    display:flex;align-items:center;gap:8px;cursor:pointer;
-    font-size:.85rem;font-weight:700;color:var(--text);
-  }
-  .qc-translate-box input[type="checkbox"]{
-    width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;
-  }
-  .qc-translate-box .lang-info{
-    font-size:.74rem;color:var(--muted);margin-left:24px;
-  }
-  .qc-translate-box .lang-info strong{color:var(--accent)}
-  .qc-progress{
-    display:none;flex-direction:column;gap:5px;margin-top:8px;
-    padding:10px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;
-  }
-  .qc-progress.show{display:flex}
-  .qc-progress-text{font-size:.8rem;font-weight:700;color:var(--text)}
-  .qc-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-  .qc-progress-bar .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .25s}
-  .qc-progress-detail{font-size:.72rem;color:var(--muted)}
 
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
@@ -852,7 +829,6 @@ html
   </div>
 </dialog>
 
-<!-- ═══ Lector de Introducción (modal propio) ═══ -->
 <dialog id="descReader">
   <div class="desc-reader-wrap">
     <header class="desc-reader-head">
@@ -984,20 +960,6 @@ html
             </button>
             <input type="file" id="qcBulkFile" accept=".txt,text/plain" hidden />
           </div>
-        </div>
-
-        <div class="qc-translate-box" id="qcTranslateBox" style="display:none">
-          <label>
-            <input type="checkbox" id="qcTraducir" checked />
-            <span>Traducir al español con Google Translate</span>
-          </label>
-          <div class="lang-info" id="qcLangInfo"></div>
-        </div>
-
-        <div class="qc-progress" id="qcProgress">
-          <div class="qc-progress-text" id="qcProgressText">Traduciendo…</div>
-          <div class="qc-progress-bar"><div class="fill" id="qcProgressFill"></div></div>
-          <div class="qc-progress-detail" id="qcProgressDetail"></div>
         </div>
 
         <div class="qc-bulk-info" id="qcBulkInfo"></div>
@@ -1274,7 +1236,9 @@ html
 (() => {
   'use strict';
 
+  /* ═══════════════ CONFIG ═══════════════ */
   const LS_KEY = 'biblioteca-libros-v7';
+  const LS_KEY_OLD = 'biblioteca-libros-v6';
   const DB_NAME = 'biblioteca-db-v3';
   const DB_COVERS = 'covers';
   const SYNC_TOKEN_KEY = 'biblioteca-sync-token';
@@ -1285,17 +1249,23 @@ html
   /* ═══════════════ CATEGORÍAS ═══════════════ */
   const CATEGORIAS = [
     { id:'general',   nombre:'General',              c1:'#6366f1', c2:'#8b5cf6', keywords:[] },
-    { id:'ficcion',   nombre:'Ficción',              c1:'#ec4899', c2:'#f43f5e', keywords:['novela','cuento','relato','ficcion','cien anos','crimen y castigo','dracula','it','resplandor','doctor sueno','rabia','demian','metamorfosis','extranjero','odisea','divina comedia','principito','jane eyre','guerra y paz','memorias del subsuelo','el doble','el tunel','el pozo','la vegetariana','la casa de hojas','sherlock','holmes','viajes en el tiempo','paradoja','todos vosotros zombis','historias de fantasmas','fantasmas','relatos de una mujer','juan salvador gaviota','caballero de la armadura','alquimista','caballo de troya','biombo del infierno','el horla','ladron de mentiras','sabueso','baskerville'] },
-    { id:'ciencia',   nombre:'Ciencia',               c1:'#0ea5e9', c2:'#06b6d4', keywords:['cosmos','fisica','cuantica','astrofisica','astrobiologia','neurociencia','cerebro','agujero negro','tiempo','universo','evolucion','gen','biologia','anatomia','gray','astronomia','ciencia','tejido del cosmos','realidad','seis piezas','orden del tiempo','surfear el espacio','breve historia','ideas fundamentales','mente del emperador','desde la eternidad','algo profundamente','testosterona','cuerpo habla','gen egoista'] },
-    { id:'filosofia', nombre:'Filosofía',             c1:'#8b5cf6', c2:'#d946ef', keywords:['meditaciones','estoico','seneca','maquiavelo','schopenhauer','nietzsche','camus','sisifo','mito','filosofia','arte de la guerra','sun tzu','cartes','platon','aristoteles','being logical','dialectica','eristica','ser logico'] },
-    { id:'psicologia',nombre:'Psicología',            c1:'#10b981', c2:'#059669', keywords:['psicologia','mente','emocional','sociopata','narcisista','trauma','terapia','psicoanalisis','freud','jung','conducta','comportamiento','gaslighting','gas','luz','manipulacion','oscura','psicologica','chantaje','limites','asertividad','comunicacion no violenta','empatia','inteligencia emocional','juegos en que','pensar rapido','despacio','por que mentimos','sin conciencia','serie de eventos','mente de los justos','generacion ansiosa','transformacion','mente moderna','reforma del pensamiento','sociedad del cansancio','yo y el ello','interpretacion de los suenos','psicologia femenina','psicologia criminal','psicologia'] },
-    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','seductor','carisma','confianza','motivacion','proposito','manifestacion','milagro','secreto','magia','fluir','flow','poder del ahora','placebo','eres tu','sobrenatural','deja de ser','desarrolle su cerebro','piense y hagase rico','si lo crees','plan fenix','traguese','sapo','basta ya','tipo lindo','no me puedes lastimar','sutil arte','importe una mierda','todo esta jodido','modelos','metodo','hombre racional','pildora roja','hombre superior','camino del hombre','camino del lobo','mujeres son de marte','5 lenguajes','lenguajes del amor','siete reglas','oro para vivir','maneras de amar','cuestion de limites','como ganar amigos','influir','influencia','persuasion','pequeno libro','500 palabras','rompe la barrera','saber conversar','supercomunicadores','tenemos que hablar','vendele','como suprimir','preocupaciones','arte de no amargarse','arte de pensar','pensar con claridad','como ser culto','como explicar','fisica cuantica','gato zombi','365 dias','mas culto','como pensar','aprender a aprender','ser mas culto','ser un hombre mas seductor','consejos','12 reglas','21 lecciones','siglo xxi','sapiens','animales a dioses','homo deus','breve historia de casi todo','padre rico','dinero','mentalidad millonaria'] },
-    { id:'historia',  nombre:'Historia',              c1:'#a16207', c2:'#78350f', keywords:['historia','guerra y paz','imperio','revolucion','siglo','antigua','roma','grecia','egipto','cristianismo','religion','libro de enoc','san cipriano','diego portales','encina','manuel carreno','carreno','manual de carreno','comportate','decidido'] },
+    { id:'ficcion',   nombre:'Ficción',              c1:'#ec4899', c2:'#f43f5e', keywords:['novela','cuento','relato','ficcion'] },
+    { id:'ciencia',   nombre:'Ciencia',              c1:'#0ea5e9', c2:'#06b6d4', keywords:['cosmos','fisica','cuantica','astrofisica','neurociencia','cerebro','agujero negro','universo','evolucion','gen','biologia','anatomia','astronomia','ciencia'] },
+    { id:'filosofia', nombre:'Filosofía',             c1:'#8b5cf6', c2:'#d946ef', keywords:['meditaciones','estoico','seneca','maquiavelo','schopenhauer','nietzsche','camus','sisifo','filosofia','arte de la guerra','sun tzu','platon','aristoteles'] },
+    { id:'psicologia',nombre:'Psicología',            c1:'#10b981', c2:'#059669', keywords:['psicologia','mente','emocional','sociopata','narcisista','trauma','terapia','psicoanalisis','freud','jung','conducta','gaslighting','manipulacion','psicologica','limites','asertividad','comunicacion no violenta','empatia','inteligencia emocional'] },
+    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','carisma','confianza','motivacion','proposito','manifestacion','poder del ahora','piense y hagase rico','12 reglas','padre rico'] },
+    { id:'historia',  nombre:'Historia',              c1:'#a16207', c2:'#78350f', keywords:['historia','imperio','revolucion','siglo','antigua','roma','grecia','egipto','cristianismo','religion'] },
     { id:'biografia', nombre:'Biografía',             c1:'#3b82f6', c2:'#6366f1', keywords:['memorias','diario','autobiografia','vida de','biografia'] },
-    { id:'negocios',  nombre:'Negocios',              c1:'#14b8a6', c2:'#0ea5e9', keywords:['negocio','empresa','economia','marketing','ventas','inversion','finanzas','emprendedor','liderazgo','creatividad','ciencia de crear','ed catmull','economista callejero'] },
-    { id:'terror',    nombre:'Terror',                c1:'#1f2937', c2:'#7f1d1d', keywords:['terror','horror','fantasma','zombi','muerto','oscuro','ligotti','lovecraft','king','dracula','miedo','resplandor','doctor sueno','it de stephen','rabia','fantasmas','peter straub','pozo','biombo del infierno','horla','maupassant','canciones de un sonador'] },
+    { id:'negocios',  nombre:'Negocios',              c1:'#14b8a6', c2:'#0ea5e9', keywords:['negocio','empresa','economia','marketing','ventas','inversion','finanzas','emprendedor','creatividad'] },
+    { id:'terror',    nombre:'Terror',                c1:'#1f2937', c2:'#7f1d1d', keywords:['terror','horror','fantasma','zombi','muerto','oscuro','lovecraft','king','dracula','miedo','resplandor'] },
     { id:'poesia',    nombre:'Poesía',                c1:'#db2777', c2:'#f472b6', keywords:['poesia','poema','verso','cantar','oda'] }
   ];
+
+  function normalizar(s) {
+    return String(s || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/^[¡!¿?]+/, '').trim();
+  }
 
   function detectarCategoria(titulo, autor) {
     const t = normalizar((titulo || '') + ' ' + (autor || ''));
@@ -1310,207 +1280,15 @@ html
     }
     return best.cat.id;
   }
-
   function getCategoria(id) {
     return CATEGORIAS.find(c => c.id === id) || CATEGORIAS[0];
   }
-
   function colorLibro(l) {
-    const catId = l.categoria || detectarCategoria(l.titulo, l.autor);
-    const cat = getCategoria(catId);
+    const cat = getCategoria(l.categoria || detectarCategoria(l.titulo, l.autor));
     return [cat.c1, cat.c2];
   }
 
-  /* ═══════════════ LIBROS PRECARGADOS ═══════════════ */
-  const LIBROS_PRECARGADOS = [
-    { titulo:"12 reglas para vivir", autor:"Jordan Peterson" },
-    { titulo:"200 consejos para ser un hombre más seductor", autor:"Ángel Daro" },
-    { titulo:"21 lecciones para el siglo XXI", autor:"Yuval Noah Harari" },
-    { titulo:"365 días para ser más culto", autor:"David S. Kidder" },
-    { titulo:"Agujeros negros y tiempo curvo", autor:"Kip S. Thorne" },
-    { titulo:"Algo profundamente oculto", autor:"Sean Carroll" },
-    { titulo:"Aprender a aprender", autor:"Barbara Oakley" },
-    { titulo:"Astrobiología", autor:"Bartolo Luque, Fernando Ballesteros" },
-    { titulo:"Astrofísica para gente con prisas", autor:"Neil deGrasse Tyson" },
-    { titulo:"Being Logical", autor:"D.Q. McInerny" },
-    { titulo:"Canciones de un soñador muerto", autor:"Thomas Ligotti" },
-    { titulo:"Cartas a Lucilio", autor:"Séneca" },
-    { titulo:"Chantaje emocional", autor:"Susan Forward" },
-    { titulo:"Cómo suprimir las preocupaciones", autor:"Dale Carnegie" },
-    { titulo:"Compórtate", autor:"Robert M. Sapolsky" },
-    { titulo:"Comunicación no violenta", autor:"Marshall B. Rosenberg" },
-    { titulo:"Cosmos", autor:"Carl Sagan" },
-    { titulo:"Creatividad: la ciencia de crear", autor:"Ed Catmull" },
-    { titulo:"Crimen y castigo", autor:"Fiódor Dostoyevski" },
-    { titulo:"Cuestión de límites", autor:"Nedra Glover Tawwab" },
-    { titulo:"Cómo explicar física cuántica con un gato zombi", autor:"Varios autores" },
-    { titulo:"Cómo ganar amigos e influir sobre las personas", autor:"Dale Carnegie" },
-    { titulo:"Cómo pensar como Sherlock Holmes", autor:"Maria Konnikova" },
-    { titulo:"Cómo ser culto", autor:"Susan Wise Bauer" },
-    { titulo:"Decidido", autor:"Robert Sapolsky" },
-    { titulo:"Deja de ser tú", autor:"Joe Dispenza" },
-    { titulo:"Del arte de la guerra", autor:"Nicolás Maquiavelo" },
-    { titulo:"Demian", autor:"Hermann Hesse" },
-    { titulo:"Desarrolle su cerebro", autor:"Joe Dispenza" },
-    { titulo:"Descubre la mentira", autor:"Philip Houston" },
-    { titulo:"Desde la eternidad hasta hoy", autor:"Sean Carroll" },
-    { titulo:"Dialéctica erística", autor:"Arthur Schopenhauer" },
-    { titulo:"Diario para estoicos", autor:"Ryan Holiday" },
-    { titulo:"Diego Portales", autor:"Francisco A. Encina" },
-    { titulo:"Doctor Sueño", autor:"Stephen King" },
-    { titulo:"Domina el arte del liderazgo", autor:"Bertrand de Witte" },
-    { titulo:"Drácula", autor:"Bram Stoker" },
-    { titulo:"Efecto luz de gas", autor:"Dra. Robin Stern" },
-    { titulo:"El alquimista", autor:"Paulo Coelho" },
-    { titulo:"El arte de la guerra", autor:"Sun Tzu" },
-    { titulo:"El arte de la seducción", autor:"Robert Greene" },
-    { titulo:"El arte de no amargarse la vida", autor:"Rafael Santandreu" },
-    { titulo:"El arte de pensar", autor:"Rolf Dobelli" },
-    { titulo:"El biombo del infierno", autor:"Ryūnosuke Akutagawa" },
-    { titulo:"El caballero de la armadura oxidada", autor:"Robert Fisher" },
-    { titulo:"El caballo de Troya", autor:"Hammond Innes" },
-    { titulo:"El camino del hombre superior", autor:"David Deida" },
-    { titulo:"El camino del lobo", autor:"—" },
-    { titulo:"El caso contra la realidad", autor:"Donald Hoffman" },
-    { titulo:"El cerdo que quería ser comido", autor:"Julian Baggini" },
-    { titulo:"El cerebro femenino", autor:"Louann Brizendine" },
-    { titulo:"El cerebro masculino", autor:"Louann Brizendine" },
-    { titulo:"El cuerpo habla", autor:"Joe Navarro" },
-    { titulo:"El código de la manifestación", autor:"Raimon Samsó" },
-    { titulo:"El demonio que hay en ti", autor:"Gwen Adshead" },
-    { titulo:"El doble", autor:"Fiódor Dostoyevski" },
-    { titulo:"El economista callejero", autor:"—" },
-    { titulo:"El extranjero", autor:"Albert Camus" },
-    { titulo:"El gen egoísta", autor:"Richard Dawkins" },
-    { titulo:"El guardián entre el centeno", autor:"J. D. Salinger" },
-    { titulo:"El hombre en busca de sentido", autor:"Viktor Frankl" },
-    { titulo:"El hombre que confundió a su mujer con un sombrero", autor:"Oliver Sacks" },
-    { titulo:"El hombre racional", autor:"Rollo Tomassi" },
-    { titulo:"El Horla", autor:"Guy de Maupassant" },
-    { titulo:"El increíble poder de las emociones", autor:"—" },
-    { titulo:"El ladrón de mentiras", autor:"Roberto Santiago; Adrián Pérez" },
-    { titulo:"El librito azul", autor:"Conny Méndez" },
-    { titulo:"El libro de Enoc", autor:"Varios autores" },
-    { titulo:"El libro de San Cipriano", autor:"San Cipriano de Antioquía" },
-    { titulo:"El maestro y su emisario", autor:"Iain McGilchrist" },
-    { titulo:"El mito de Sísifo", autor:"Albert Camus" },
-    { titulo:"El mundo como voluntad y representación I", autor:"Arthur Schopenhauer" },
-    { titulo:"El método", autor:"Neil Strauss" },
-    { titulo:"El orden del tiempo", autor:"Carlo Rovelli" },
-    { titulo:"El pequeño libro de la influencia", autor:"Javier Luxor" },
-    { titulo:"El pequeño libro de las 500 palabras", autor:"Miguel Sosa Lázaro" },
-    { titulo:"El placebo eres tú", autor:"Joe Dispenza" },
-    { titulo:"El plan Fénix", autor:"Brian Tracy" },
-    { titulo:"El poder de la presencia", autor:"Amy Cuddy" },
-    { titulo:"El poder del ahora", autor:"Eckhart Tolle" },
-    { titulo:"El poder", autor:"Rhonda Byrne" },
-    { titulo:"El pozo", autor:"Hye-Young Pyun" },
-    { titulo:"El principito", autor:"Antoine de Saint-Exupéry" },
-    { titulo:"El problema de los tres cuerpos", autor:"Liu Cixin" },
-    { titulo:"El príncipe", autor:"Nicolás Maquiavelo" },
-    { titulo:"El secreto", autor:"Rhonda Byrne" },
-    { titulo:"El sociópata de la puerta de al lado", autor:"Martha Stout" },
-    { titulo:"El sutil arte de que (casi todo) te importe una mierda", autor:"Mark Manson" },
-    { titulo:"El tejido del cosmos", autor:"Brian Greene" },
-    { titulo:"El túnel del ego", autor:"Thomas Metzinger" },
-    { titulo:"El yo y el ello", autor:"Sigmund Freud" },
-    { titulo:"Ellas llegan primero", autor:"Ian Kerner" },
-    { titulo:"Empatía", autor:"Roman Krznaric" },
-    { titulo:"Fantasmas", autor:"Peter Straub" },
-    { titulo:"Fluir (Flow)", autor:"Mihály Csíkszentmihályi" },
-    { titulo:"Gray: anatomía para estudiantes", autor:"Richard L. Drake" },
-    { titulo:"Guerra y paz", autor:"León Tolstói" },
-    { titulo:"Historias de fantasmas", autor:"Charles Dickens" },
-    { titulo:"Hábitos atómicos", autor:"James Clear" },
-    { titulo:"Influencia: la psicología de la persuasión", autor:"Robert B. Cialdini" },
-    { titulo:"Inteligencia emocional en el trabajo", autor:"Daniel Goleman" },
-    { titulo:"It", autor:"Stephen King" },
-    { titulo:"Jane Eyre", autor:"Charlotte Brontë" },
-    { titulo:"Juan Salvador Gaviota", autor:"Richard Bach" },
-    { titulo:"Juegos en que participamos", autor:"Eric Berne" },
-    { titulo:"La asertividad", autor:"Olga Castanyer Mayer-Spiess" },
-    { titulo:"La casa de hojas", autor:"Mark Z. Danielewski" },
-    { titulo:"La casa de la tía Norm", autor:"Lucila Castro Díaz" },
-    { titulo:"La conspiración contra la especie humana", autor:"Thomas Ligotti" },
-    { titulo:"La divina comedia", autor:"Dante Alighieri" },
-    { titulo:"La evolución del deseo", autor:"David M. Buss" },
-    { titulo:"La generación ansiosa", autor:"Jonathan Haidt" },
-    { titulo:"La interpretación de los sueños", autor:"Sigmund Freud" },
-    { titulo:"La magia del orden", autor:"Marie Kondo" },
-    { titulo:"La magia", autor:"Rhonda Byrne" },
-    { titulo:"La mente de los justos", autor:"Jonathan Haidt" },
-    { titulo:"La metamorfosis", autor:"Franz Kafka" },
-    { titulo:"La nueva mente del emperador", autor:"Roger Penrose" },
-    { titulo:"La píldora roja", autor:"Ferris Becker" },
-    { titulo:"La reforma del pensamiento", autor:"Robert Jay Lifton" },
-    { titulo:"La sociedad del cansancio", autor:"Byung-Chul Han" },
-    { titulo:"La transformación de la mente moderna", autor:"Jonathan Haidt & Greg Lukianoff" },
-    { titulo:"La vegetariana", autor:"Han Kang" },
-    { titulo:"Las 48 leyes del poder", autor:"Robert Greene" },
-    { titulo:"Las ideas fundamentales del universo 2", autor:"Sean Carroll" },
-    { titulo:"Las ideas fundamentales del universo", autor:"Sean Carroll" },
-    { titulo:"Los 5 lenguajes del amor", autor:"Gary Chapman" },
-    { titulo:"Los 7 hábitos de la gente altamente efectiva", autor:"Stephen R. Covey" },
-    { titulo:"Los hombres son de Marte, las mujeres son de Venus", autor:"John Gray" },
-    { titulo:"Los secretos de la mente millonaria", autor:"T. Harv Eker" },
-    { titulo:"Maestría", autor:"Robert Greene" },
-    { titulo:"Maneras de amar", autor:"Amir Levine, Rachel Heller" },
-    { titulo:"Manual de Carreño", autor:"Manuel Antonio Carreño" },
-    { titulo:"Manual de psicología criminal", autor:"Autor no especificado" },
-    { titulo:"Meditaciones", autor:"Marco Aurelio" },
-    { titulo:"Memorias del subsuelo", autor:"Fiódor Dostoyevski" },
-    { titulo:"Modelos", autor:"Mark Manson" },
-    { titulo:"Modern Romance", autor:"Aziz Ansari & Eric Klinenberg" },
-    { titulo:"Neurociencia cognitiva", autor:"Gazzaniga" },
-    { titulo:"Neurociencia para la psicología", autor:"Marc Zeise" },
-    { titulo:"Neurociencia cognitiva y educación", autor:"—" },
-    { titulo:"Neuroeducación", autor:"Francisco Mora" },
-    { titulo:"No me puedes lastimar", autor:"David Goggins" },
-    { titulo:"No ser nadie", autor:"Thomas Metzinger" },
-    { titulo:"Odisea", autor:"Homero" },
-    { titulo:"Padre rico, padre pobre", autor:"Robert Kiyosaki" },
-    { titulo:"Papelucho", autor:"Marcela Paz" },
-    { titulo:"Pensando en sistemas", autor:"Donella Meadows" },
-    { titulo:"Pensar con claridad", autor:"Rolf Dobelli" },
-    { titulo:"Pensar rápido, pensar despacio", autor:"Daniel Kahneman" },
-    { titulo:"Piense y hágase rico", autor:"Napoleon Hill" },
-    { titulo:"Por qué mentimos", autor:"Dan Ariely" },
-    { titulo:"Psicología", autor:"Myers de Wall" },
-    { titulo:"Psicología femenina", autor:"Karen Horney" },
-    { titulo:"Psicología oscura: 6 libros en 1", autor:"Benedict Goleman" },
-    { titulo:"Psicología oscura y manipulación mental", autor:"J. P. Goleman, Laura & Cooper, Daniel" },
-    { titulo:"Rabia", autor:"Stephen King" },
-    { titulo:"Relatos de una mujer borracha 2", autor:"Antonia Torres" },
-    { titulo:"Relatos de una mujer borracha", autor:"Martina Cañas" },
-    { titulo:"Resplandor", autor:"Stephen King" },
-    { titulo:"Rompe la barrera del no", autor:"Christopher Voss, Tahl Raz" },
-    { titulo:"Saber conversar", autor:"Debra Fine" },
-    { titulo:"Sapiens: de animales a dioses", autor:"Yuval Noah Harari" },
-    { titulo:"Seis piezas fáciles", autor:"Richard Feynman" },
-    { titulo:"Sherlock Holmes: la colección completa", autor:"Arthur Conan Doyle" },
-    { titulo:"Si lo crees, lo creas", autor:"Brian Tracy" },
-    { titulo:"Siete reglas de oro para vivir en pareja", autor:"John M. Gottman & Nan Silver" },
-    { titulo:"Sin conciencia", autor:"Robert D. Hare" },
-    { titulo:"Sobrenatural", autor:"Joe Dispenza" },
-    { titulo:"Sueño en el pabellón rojo", autor:"Cao Xueqin" },
-    { titulo:"Supercomunicadores", autor:"Charles Duhigg" },
-    { titulo:"Surfear el espacio-tiempo", autor:"Miguel Alcubierre" },
-    { titulo:"Tal como eres", autor:"Emily Nagoski" },
-    { titulo:"Tenemos que hablar", autor:"Celeste Headlee" },
-    { titulo:"Testosterona", autor:"Carole Hooven" },
-    { titulo:"Todo está jodido", autor:"Mark Manson" },
-    { titulo:"Todos vosotros zombis", autor:"Robert A. Heinlein" },
-    { titulo:"Trascender los niveles de conciencia", autor:"David R. Hawkins" },
-    { titulo:"Trilogía El Cuarto Mono", autor:"J. D. Barker" },
-    { titulo:"Una breve historia de casi todo", autor:"Bill Bryson" },
-    { titulo:"Una serie de eventos desafortunados", autor:"Sean Carroll" },
-    { titulo:"Viajes en el tiempo: paradoja", autor:"Lucila Castro" },
-    { titulo:"Véndele a la mente, no a la gente", autor:"Jurgen Klaric" },
-    { titulo:"¡Basta ya de ser un tipo lindo!", autor:"Robert A. Glover" },
-    { titulo:"¡Tráguese ese sapo!", autor:"Brian Tracy" },
-    { titulo:"¿Qué harías tú en mi lugar?", autor:"Julia Llewellyn" }
-  ];
-
+  /* ═══════════════ ESTADO ═══════════════ */
   let libros = [];
   let editandoId = null;
   let puntosSel = 0;
@@ -1524,6 +1302,7 @@ html
   let scrollSaveTimer = null;
   let filtroActivo = 'todos';
   let vistaActual = 'grid';
+  let busquedaTimer = null;
 
   let ttsPausado = false;
   let ttsVelocidad = 1.0;
@@ -1536,24 +1315,20 @@ html
   let fragDialogCapId = null;
   let fragDialogFrags = [];
 
-  // TTS de introducción (independiente)
   let drTtsPausado = false;
   let drTtsVelocidad = 1.0;
   let drTtsCola = [];
   let drTtsIndice = 0;
   let drTtsGen = 0;
   let drTtsActivo = false;
-  let drTextoActual = '';
 
+  /* ═══════════════ UTILIDADES ═══════════════ */
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
     ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
   const uid = () => (crypto.randomUUID ? crypto.randomUUID()
     : 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10));
   const nPalabras = (t) => { const s = String(t || '').trim(); return s ? s.split(/\s+/).length : 0; };
   const estrellas = (n) => '★'.repeat(n) + '☆'.repeat(Math.max(0, 5 - n));
-  const normalizar = (s) => String(s || '').toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/^[¡!¿?]+/, '').trim();
 
   function contarLibro(l) {
     const directos = (l.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
@@ -1592,6 +1367,7 @@ html
     toastTimer = setTimeout(() => el.classList.remove('show'), 2300);
   }
 
+  /* ═══════════════ INDEXEDDB ═══════════════ */
   let dbPromise = null;
   function getDB() {
     if (dbPromise) return dbPromise;
@@ -1679,44 +1455,53 @@ html
     }
   }
 
+  /* ═══════════════ PERSISTENCIA + MIGRACIÓN ═══════════════ */
+  function normalizarLibro(l) {
+    if (!Array.isArray(l.capitulos)) l.capitulos = [];
+    if (!Array.isArray(l.secciones)) l.secciones = [];
+    if (typeof l.favorito !== 'boolean') l.favorito = false;
+    if (typeof l.descripcion !== 'string') l.descripcion = '';
+    if (!l.categoria) l.categoria = detectarCategoria(l.titulo, l.autor);
+    if ('hasBookFile' in l) delete l.hasBookFile;
+    if ('resumen' in l) delete l.resumen;
+    return l;
+  }
+
   function cargar() {
+    // 1) Intentar versión actual (v7)
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (raw) {
-        libros = JSON.parse(raw) || [];
-        libros.forEach(l => {
-          if (!Array.isArray(l.capitulos)) l.capitulos = [];
-          if (!Array.isArray(l.secciones)) l.secciones = [];
-          if (typeof l.favorito !== 'boolean') l.favorito = false;
-          if (typeof l.descripcion !== 'string') l.descripcion = '';
-          if (!l.categoria) l.categoria = detectarCategoria(l.titulo, l.autor);
-          if ('hasBookFile' in l) delete l.hasBookFile;
-          if ('resumen' in l) delete l.resumen;
-        });
+        libros = (JSON.parse(raw) || []).map(normalizarLibro);
         return;
       }
     } catch {}
-    libros = LIBROS_PRECARGADOS.map((b, i) => ({
-      id: uid(),
-      titulo: b.titulo,
-      autor: b.autor,
-      capitulos: [],
-      secciones: [],
-      descripcion: '',
-      categoria: detectarCategoria(b.titulo, b.autor),
-      puntos: 0,
-      leido: false,
-      favorito: false,
-      fecha: Date.now() - i * 1000,
-      scrollTop: 0
-    }));
-    guardar();
-  }
-  function guardar() {
-    try { localStorage.setItem(LS_KEY, JSON.stringify(libros)); }
-    catch { toast('Almacenamiento lleno'); }
+
+    // 2) Intentar migrar desde v6
+    try {
+      const old = localStorage.getItem(LS_KEY_OLD);
+      if (old) {
+        libros = (JSON.parse(old) || []).map(normalizarLibro);
+        guardar();
+        // No borramos v6 por seguridad; queda como respaldo.
+        toast(`Migrados ${libros.length} libros desde versión anterior`);
+        return;
+      }
+    } catch {}
+
+    // 3) Arrancar vacío (usuario empieza de cero)
+    libros = [];
   }
 
+  function guardar() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(libros));
+    } catch (e) {
+      toast('Almacenamiento lleno: no se pudo guardar');
+    }
+  }
+
+  /* ═══════════════ FILTROS ═══════════════ */
   function aplicarFiltroChip(l, filtro) {
     const c = contarLibro(l);
     switch (filtro) {
@@ -1810,7 +1595,7 @@ html
     if (!lista.length) {
       grid.innerHTML = '';
       vacio.innerHTML = libros.length === 0
-        ? `<div class="empty"><h3>Sin libros</h3><p>Usa «Nuevo» o el menú de gestión para importar.</p></div>`
+        ? `<div class="empty"><h3>Tu biblioteca está vacía</h3><p>Toca «Nuevo» para añadir tu primer libro, o abre «Gestión» para importar.</p></div>`
         : `<div class="empty"><h3>Sin resultados</h3><p>Prueba con otro filtro o búsqueda.</p></div>`;
       return;
     }
@@ -1883,6 +1668,7 @@ html
     }).join('');
   }
 
+  /* ═══════════════ MENÚ DE TARJETA ═══════════════ */
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-menu]');
     const menuPanel = e.target.closest('.card-menu');
@@ -1903,6 +1689,7 @@ html
     document.querySelectorAll('.card-menu.open').forEach(p => p.classList.remove('open'));
   });
 
+  /* ═══════════════ VISTA / FILTROS / BÚSQUEDA ═══════════════ */
   $('#viewToggle').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-view]');
     if (!btn) return;
@@ -1921,6 +1708,13 @@ html
     render();
   });
 
+  $('#busqueda').addEventListener('input', () => {
+    clearTimeout(busquedaTimer);
+    busquedaTimer = setTimeout(render, 180);
+  });
+  $('#orden').addEventListener('change', render);
+
+  /* ═══════════════ FAVORITO ═══════════════ */
   function toggleFavorito(id) {
     const i = libros.findIndex(l => l.id === id);
     if (i < 0) return;
@@ -1934,7 +1728,6 @@ html
       abrirLector(id);
     }
   }
-
   function actualizarBotonFavorito() {
     if (!libroAbierto) return;
     const btn = $('#rFavorito');
@@ -1944,9 +1737,7 @@ html
     txt.textContent = 'Favorito';
   }
 
-  const reader = $('#reader');
-  const rBody = $('#rBody');
-
+  /* ═══════════════ TTS ═══════════════ */
   function elegirMejorVoz() {
     if (!('speechSynthesis' in window)) return null;
     const voces = window.speechSynthesis.getVoices() || [];
@@ -2201,6 +1992,7 @@ html
     if (ctrl) ctrl.innerHTML = renderCapControls(cap, totalFrags);
   }
 
+  /* ═══════════════ RENDER DE LIBRO ABIERTO ═══════════════ */
   function renderDescripcionHTML(l) {
     const d = (l.descripcion || '').trim();
     if (!d) return '';
@@ -2301,13 +2093,11 @@ html
 
   function expandirCap(capId) {
     const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
-    if (!capEl) return;
-    capEl.classList.add('expanded');
+    if (capEl) capEl.classList.add('expanded');
   }
   function colapsarCap(capId) {
     const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
-    if (!capEl) return;
-    capEl.classList.remove('expanded');
+    if (capEl) capEl.classList.remove('expanded');
   }
   function toggleCap(capId) {
     const capEl = rBody.querySelector(`[data-cap-el="${capId}"]`);
@@ -2322,9 +2112,12 @@ html
   }
   function toggleSeccion(secId) {
     const el = rBody.querySelector(`[data-sec-el="${secId}"]`);
-    if (!el) return;
-    el.classList.toggle('colapsada');
+    if (el) el.classList.toggle('colapsada');
   }
+
+  /* ═══════════════ EVENTOS DEL LECTOR ═══════════════ */
+  const reader = $('#reader');
+  const rBody = $('#rBody');
 
   rBody.addEventListener('click', (e) => {
     const intro = e.target.closest('[data-abrir-intro]');
@@ -2407,7 +2200,7 @@ html
     }
   });
 
-  /* ═══════════ LECTOR DE INTRODUCCIÓN ═══════════ */
+  /* ═══════════════ LECTOR DE INTRODUCCIÓN ═══════════════ */
   const descReader = $('#descReader');
   const drBody = $('#drBody');
   const drCover = $('#drCover');
@@ -2429,17 +2222,14 @@ html
     drTtsIndice = 0;
     drTtsPausado = false;
   }
-
   function resetDrTTS() {
     pararDrTTS();
     limpiarResaltadoDr();
     actualizarBotonesDrTTS(false);
   }
-
   function limpiarResaltadoDr() {
     drBody.querySelectorAll('.tts-frag.tts-activo').forEach(el => el.classList.remove('tts-activo'));
   }
-
   function resaltarFragmentoDr(i) {
     limpiarResaltadoDr();
     const span = drBody.querySelector(`.tts-frag[data-frag="${i}"]`);
@@ -2457,7 +2247,6 @@ html
       drBody.scrollTo({ top: Math.max(0, drBody.scrollTop + delta), behavior: 'smooth' });
     }
   }
-
   function actualizarBotonesDrTTS(activo) {
     if (activo) {
       drPlay.hidden = true;
@@ -2475,7 +2264,6 @@ html
       drPlayTxt.textContent = 'Escuchar';
     }
   }
-
   function reproducirDrTrozo(gen) {
     if (gen !== drTtsGen) return;
     if (!drTtsActivo) return;
@@ -2509,7 +2297,6 @@ html
       resetDrTTS();
     }
   }
-
   function iniciarDrTTS(desdeInicio = true) {
     if (!('speechSynthesis' in window)) { toast('Tu navegador no soporta lectura por voz'); return; }
     const frags = [];
@@ -2535,13 +2322,11 @@ html
     if (!l) return;
     const desc = (l.descripcion || '').trim();
     if (!desc) { toast('Este libro no tiene introducción'); return; }
-    drTextoActual = desc;
 
     const cat = getCategoria(l.categoria || detectarCategoria(l.titulo, l.autor));
     descReader.style.setProperty('--cat-c1', cat.c1);
     descReader.style.setProperty('--cat-c2', cat.c2);
 
-    // portada
     drCover.innerHTML = '';
     drCover.style.background = '';
     const url = coversCache.get(l.id);
@@ -2558,7 +2343,6 @@ html
     drTitulo.textContent = l.titulo || 'Sin título';
     drAutor.textContent = (l.autor && l.autor !== '—') ? l.autor : '';
 
-    // Partir el texto en párrafos + fragmentos TTS
     const parrafos = desc.split(/\n+/).map(p => p.trim()).filter(Boolean);
     let contador = 0;
     drBody.innerHTML = parrafos.map(p => {
@@ -2584,9 +2368,7 @@ html
     resetDrTTS();
     descReader.close();
   });
-
   drPlay.addEventListener('click', () => iniciarDrTTS(true));
-
   drPause.addEventListener('click', () => {
     if (!drTtsActivo) return;
     if (drTtsPausado) {
@@ -2598,12 +2380,7 @@ html
     }
     actualizarBotonesDrTTS(true);
   });
-
-  drStop.addEventListener('click', () => {
-    resetDrTTS();
-    toast('Detenido');
-  });
-
+  drStop.addEventListener('click', () => { resetDrTTS(); toast('Detenido'); });
   drSpeed.addEventListener('change', () => {
     drTtsVelocidad = parseFloat(drSpeed.value);
     if (drTtsActivo && !drTtsPausado && drTtsCola.length > 0) {
@@ -2617,6 +2394,7 @@ html
     }
   });
 
+  /* ═══════════════ BÚSQUEDA DE CAP / TTS DEL LECTOR ═══════════════ */
   function buscarCap(capId) {
     let cap = (libroAbierto?.capitulos || []).find(c => c.id === capId);
     if (cap) return { cap, sec: null };
@@ -2638,8 +2416,7 @@ html
       if (secEl) secEl.classList.remove('colapsada');
     }
     expandirCap(capId);
-    const parrafosFrags = dividirResumenEnFragmentos(txt);
-    const fragsPlanos = parrafosFrags.flat();
+    const fragsPlanos = dividirResumenEnFragmentos(txt).flat();
     if (!fragsPlanos.length) { toast('No hay texto para leer'); return; }
     let inicio = 0;
     if (cap.ttsIndice && cap.ttsIndice > 0 && cap.ttsIndice < fragsPlanos.length) {
@@ -2669,12 +2446,12 @@ html
     }
     actualizarCapHeader(capId);
   }
-
   function detenerCap(capId) {
     if (ttsCapId !== capId) { resetTTS(); return; }
     resetTTS();
   }
 
+  /* ═══════════════ DIÁLOGO IR A FRAGMENTO ═══════════════ */
   const fragDialog = $('#fragDialog');
   const fragInput = $('#fragInput');
   const fragPreview = $('#fragPreview');
@@ -2686,7 +2463,6 @@ html
     const f = fragDialogFrags[idx] || '';
     fragPreview.innerHTML = `<strong>Fragmento ${idx + 1} de ${fragDialogFrags.length}</strong>${esc(f)}`;
   }
-
   function abrirFragDialog(capId) {
     const { cap } = buscarCap(capId);
     if (!cap) return;
@@ -2696,17 +2472,14 @@ html
     const idxActual = Math.max(0, Math.min(fragDialogFrags.length - 1, cap.ttsIndice || 0));
     fragInput.value = idxActual + 1;
     fragInput.max = fragDialogFrags.length;
-    $('#fragInfo').textContent = 'Elige el fragmento al que quieres ir.';
     $('#fragTotal').textContent = `Total: ${fragDialogFrags.length} fragmentos`;
     actualizarFragPreview();
     fragDialog.showModal();
   }
-
   $('#fragCerrar').addEventListener('click', () => fragDialog.close());
   $('#fragCancelar').addEventListener('click', () => fragDialog.close());
   fragInput.addEventListener('input', actualizarFragPreview);
   fragInput.addEventListener('change', actualizarFragPreview);
-
   fragDialog.querySelectorAll('[data-frag-jump]').forEach(btn => {
     btn.addEventListener('click', () => {
       const delta = parseInt(btn.dataset.fragJump, 10);
@@ -2716,7 +2489,6 @@ html
       actualizarFragPreview();
     });
   });
-
   $('#fragIr').addEventListener('click', () => {
     if (!fragDialogCapId) { fragDialog.close(); return; }
     const idx = Math.max(0, Math.min(fragDialogFrags.length - 1, parseInt(fragInput.value || '1', 10) - 1));
@@ -2731,6 +2503,7 @@ html
     toast('Reproduciendo desde el fragmento ' + (idx + 1));
   });
 
+  /* ═══════════════ NOTAS ═══════════════ */
   function agregarNota(capId, txt) {
     if (!libroAbierto) return;
     const { cap } = buscarCap(capId);
@@ -2753,7 +2526,6 @@ html
     render();
     toast('Nota añadida');
   }
-
   function eliminarNota(capId, idx) {
     if (!libroAbierto) return;
     const { cap } = buscarCap(capId);
@@ -2775,13 +2547,13 @@ html
     render();
   }
 
+  /* ═══════════════ CERRAR / PROGRESO / BOTONES LECTOR ═══════════════ */
   function cerrarLector() {
     guardarScroll();
     resetTTS();
     reader.close();
     libroAbierto = null;
   }
-
   function actualizarBotonLeido() {
     if (!libroAbierto) return;
     const btn = $('#rLeido');
@@ -2794,28 +2566,23 @@ html
       txt.textContent = 'Marcar leído';
     }
   }
-
   function actualizarProgreso() {
     if (!libroAbierto) return;
     const max = rBody.scrollHeight - rBody.clientHeight;
     const pct = max > 0 ? Math.min(100, Math.round((rBody.scrollTop / max) * 100)) : 0;
     $('#rProgressFill').style.width = pct + '%';
   }
-
   function guardarScroll() {
     if (!libroAbierto) return;
     libroAbierto.scrollTop = rBody.scrollTop;
     guardar();
   }
-
   rBody.addEventListener('scroll', () => {
     actualizarProgreso();
     clearTimeout(scrollSaveTimer);
     scrollSaveTimer = setTimeout(guardarScroll, 400);
   });
-
   $('#tocToggle').addEventListener('click', () => $('#rToc').classList.toggle('open'));
-
   $('#tocList').addEventListener('click', (e) => {
     const item = e.target.closest('.toc-item');
     if (!item) return;
@@ -2840,14 +2607,11 @@ html
       if (el) el.scrollIntoView({ block: 'start' });
     }
   });
-
   $('#rCerrar').addEventListener('click', cerrarLector);
-
   $('#rFavorito').addEventListener('click', () => {
     if (!libroAbierto) return;
     toggleFavorito(libroAbierto.id);
   });
-
   $('#rLeido').addEventListener('click', () => {
     if (!libroAbierto) return;
     const i = libros.findIndex(x => x.id === libroAbierto.id);
@@ -2862,6 +2626,7 @@ html
     }
   });
 
+  /* ═══════════════ INTRODUCCIÓN ═══════════════ */
   const descDialog = $('#descDialog');
   const descInput = $('#descInput');
   const descWc = $('#descWc');
@@ -2871,7 +2636,6 @@ html
     descWc.textContent = n.toLocaleString('es') + (n === 1 ? ' palabra' : ' palabras');
   }
   descInput.addEventListener('input', actualizarDescWc);
-
   $('#rEditDesc').addEventListener('click', () => {
     if (!libroAbierto) return;
     descInput.value = libroAbierto.descripcion || '';
@@ -2895,7 +2659,7 @@ html
     descDialog.close();
   });
 
-  /* ═══════════ AÑADIR CONTENIDO ═══════════ */
+  /* ═══════════════ AÑADIR CONTENIDO ═══════════════ */
   const quickCapDialog = $('#quickCapDialog');
   const qcSeccion = $('#qcSeccion');
   const qcTitulo = $('#qcTitulo');
@@ -2903,41 +2667,33 @@ html
   const qcWc = $('#qcWc');
   const qcBulkTexto = $('#qcBulkTexto');
   const qcBulkInfo = $('#qcBulkInfo');
-  const qcTranslateBox = $('#qcTranslateBox');
-  const qcTraducir = $('#qcTraducir');
-  const qcLangInfo = $('#qcLangInfo');
-  const qcProgress = $('#qcProgress');
-  const qcProgressText = $('#qcProgressText');
-  const qcProgressFill = $('#qcProgressFill');
-  const qcProgressDetail = $('#qcProgressDetail');
   let qcTabActivo = 'uno';
   let qcCapsDetectados = [];
-  let qcIdiomaDetectado = 'es';
-  let qcTraduciendo = false;
 
   function actualizarQcWc() {
     if (qcTabActivo === 'uno') {
       const n = nPalabras(qcResumen.value);
       qcWc.textContent = n.toLocaleString('es') + (n === 1 ? ' palabra' : ' palabras');
     } else {
-      let totalCaps = 0, totalChars = 0;
+      let totalCaps = 0, totalPalabras = 0;
       for (const item of qcCapsDetectados) {
         if (item.tipo === 'sec') {
           totalCaps += item.capitulos.length;
-          totalChars += item.capitulos.reduce((a, c) => a + nPalabras(c.resumen), 0);
+          totalPalabras += item.capitulos.reduce((a, c) => a + nPalabras(c.resumen), 0);
         } else if (item.tipo === 'intro') {
-          totalChars += nPalabras(item.resumen);
+          totalPalabras += nPalabras(item.resumen);
         } else {
           totalCaps += 1;
-          totalChars += nPalabras(item.resumen);
+          totalPalabras += nPalabras(item.resumen);
         }
       }
       const secs = qcCapsDetectados.filter(x => x.tipo === 'sec').length;
       const intros = qcCapsDetectados.filter(x => x.tipo === 'intro').length;
-      qcWc.textContent = `${secs} sección${secs === 1 ? '' : 'es'} · ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros ? ' · intro ✓' : ''} · ${totalChars.toLocaleString('es')} palabras`;
+      qcWc.textContent = `${secs} sección${secs === 1 ? '' : 'es'} · ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros ? ' · intro ✓' : ''} · ${totalPalabras.toLocaleString('es')} palabras`;
     }
   }
 
+  /* ═══════════════ DETECTOR DE ESTRUCTURA ═══════════════ */
   function detectarEstructura(texto) {
     const lineas = String(texto || '').split('\n');
     const nLineas = lineas.length;
@@ -3091,108 +2847,15 @@ html
     return estructura;
   }
 
-  /* ═══ Detección de idioma simple ═══ */
-  function detectarIdioma(texto) {
-    const t = ' ' + String(texto || '').toLowerCase().slice(0, 3000) + ' ';
-    const enStops = [' the ', ' and ', ' of ', ' to ', ' in ', ' is ', ' that ', ' it ', ' was ', ' he ', ' she ', ' for ', ' on ', ' with ', ' as ', ' his ', ' her ', ' at ', ' by ', ' from ', ' but ', ' they '];
-    const esStops = [' el ', ' la ', ' los ', ' las ', ' de ', ' que ', ' y ', ' en ', ' un ', ' una ', ' es ', ' por ', ' con ', ' para ', ' se ', ' su ', ' al ', ' del ', ' como ', ' más ', ' pero ', ' este '];
-    let enScore = 0, esScore = 0;
-    for (const w of enStops) { const re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'); enScore += (t.match(re) || []).length; }
-    for (const w of esStops) { const re = new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'); esScore += (t.match(re) || []).length; }
-    // Letras no-españolas típicas del inglés
-    const enChars = (t.match(/[a-z]/g) || []).length;
-    if (enScore > esScore && enScore >= 3) return 'en';
-    if (esScore > enScore) return 'es';
-    return enChars > 100 ? 'en' : 'es';
-  }
-
-  /* ═══ Traducción con Google Translate (endpoint público) ═══ */
-  async function traducirGoogle(texto, source = 'en', target = 'es') {
-    if (!texto || !texto.trim()) return texto;
-    // Trocear por párrafos, y cada párrafo por tamaño máximo ~4500 chars
-    const bloques = [];
-    const parrafos = texto.split(/\n+/);
-    for (const p of parrafos) {
-      if (!p.trim()) { bloques.push(''); continue; }
-      if (p.length <= 4500) { bloques.push(p); continue; }
-      // partir por frases si es muy grande
-      const oraciones = p.match(/[^.!?…]+[.!?…]+["')\]]*\s*/g) || [p];
-      let buf = '';
-      for (const o of oraciones) {
-        if ((buf + o).length > 4500) {
-          if (buf) bloques.push(buf);
-          if (o.length > 4500) {
-            // fallback: cortar por espacio
-            let rest = o;
-            while (rest.length > 4500) {
-              let cut = rest.lastIndexOf(' ', 4500);
-              if (cut < 3000) cut = 4500;
-              bloques.push(rest.slice(0, cut));
-              rest = rest.slice(cut);
-            }
-            if (rest) bloques.push(rest);
-            buf = '';
-          } else {
-            buf = o;
-          }
-        } else {
-          buf += o;
-        }
-      }
-      if (buf) bloques.push(buf);
-    }
-
-    const resultados = [];
-    for (let i = 0; i < bloques.length; i++) {
-      const b = bloques[i];
-      if (!b.trim()) { resultados.push(''); continue; }
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(b)}`;
-      let ok = false;
-      for (let intento = 0; intento < 3 && !ok; intento++) {
-        try {
-          const res = await fetch(url);
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          const data = await res.json();
-          if (Array.isArray(data) && Array.isArray(data[0])) {
-            const txt = data[0].map(seg => seg[0]).filter(Boolean).join('');
-            resultados.push(txt);
-            ok = true;
-          } else {
-            throw new Error('Formato inesperado');
-          }
-        } catch (err) {
-          if (intento === 2) {
-            // último intento: dejar original
-            resultados.push(b);
-          } else {
-            await new Promise(r => setTimeout(r, 400 * (intento + 1)));
-          }
-        }
-      }
-      // pequeña pausa para no colapsar Google
-      if (i < bloques.length - 1) await new Promise(r => setTimeout(r, 120));
-    }
-    return resultados.join('\n');
-  }
-
   function actualizarBulkInfo() {
     const texto = qcBulkTexto.value;
     if (!texto.trim()) {
       qcCapsDetectados = [];
       qcBulkInfo.innerHTML = '';
-      qcTranslateBox.style.display = 'none';
-      qcProgress.classList.remove('show');
       actualizarQcWc();
       return;
     }
     qcCapsDetectados = detectarEstructura(texto);
-    qcIdiomaDetectado = detectarIdioma(texto);
-    if (qcIdiomaDetectado === 'en') {
-      qcTranslateBox.style.display = '';
-      qcLangInfo.innerHTML = `Idioma detectado: <strong>inglés</strong>. Se traducirá <strong>capítulo por capítulo</strong> al pulsar Añadir.`;
-    } else {
-      qcTranslateBox.style.display = 'none';
-    }
 
     const secciones = qcCapsDetectados.filter(x => x.tipo === 'sec');
     const intros = qcCapsDetectados.filter(x => x.tipo === 'intro');
@@ -3233,6 +2896,7 @@ html
     qcBulkInfo.innerHTML = html;
     actualizarQcWc();
   }
+
   qcBulkTexto.addEventListener('input', actualizarBulkInfo);
   qcResumen.addEventListener('input', actualizarQcWc);
 
@@ -3284,7 +2948,6 @@ html
       toast('No se pudo leer el portapapeles');
     }
   });
-
   $('#qcSubir').addEventListener('click', () => $('#qcFile').click());
   $('#qcFile').addEventListener('change', async (e) => {
     const f = e.target.files?.[0]; e.target.value = '';
@@ -3299,7 +2962,6 @@ html
       toast('No se pudo leer el archivo');
     }
   });
-
   $('#qcBulkPegar').addEventListener('click', async () => {
     try {
       const txt = await navigator.clipboard.readText();
@@ -3311,7 +2973,6 @@ html
       toast('No se pudo leer el portapapeles');
     }
   });
-
   $('#qcBulkSubir').addEventListener('click', () => $('#qcBulkFile').click());
   $('#qcBulkFile').addEventListener('change', async (e) => {
     const f = e.target.files?.[0]; e.target.value = '';
@@ -3334,8 +2995,6 @@ html
     qcBulkInfo.innerHTML = '';
     qcCapsDetectados = [];
     qcSeccion.value = '';
-    qcTranslateBox.style.display = 'none';
-    qcProgress.classList.remove('show');
     const secciones = libroAbierto.secciones || [];
     if (secciones.length) {
       const datalist = document.getElementById('seccionesDatalist') || (() => {
@@ -3360,8 +3019,8 @@ html
   }
 
   $('#rAddCap').addEventListener('click', abrirQuickCap);
-  $('#qcCerrar').addEventListener('click', () => { if (!qcTraduciendo) quickCapDialog.close(); });
-  $('#qcCancelar').addEventListener('click', () => { if (!qcTraduciendo) quickCapDialog.close(); });
+  $('#qcCerrar').addEventListener('click', () => quickCapDialog.close());
+  $('#qcCancelar').addEventListener('click', () => quickCapDialog.close());
 
   function insertarEnLibroYRender(nuevosItems) {
     if (!libroAbierto || !nuevosItems.length) return;
@@ -3421,78 +3080,8 @@ html
     render();
   }
 
-  function setTraduciendo(activo, texto = '', pct = 0, detalle = '') {
-    qcTraduciendo = activo;
-    if (activo) {
-      qcProgress.classList.add('show');
-      qcProgressText.textContent = texto;
-      qcProgressFill.style.width = pct + '%';
-      qcProgressDetail.textContent = detalle;
-      $('#qcGuardar').disabled = true;
-      $('#qcCancelar').disabled = true;
-      $('#qcCerrar').disabled = true;
-    } else {
-      qcProgress.classList.remove('show');
-      $('#qcGuardar').disabled = false;
-      $('#qcCancelar').disabled = false;
-      $('#qcCerrar').disabled = false;
-    }
-  }
-
-  async function traducirEstructura(estructura) {
-    // Recorre la estructura y traduce título+resumen de cada capítulo/intro
-    const total = (() => {
-      let n = 0;
-      for (const it of estructura) {
-        if (it.tipo === 'sec') n += 1 + it.capitulos.length;
-        else n += 1;
-      }
-      return n;
-    })();
-    let hechos = 0;
-    const resultados = [];
-    for (const item of estructura) {
-      if (item.tipo === 'sec') {
-        const secNueva = { tipo: 'sec', titulo: item.titulo, capitulos: [] };
-        // traducir título de la sección
-        setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Sección: ${item.titulo.slice(0, 60)}`);
-        try { secNueva.titulo = await traducirGoogle(item.titulo); } catch {}
-        hechos++;
-        for (const c of item.capitulos) {
-          setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Capítulo: ${c.titulo.slice(0, 60)}`);
-          let tituloT = c.titulo;
-          let resumenT = c.resumen;
-          try { tituloT = await traducirGoogle(c.titulo); } catch {}
-          try { resumenT = await traducirGoogle(c.resumen); } catch {}
-          secNueva.capitulos.push({ ...c, titulo: tituloT, resumen: resumenT });
-          hechos++;
-        }
-        resultados.push(secNueva);
-      } else if (item.tipo === 'intro') {
-        setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Introducción`);
-        let tituloT = item.titulo;
-        let resumenT = item.resumen;
-        try { tituloT = await traducirGoogle(item.titulo); } catch {}
-        try { resumenT = await traducirGoogle(item.resumen); } catch {}
-        resultados.push({ ...item, titulo: tituloT, resumen: resumenT });
-        hechos++;
-      } else {
-        setTraduciendo(true, `Traduciendo ${hechos + 1}/${total}…`, Math.round(hechos / total * 100), `Capítulo: ${item.titulo.slice(0, 60)}`);
-        let tituloT = item.titulo;
-        let resumenT = item.resumen;
-        try { tituloT = await traducirGoogle(item.titulo); } catch {}
-        try { resumenT = await traducirGoogle(item.resumen); } catch {}
-        resultados.push({ ...item, titulo: tituloT, resumen: resumenT });
-        hechos++;
-      }
-    }
-    setTraduciendo(true, 'Traducción completa', 100, '');
-    await new Promise(r => setTimeout(r, 250));
-    return resultados;
-  }
-
-  $('#qcGuardar').addEventListener('click', async () => {
-    if (!libroAbierto || qcTraduciendo) return;
+  $('#qcGuardar').addEventListener('click', () => {
+    if (!libroAbierto) return;
 
     if (qcTabActivo === 'uno') {
       const titulo = qcTitulo.value.trim();
@@ -3522,25 +3111,9 @@ html
     } else {
       const texto = qcBulkTexto.value;
       if (!texto.trim()) { toast('Pega o sube el texto primero'); return; }
-      let detectado = detectarEstructura(texto);
+      const detectado = detectarEstructura(texto);
       if (!detectado.length) { toast('No hay texto para importar'); return; }
 
-      const debeTraducir = qcIdiomaDetectado === 'en' && qcTraducir.checked && qcTranslateBox.style.display !== 'none';
-
-      if (debeTraducir) {
-        setTraduciendo(true, 'Iniciando traducción…', 0, 'Preparando capítulos…');
-        try {
-          detectado = await traducirEstructura(detectado);
-        } catch (err) {
-          console.error(err);
-          toast('Error en traducción: ' + err.message);
-          setTraduciendo(false);
-          return;
-        }
-        setTraduciendo(false);
-      }
-
-      // Extract intro → descripcion
       const intros = detectado.filter(x => x.tipo === 'intro');
       const contenido = detectado.filter(x => x.tipo !== 'intro');
 
@@ -3572,10 +3145,11 @@ html
       }
 
       if (totalCaps === 0 && intros.length === 0) { toast('No se detectó contenido válido'); return; }
-      toast(`${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} añadido${totalCaps === 1 ? '' : 's'}${intros.length ? ' · intro importada' : ''}${debeTraducir ? ' · traducido' : ''}`);
+      toast(`${totalCaps} capítulo${totalCaps === 1 ? '' : 's'} añadido${totalCaps === 1 ? '' : 's'}${intros.length ? ' · intro importada' : ''}`);
     }
   });
 
+  /* ═══════════════ TOC ═══════════════ */
   function renderTOC(l) {
     const list = $('#tocList');
     const directos = (l.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
@@ -3624,6 +3198,7 @@ html
     list.innerHTML = html;
   }
 
+  /* ═══════════════ ABRIR LECTOR ═══════════════ */
   async function abrirLector(id) {
     resetTTS();
     const l = libros.find(x => x.id === id);
@@ -3695,6 +3270,7 @@ html
     });
   }
 
+  /* ═══════════════ EDITOR DE LIBRO ═══════════════ */
   const editor = $('#editor');
   const form = $('#formLibro');
 
@@ -3792,6 +3368,16 @@ html
         </div>
       </div>
     `;
+  }
+
+  function buscarCapEnEditor(capId, path) {
+    if (path === 'direct') return estructuraEditor.find(x => x.tipo === 'cap' && x.id === capId);
+    if (path.startsWith('sec:')) {
+      const secId = path.slice(4);
+      const sec = estructuraEditor.find(x => x.tipo === 'sec' && x.id === secId);
+      if (sec) return (sec.capitulos || []).find(c => c.id === capId);
+    }
+    return null;
   }
 
   function renderEditorCaps() {
@@ -3925,16 +3511,6 @@ html
     actualizarWC();
   }
 
-  function buscarCapEnEditor(capId, path) {
-    if (path === 'direct') return estructuraEditor.find(x => x.tipo === 'cap' && x.id === capId);
-    if (path.startsWith('sec:')) {
-      const secId = path.slice(4);
-      const sec = estructuraEditor.find(x => x.tipo === 'sec' && x.id === secId);
-      if (sec) return (sec.capitulos || []).find(c => c.id === capId);
-    }
-    return null;
-  }
-
   function abrirEditor(libro) {
     editandoId = libro ? libro.id : null;
     portadaPendiente = null;
@@ -4006,7 +3582,6 @@ html
       if (inp) inp.focus();
     }, 50);
   });
-
   $('#edAddSec').addEventListener('click', () => {
     estructuraEditor.push({ tipo: 'sec', id: uid(), titulo: `Sección ${estructuraEditor.filter(x => x.tipo === 'sec').length + 1}`, capitulos: [] });
     renderEditorCaps();
@@ -4077,7 +3652,6 @@ html
       toast('No se pudo pegar: ' + err.message);
     }
   });
-
   $('#edCargarUrl').addEventListener('click', async () => {
     const url = $('#edUrlPortada').value.trim();
     if (!url) { toast('Pega una URL primero'); return; }
@@ -4093,7 +3667,6 @@ html
       toast('Error: ' + err.message);
     }
   });
-
   $('#edSubirPortada').addEventListener('click', () => $('#edFilePortada').click());
   $('#edFilePortada').addEventListener('change', (e) => {
     const f = e.target.files?.[0]; e.target.value = '';
@@ -4176,6 +3749,7 @@ html
     render();
   });
 
+  /* ═══════════════ SYNC GITHUB GIST ═══════════════ */
   const syncDialog = $('#syncDialog');
   let syncToken = localStorage.getItem(SYNC_TOKEN_KEY) || '';
   let syncGistId = localStorage.getItem(SYNC_GIST_KEY) || '';
@@ -4191,7 +3765,6 @@ html
       } catch { $('#syncLast').textContent = 'Nunca sincronizado'; }
     }
   }
-
   async function ghRequest(method, path, body) {
     if (!syncToken || !syncGistId) throw new Error('Falta token o Gist ID');
     const res = await fetch(`https://api.github.com${path}`, {
@@ -4209,7 +3782,6 @@ html
     }
     return res.json();
   }
-
   async function subirASync() {
     const portadas = {};
     for (const l of libros) {
@@ -4228,7 +3800,6 @@ html
     cargarSyncConfig();
     return data.libros.length;
   }
-
   async function bajarDeSync() {
     const gist = await ghRequest('GET', `/gists/${syncGistId}`);
     const file = gist.files && gist.files['biblioteca.json'];
@@ -4243,15 +3814,7 @@ html
     const data = JSON.parse(contenido);
     if (!data.libros) throw new Error('Formato inválido');
 
-    libros = data.libros;
-    libros.forEach(l => {
-      if (typeof l.favorito !== 'boolean') l.favorito = false;
-      if (typeof l.descripcion !== 'string') l.descripcion = '';
-      if (!l.categoria) l.categoria = detectarCategoria(l.titulo, l.autor);
-      if (!Array.isArray(l.capitulos)) l.capitulos = [];
-      if (!Array.isArray(l.secciones)) l.secciones = [];
-      if ('hasBookFile' in l) delete l.hasBookFile;
-    });
+    libros = data.libros.map(normalizarLibro);
     guardar();
     await dbClearAll(DB_COVERS);
     coversCache.forEach(u => URL.revokeObjectURL(u));
@@ -4271,7 +3834,6 @@ html
     cargarSyncConfig();
     return data.libros.length;
   }
-
   function blobToBase64(blob) {
     return new Promise((res, rej) => {
       const r = new FileReader();
@@ -4288,7 +3850,6 @@ html
     for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
     return new Blob([arr], { type: mime });
   }
-
   function setSyncStatus(tipo, msg) {
     const el = $('#syncStatus');
     el.className = 'sync-status ' + tipo;
@@ -4304,7 +3865,6 @@ html
   });
   $('#syncCerrar').addEventListener('click', () => syncDialog.close());
   $('#syncCancelar').addEventListener('click', () => syncDialog.close());
-
   $('#syncToken').addEventListener('input', (e) => {
     syncToken = e.target.value.trim();
     localStorage.setItem(SYNC_TOKEN_KEY, syncToken);
@@ -4313,7 +3873,6 @@ html
     syncGistId = e.target.value.trim();
     localStorage.setItem(SYNC_GIST_KEY, syncGistId);
   });
-
   $('#btnSyncUpload').addEventListener('click', async () => {
     try {
       setSyncStatus('info', 'Subiendo…');
@@ -4324,7 +3883,6 @@ html
       setSyncStatus('err', '✗ ' + err.message);
     }
   });
-
   $('#btnSyncDownload').addEventListener('click', async () => {
     if (!confirm('Esto reemplaza TODOS los datos locales con los de GitHub. ¿Continuar?')) return;
     try {
@@ -4336,7 +3894,6 @@ html
       setSyncStatus('err', '✗ ' + err.message);
     }
   });
-
   $('#btnSyncAuto').addEventListener('click', async () => {
     try {
       setSyncStatus('info', 'Comparando fechas…');
@@ -4370,6 +3927,7 @@ html
     }
   });
 
+  /* ═══════════════ GESTIÓN ═══════════════ */
   const menu = $('#importador');
   $('#btnMenu').addEventListener('click', () => {
     $('#fImportar').value = '';
@@ -4398,7 +3956,6 @@ html
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     toast('Respaldo exportado');
   });
-
   $('#btnImportarBackup').addEventListener('click', () => $('#fileBackup').click());
   $('#fileBackup').addEventListener('change', async (e) => {
     const f = e.target.files?.[0]; e.target.value = '';
@@ -4408,15 +3965,7 @@ html
       const txt = await f.text();
       const data = JSON.parse(txt);
       if (!data.libros) throw new Error('Formato inválido');
-      libros = data.libros;
-      libros.forEach(l => {
-        if (typeof l.favorito !== 'boolean') l.favorito = false;
-        if (typeof l.descripcion !== 'string') l.descripcion = '';
-        if (!l.categoria) l.categoria = detectarCategoria(l.titulo, l.autor);
-        if (!Array.isArray(l.capitulos)) l.capitulos = [];
-        if (!Array.isArray(l.secciones)) l.secciones = [];
-        if ('hasBookFile' in l) delete l.hasBookFile;
-      });
+      libros = data.libros.map(normalizarLibro);
       guardar();
       await dbClearAll(DB_COVERS);
       for (const [id, b64] of Object.entries(data.portadas || {})) {
@@ -4453,12 +4002,10 @@ html
     }
     return { titulo: (p[0]||'').trim(), autor: p.slice(1).join(' ').trim() };
   }
-
   $('#fImportar').addEventListener('input', () => {
     const n = $('#fImportar').value.split('\n').filter(l => l.trim()).length;
     $('#imCount').textContent = n + (n === 1 ? ' libro a añadir' : ' libros a añadir');
   });
-
   $('#imImportar').addEventListener('click', () => {
     const lineas = $('#fImportar').value.split('\n');
     const existentes = new Set(libros.map(l => (normalizar(l.titulo) + '|' + normalizar(l.autor)).toLowerCase()));
@@ -4535,9 +4082,7 @@ html
     abrirLector(card.dataset.id);
   });
 
-  $('#busqueda').addEventListener('input', render);
-  $('#orden').addEventListener('change', render);
-
+  /* ═══════════════ AJUSTES ═══════════════ */
   const settingsDialog = $('#settingsDialog');
 
   function aplicarConfiguracionVisual() {
@@ -4574,7 +4119,6 @@ html
     aplicarConfiguracionVisual();
     toast('Tema cambiado');
   });
-
   $('#fontOptions').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-font]');
     if (!btn) return;
@@ -4582,7 +4126,6 @@ html
     aplicarConfiguracionVisual();
     toast('Tamaño de letra cambiado');
   });
-
   $('#iconOptions').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-icons]');
     if (!btn) return;
@@ -4591,6 +4134,7 @@ html
     toast('Tamaño de iconos cambiado');
   });
 
+  /* ═══════════════ INIT ═══════════════ */
   async function init() {
     initCategoriasSelect();
     cargar();
