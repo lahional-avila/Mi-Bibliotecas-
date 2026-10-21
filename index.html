@@ -8,7 +8,9 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
-<link rel="manifest" href="manifest.json?v=4" />
+<link rel="manifest" href="manifest.json?v=5" />
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
 <script>
   try{
@@ -18,7 +20,7 @@
   }catch(e){}
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js?v=4').catch(()=>{});
+      navigator.serviceWorker.register('sw.js?v=5').catch(()=>{});
     });
   }
 </script>
@@ -374,7 +376,6 @@
   .cap-num{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem;flex-shrink:0}
   .cap-titulo{flex:1;min-width:0;font-size:.96rem;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-  /* ═══ BADGES DE ESTADO ═══ */
   .estado-badge{
     width:22px;height:22px;border-radius:50%;
     display:inline-flex;align-items:center;justify-content:center;
@@ -541,6 +542,7 @@
   .hint{font-size:.82rem;color:var(--muted);margin:0 0 4px}
   .hint strong{color:var(--text)}
   .hint code{background:var(--surface-2);padding:1px 5px;border-radius:4px;font-size:.78rem;border:1px solid var(--border)}
+  .hint a{color:var(--accent);text-decoration:underline}
   .sync-status{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;font-size:.85rem;margin-bottom:10px}
   .sync-status.ok{background:color-mix(in srgb,var(--ok) 12%, transparent);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 30%, transparent)}
   .sync-status.err{background:color-mix(in srgb,var(--danger) 10%, transparent);color:var(--danger);border:1px solid color-mix(in srgb,var(--danger) 30%, transparent)}
@@ -908,7 +910,7 @@
     <div class="editor-body">
       <div class="qc-tabs">
         <button type="button" class="qc-tab active" data-qc-tab="uno">Un capítulo</button>
-        <button type="button" class="qc-tab" data-qc-tab="varios">Importar libro (.txt)</button>
+        <button type="button" class="qc-tab" data-qc-tab="varios">Importar libro</button>
       </div>
 
       <div data-qc-panel="uno">
@@ -926,35 +928,35 @@
           <div class="qc-actions">
             <button type="button" class="btn btn-ghost btn-sm" id="qcPegar">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
-              Pegar del portapapeles
+              Pegar
             </button>
             <button type="button" class="btn btn-ghost btn-sm" id="qcSubir">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
-              Subir .txt
+              Subir archivo
             </button>
-            <input type="file" id="qcFile" accept=".txt,text/plain" hidden />
+            <input type="file" id="qcFile" accept=".epub,.txt,.md,application/epub+zip,text/plain" hidden />
           </div>
         </div>
       </div>
 
       <div data-qc-panel="varios" style="display:none">
-        <p class="hint">Pega el libro completo. Detecta secciones y capítulos automáticamente, e <strong>ignora la tabla de contenido</strong> al inicio.<br>
-        <strong>Secciones</strong>: <code>Parte I</code>, <code>I.- Título</code>, <code>PRIMERA PARTE:</code>, <code>LIBRO PRIMERO</code>.<br>
-        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>1. Título</code>, <code>1 TÍTULO</code>, <code>1-"Título"</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>.<br>
+        <p class="hint">Pega el libro completo o subí un <strong>EPUB / TXT / MD</strong>. Los EPUB se procesan por estructura real (capítulos, partes, TOC). Los MOBI/AZW/PDF no se pueden procesar: convertílos a EPUB con <a href="https://calibre-ebook.com/" target="_blank" rel="noopener">Calibre</a>.<br>
+        <strong>TXT/MD — Secciones</strong>: <code>Parte I</code>, <code>I.- Título</code>, <code>PRIMERA PARTE:</code>, <code>LIBRO PRIMERO</code>.<br>
+        <strong>TXT/MD — Capítulos</strong>: <code>Capítulo 1</code>, <code>1. Título</code>, <code>1 TÍTULO</code>, <code>1-"Título"</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>.<br>
         <strong>Introducción</strong> y <strong>Prefacio</strong> se auto-asignan como introducción del libro.</p>
         <div class="field">
           <label for="qcBulkTexto">Texto completo</label>
-          <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero con sus secciones y capítulos…" style="min-height:220px"></textarea>
+          <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero o subí un EPUB…" style="min-height:220px"></textarea>
           <div class="qc-actions">
             <button type="button" class="btn btn-ghost btn-sm" id="qcBulkPegar">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
-              Pegar del portapapeles
+              Pegar texto
             </button>
             <button type="button" class="btn btn-ghost btn-sm" id="qcBulkSubir">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
-              Subir .txt
+              Subir archivo
             </button>
-            <input type="file" id="qcBulkFile" accept=".txt,text/plain" hidden />
+            <input type="file" id="qcBulkFile" accept=".epub,.txt,.md,.mobi,.azw,.azw3,.pdf,application/epub+zip,text/plain,application/pdf" hidden />
           </div>
         </div>
 
@@ -1432,7 +1434,6 @@
     if (fragsCountCache.has(key)) return fragsCountCache.get(key);
     const n = dividirResumenEnFragmentos(txt).flat().length;
     fragsCountCache.set(key, n);
-    // Limpieza simple
     if (fragsCountCache.size > 500) {
       const first = fragsCountCache.keys().next().value;
       fragsCountCache.delete(first);
@@ -1440,7 +1441,6 @@
     return n;
   }
 
-  // Estado de un capítulo: 'pendiente' | 'proceso' | 'leido'
   function estadoCapitulo(cap) {
     const total = contarFragmentosCap(cap);
     if (total === 0) return 'pendiente';
@@ -1992,7 +1992,6 @@
     if (gen !== ttsGeneracion) return;
     if (!ttsActivo) return;
     if (ttsIndice >= ttsCola.length) {
-      // ¡Terminado! Marcamos como leído: ttsIndice = total
       if (ttsCapId) {
         const { cap } = buscarCap(ttsCapId);
         if (cap) { cap.ttsIndice = ttsCola.length; guardar(); }
@@ -2078,7 +2077,6 @@
     header.classList.toggle('sticky-active', activo);
     const ctrl = header.querySelector('.cap-controls');
     if (ctrl) ctrl.innerHTML = renderCapControls(cap, totalFrags);
-    // Actualizar badge
     const badgeCont = header.querySelector('.cap-estado-cont');
     if (badgeCont) badgeCont.innerHTML = badgeEstadoHTML(estadoCapitulo(cap));
   }
@@ -2481,7 +2479,6 @@
     let inicio = 0;
     const totalFrags = fragsPlanos.length;
     if (cap.ttsIndice && cap.ttsIndice >= totalFrags) {
-      // Ya está completo
       const reiniciar = confirm('Este capítulo ya está leído.\n\nAceptar = volver a escucharlo desde el principio.\nCancelar = dejarlo como leído.');
       if (!reiniciar) return;
       cap.ttsIndice = 0;
@@ -2758,7 +2755,208 @@
     }
   }
 
-  /* ═══════════════ DETECTOR DE ESTRUCTURA (v3) ═══════════════ */
+  /* ═══════════════ LECTOR MULTI-FORMATO ═══════════════ */
+  async function leerArchivo(file) {
+    const nombre = (file.name || '').toLowerCase();
+    const ext = nombre.includes('.') ? nombre.slice(nombre.lastIndexOf('.')) : '';
+
+    if (ext === '.epub' || file.type === 'application/epub+zip') {
+      const estructura = await procesarEPUB(file);
+      return { estructura };
+    }
+    if (ext === '.mobi' || ext === '.azw' || ext === '.azw3') {
+      throw new Error('Formato Amazon (MOBI/AZW) no soportado directamente. Convertílo a EPUB con Calibre (calibre-ebook.com) y volvé a intentar. Es rápido: arrastrás el archivo → "Convertir libros" → EPUB.');
+    }
+    if (ext === '.pdf' || file.type === 'application/pdf') {
+      throw new Error('PDF no soportado directamente (no tiene estructura de capítulos). Convertílo a EPUB con Calibre y volvé a intentar.');
+    }
+    if (ext === '.txt' || ext === '.md' || ext === '' || (file.type && file.type.startsWith('text/'))) {
+      const txt = await file.text();
+      return { texto: txt };
+    }
+    throw new Error('Extensión no reconocida: ' + (ext || 'sin extensión') + '. Formatos aceptados: EPUB, TXT, MD.');
+  }
+
+  async function procesarEPUB(file) {
+    if (typeof JSZip === 'undefined') {
+      throw new Error('El lector EPUB no está cargado. Conectate a internet una vez y volvé a intentar. Después queda cacheado para uso offline.');
+    }
+    const zip = await JSZip.loadAsync(file);
+
+    const containerFile = zip.file('META-INF/container.xml');
+    if (!containerFile) throw new Error('EPUB inválido: no se encontró META-INF/container.xml');
+    const containerXml = await containerFile.async('string');
+    const containerDoc = new DOMParser().parseFromString(containerXml, 'application/xml');
+    const rootfileEl = containerDoc.querySelector('rootfile');
+    if (!rootfileEl) throw new Error('EPUB inválido: no se encontró rootfile en container.xml');
+    const opfPath = rootfileEl.getAttribute('full-path');
+
+    const opfFile = zip.file(opfPath);
+    if (!opfFile) throw new Error('EPUB inválido: no se encontró ' + opfPath);
+    const opfXml = await opfFile.async('string');
+    const opfDir = opfPath.includes('/') ? opfPath.slice(0, opfPath.lastIndexOf('/') + 1) : '';
+    const opfDoc = new DOMParser().parseFromString(opfXml, 'application/xml');
+
+    const manifest = {};
+    opfDoc.querySelectorAll('manifest > item').forEach(item => {
+      const id = item.getAttribute('id');
+      const href = item.getAttribute('href');
+      const props = item.getAttribute('properties') || '';
+      if (id && href) {
+        manifest[id] = { href: opfDir + href, properties: props };
+      }
+    });
+
+    const spine = [];
+    opfDoc.querySelectorAll('spine > itemref').forEach(ref => {
+      const idref = ref.getAttribute('idref');
+      if (idref && manifest[idref]) spine.push(manifest[idref].href);
+    });
+
+    const navMap = {};
+    let navPath = null;
+    for (const id in manifest) {
+      if (manifest[id].properties && manifest[id].properties.includes('nav')) {
+        navPath = manifest[id].href;
+        break;
+      }
+    }
+    if (navPath) {
+      try {
+        const navXml = await zip.file(navPath)?.async('string');
+        if (navXml) {
+          const navDoc = new DOMParser().parseFromString(navXml, 'application/xhtml+xml');
+          navDoc.querySelectorAll('nav a[href]').forEach(a => {
+            const href = a.getAttribute('href');
+            if (!href) return;
+            const cleaned = href.split('#')[0];
+            const base = navPath.includes('/') ? navPath.slice(0, navPath.lastIndexOf('/') + 1) : '';
+            const fullHref = base + cleaned;
+            const label = a.textContent.trim();
+            if (!navMap[fullHref] && label) navMap[fullHref] = label;
+          });
+        }
+      } catch {}
+    }
+    const spineEl = opfDoc.querySelector('spine');
+    const tocId = spineEl?.getAttribute('toc');
+    if (tocId && manifest[tocId]) {
+      const ncxPath = manifest[tocId].href;
+      try {
+        const ncxXml = await zip.file(ncxPath)?.async('string');
+        if (ncxXml) {
+          const ncxDoc = new DOMParser().parseFromString(ncxXml, 'application/xml');
+          ncxDoc.querySelectorAll('navPoint').forEach(np => {
+            const label = np.querySelector('navLabel text')?.textContent?.trim();
+            const src = np.querySelector('content')?.getAttribute('src');
+            if (label && src) {
+              const href = src.split('#')[0];
+              const base = ncxPath.includes('/') ? ncxPath.slice(0, ncxPath.lastIndexOf('/') + 1) : '';
+              const fullHref = base + href;
+              if (!navMap[fullHref]) navMap[fullHref] = label;
+            }
+          });
+        }
+      } catch {}
+    }
+
+    const items = [];
+    for (const itemPath of spine) {
+      const xhtml = await zip.file(itemPath)?.async('string');
+      if (!xhtml) continue;
+
+      let doc = new DOMParser().parseFromString(xhtml, 'application/xhtml+xml');
+      if (doc.querySelector('parsererror')) {
+        doc = new DOMParser().parseFromString(xhtml, 'text/html');
+      }
+      const body = doc.body || doc.documentElement;
+      if (!body) continue;
+
+      const headings = body.querySelectorAll('h1, h2, h3, h4');
+
+      if (headings.length === 0) {
+        const titulo = (navMap[itemPath] || doc.querySelector('title')?.textContent?.trim() || primeraFrase(body) || '').trim();
+        if (!titulo) continue;
+        const resumen = textoPlanoDe(body);
+        if (resumen.trim()) items.push({ tipo: 'cap', titulo, resumen });
+      } else {
+        const allEls = body.querySelectorAll('*');
+        let marcadorActual = null;
+        let buffer = [];
+
+        const flushActual = () => {
+          if (!marcadorActual) return;
+          const resumen = buffer.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+          items.push({ ...marcadorActual, resumen });
+        };
+
+        allEls.forEach(el => {
+          const tag = el.tagName.toLowerCase();
+          if (/^h[1-4]$/.test(tag)) {
+            flushActual();
+            const nivel = parseInt(tag[1], 10);
+            const titulo = el.textContent.trim();
+            if (!titulo) { marcadorActual = null; buffer = []; return; }
+            marcadorActual = { tipo: nivel === 1 ? 'sec' : 'cap', titulo };
+            buffer = [];
+          } else if (marcadorActual && /^(p|blockquote)$/.test(tag)) {
+            const txt = el.textContent.trim();
+            if (txt) buffer.push(txt);
+          } else if (marcadorActual && tag === 'ul') {
+            el.querySelectorAll('li').forEach(li => {
+              const txt = li.textContent.trim();
+              if (txt) buffer.push('• ' + txt);
+            });
+          } else if (marcadorActual && tag === 'ol') {
+            el.querySelectorAll('li').forEach((li, i) => {
+              const txt = li.textContent.trim();
+              if (txt) buffer.push((i + 1) + '. ' + txt);
+            });
+          }
+        });
+        flushActual();
+      }
+    }
+
+    const resultado = [];
+    let secActual = null;
+    for (const item of items) {
+      if (item.tipo === 'sec') {
+        secActual = { tipo: 'sec', titulo: item.titulo, capitulos: [] };
+        if (item.resumen && item.resumen.length >= 200) {
+          secActual.capitulos.push({ tipo: 'cap', titulo: 'Introducción', resumen: item.resumen });
+        }
+        resultado.push(secActual);
+      } else if (item.tipo === 'cap') {
+        if (secActual) secActual.capitulos.push(item);
+        else resultado.push(item);
+      }
+    }
+    return resultado.map(x => {
+      if (x.tipo === 'sec' && x.capitulos.length === 0) {
+        return { tipo: 'cap', titulo: x.titulo, resumen: '' };
+      }
+      return x;
+    });
+  }
+
+  function textoPlanoDe(el) {
+    const partes = [];
+    el.querySelectorAll('p, li, blockquote').forEach(p => {
+      const t = p.textContent.trim();
+      if (t) partes.push(t);
+    });
+    if (partes.length === 0) return el.textContent.replace(/\s+/g, ' ').trim();
+    return partes.join('\n\n');
+  }
+
+  function primeraFrase(el) {
+    const p = el.querySelector('p');
+    if (!p) return '';
+    return p.textContent.trim().replace(/\s+/g, ' ').slice(0, 80);
+  }
+
+  /* ═══════════════ DETECTOR DE ESTRUCTURA (TXT/MD) ═══════════════ */
   function detectarEstructura(texto) {
     const lineas = String(texto || '').split('\n');
     const nLineas = lineas.length;
@@ -2778,12 +2976,10 @@
       const t = limpiar(raw);
       if (!t || t.length > 180) return null;
 
-      // ── TOC ──
       if (/^(tabla de contenidos?|[ií]ndice general|[ií]ndice|indice|contenidos?|contents|table of contents|sumario|sumario general)$/i.test(t)) {
         return 'toc';
       }
 
-      // ── Introducción / Prefacio / Prólogo → descripción ──
       if (/^(introducci[oó]n|prefacio|pr[oó]logo|proemio|presentaci[oó]n|pr[eé]ambulo)(\s*[:.\-–—]\s*.*)?$/i.test(t)) {
         return 'intro';
       }
@@ -2792,41 +2988,28 @@
         return 'intro';
       }
 
-      // ── Partes / Libros / Secciones ──
       if (/^[ivxlcdm]+\s*\.\s*[-–—]\s*\S/i.test(t)) return 'sec';
       if (/^(parte|libro|secci[oó]n)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|s[eé]ptima|octavo|noveno|d[eé]cimo|d[eé]cima|und[eé]cimo|und[eé]cima|duod[eé]cimo|duod[eé]cima)\b/i.test(t)) return 'sec';
       if (/^(primera|segunda|tercera|cuarta|quinta|sexta|s[eé]ptima|octava|novena|d[eé]cima|und[eé]cima|duod[eé]cima)\s+parte\b/i.test(t)) return 'sec';
       if (/^libro\s+(primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|octavo|noveno|d[eé]cimo|[ivxlcdm]+|\d+)\b/i.test(t)) return 'sec';
 
-      // ── Capítulos con la palabra ──
       if (/^(cap[ií]tulo|cap\.|chapter|chap\.)\s+([\divxlcdm]+|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|diecis[eé]is|diecisiete|dieciocho|diecinueve|veinte|veintiuno|veintid[oó]s|veintitr[eé]s|veinticuatro|veinticinco|veintis[eé]is|veintisiete|veintiocho|veintinueve|treinta)\b/i.test(t)) return 'cap';
 
-      // ── Capítulos especiales sin número ──
       if (/^(ep[ií]logo|conclusi[oó]n(es)?|cierre(\s+sexual)?|final|glosario|bibliograf[ií]a|referencias|lecturas\s+(adicionales|recomendadas)|recursos\s+recomendados|ap[eé]ndice\b|anexo\b|agradecimientos|dedicatoria|ep[ií]grafe|advertencia|sobre\s+(el|los|la|las)\s+autor(es|a|as)?|acerca\s+de(l|\s+los|\s+la|\s+las)?\s+autor(es|a|as)?|notas?\s+finales?|[ií]ndice\s+(anal[ií]tico|onom[aá]stico|tem[aá]tico)|cr[eé]ditos\s+de\s+ilustraciones|soluciones\s+de\s+los\s+ejercicios)\b/i.test(t)) return 'cap';
 
-      // ── Markdown headings ──
       if (/^#{1,6}\s+\S/.test(raw.trim())) {
         if (/^#{1,2}\s+(parte|libro|secci[oó]n)\b/i.test(raw)) return 'sec';
         return 'cap';
       }
 
-      // ── "1. Título" (número + punto + espacio + Mayúscula) ──
-      // Cap a 120 chars: títulos muy largos son texto, no capítulos
       if (/^\d{1,3}\.\s+[A-ZÁÉÍÓÚÑ]/.test(t) && t.length < 120) return 'cap';
-
-      // ── "1 TÍTULO EN MAYÚSCULAS" (sin punto) ──
       if (/^\d{1,3}\s+[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s\d"'¡!¿?.,:;()\-]{5,}$/.test(t) && t.length < 150) return 'cap';
-
-      // ── "1) Título" / "1- Título" / "1 – Título" / "1.- Título" ──
       if (/^\d{1,3}\s*[)\-–—.]\s*[A-ZÁÉÍÓÚÑ"“«]/.test(t) && t.length < 150) return 'cap';
-
-      // ── '1-"Título"' (los 200 consejos de Ángel Daro) ──
       if (/^\d{1,3}\s*[-–—]\s*["“«]/.test(t) && t.length < 250) return 'cap';
 
       return null;
     }
 
-    // ── PASO 1: saltar la TOC correctamente ──
     let inicioReal = 0;
     let tocIdx = -1;
     for (let i = 0; i < nLineas; i++) {
@@ -2834,7 +3017,6 @@
     }
 
     if (tocIdx >= 0) {
-      // Buscar el primer marker cuyo contenido hasta el SIGUIENTE marker sea sustancial
       for (let i = tocIdx + 1; i < nLineas; i++) {
         const tipo = tipoMarcador(lineas[i]);
         if (!tipo || tipo === 'toc') continue;
@@ -2849,7 +3031,6 @@
           break;
         }
       }
-      // Fallback: primera línea no vacía con >100 chars
       if (inicioReal === 0) {
         for (let i = tocIdx + 1; i < nLineas; i++) {
           if (lineas[i].trim().length > 100) { inicioReal = i; break; }
@@ -2857,7 +3038,6 @@
       }
     }
 
-    // ── PASO 2: recolectar todos los marcadores ──
     const allMarkers = [];
     for (let i = inicioReal; i < nLineas; i++) {
       const tipo = tipoMarcador(lineas[i]);
@@ -2866,7 +3046,6 @@
       }
     }
 
-    // ── PASO 3: filtrar ítems de listas numeradas ──
     function contenidoEntre(aIdx, bIdx) {
       let chars = 0;
       for (let j = aIdx + 1; j < bIdx; j++) {
@@ -2884,9 +3063,7 @@
       if (!numMatch) continue;
       const num = parseInt(numMatch[1]);
       const rest = numMatch[2];
-      // Título tras el número demasiado largo → es contenido, no capítulo
       if (rest.length > 100) { listItems.add(i); continue; }
-      // Vecino N-1 antes, con < 150 chars entre ellos
       if (i > 0) {
         const prev = allMarkers[i - 1];
         const prevMatch = prev.titulo.match(/^(\d{1,3})\.\s+/);
@@ -2894,7 +3071,6 @@
           if (contenidoEntre(prev.idx, m.idx) < 150) listItems.add(i);
         }
       }
-      // Vecino N+1 después, con < 150 chars entre ellos
       if (i + 1 < allMarkers.length) {
         const next = allMarkers[i + 1];
         const nextMatch = next.titulo.match(/^(\d{1,3})\.\s+/);
@@ -2906,14 +3082,12 @@
 
     const marcadores = allMarkers.filter((_, i) => !listItems.has(i));
 
-    // Si no hay marcadores, todo va como un capítulo
     if (marcadores.length === 0) {
       const limpio = String(texto || '').trim();
       if (!limpio) return [];
       return [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: limpio }];
     }
 
-    // ── PASO 4: armar estructura ──
     const estructura = [];
     let seccionActual = null;
 
@@ -2933,7 +3107,6 @@
 
       let titulo = m.titulo;
 
-      // Separar "Capítulo 1: Título" cuando hay contenido tras ":"
       if (m.tipo === 'cap') {
         const matchColon = titulo.match(/^([^:]{2,90}):\s*(.{40,})$/);
         if (matchColon) {
@@ -2946,7 +3119,6 @@
         }
       }
 
-      // Fusionar "Capítulo N" solo + subtítulo en línea siguiente
       const esSoloCap = /^(cap[ií]tulo|parte|secci[oó]n)\s+[\divxlcdm]+\s*$/i.test(titulo);
       if (esSoloCap && resumen) {
         const rLineas = resumen.split('\n');
@@ -2970,7 +3142,6 @@
         }
       }
 
-      // Fusionar "PRIMERA PARTE" + subtítulo en línea siguiente
       const esSoloParte = /^(primera|segunda|tercera|cuarta|quinta|sexta|s[eé]ptima|octava|novena|d[eé]cima|und[eé]cima|duod[eé]cima)\s+parte\s*$/i.test(titulo);
       if (esSoloParte && resumen) {
         const rLineas = resumen.split('\n');
@@ -3012,7 +3183,6 @@
       }
     }
 
-    // ── PASO 5: limpiar secciones vacías ──
     const limpia = [];
     for (const item of estructura) {
       if (item.tipo === 'sec') {
@@ -3029,12 +3199,74 @@
     return limpia;
   }
 
+  function contarTotalCaps(estructura) {
+    let n = 0;
+    for (const item of estructura) {
+      if (item.tipo === 'sec') n += (item.capitulos || []).length;
+      else if (item.tipo === 'cap') n += 1;
+    }
+    return n;
+  }
+
+  function extraerTodoTexto(estructura) {
+    const partes = [];
+    for (const item of estructura) {
+      if (item.tipo === 'sec') {
+        for (const c of (item.capitulos || [])) partes.push(c.titulo + '\n\n' + (c.resumen || ''));
+      } else if (item.tipo === 'cap') {
+        partes.push(item.titulo + '\n\n' + (item.resumen || ''));
+      }
+    }
+    return partes.join('\n\n\n');
+  }
+
+  function renderPreviewDesdeCaps() {
+    const caps = qcCapsDetectados;
+    const secciones = caps.filter(x => x.tipo === 'sec');
+    const intros = caps.filter(x => x.tipo === 'intro');
+    const capsSueltos = caps.filter(x => x.tipo === 'cap');
+    const totalCaps = capsSueltos.length + secciones.reduce((a, s) => a + (s.capitulos || []).length, 0);
+
+    if (totalCaps === 0 && intros.length === 0) {
+      qcBulkInfo.innerHTML = '<strong>No se detectó contenido.</strong>';
+      actualizarQcWc();
+      return;
+    }
+
+    let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros.length ? ', <span style="color:var(--accent)">'+intros.length+' introducción</span>' : ''}<ul>`;
+    let cont = 0;
+    for (const item of caps) {
+      if (cont >= 40) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
+      if (item.tipo === 'sec') {
+        html += `<li class="sec-item">§ ${esc(item.titulo)} (${(item.capitulos || []).length} cap${(item.capitulos || []).length === 1 ? '' : 's'})</li>`;
+        for (const c of (item.capitulos || [])) {
+          if (cont >= 40) break;
+          html += `<li class="cap-item">${esc(c.titulo)} · ${nPalabras(c.resumen).toLocaleString('es')} palabras</li>`;
+          cont++;
+        }
+        cont++;
+      } else if (item.tipo === 'intro') {
+        html += `<li class="intro-item">📖 Introducción → se asignará al libro · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
+      } else {
+        html += `<li class="cap-item">${esc(item.titulo)} · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
+        cont++;
+      }
+    }
+    html += '</ul>';
+    qcBulkInfo.innerHTML = html;
+    actualizarQcWc();
+  }
+
   function actualizarBulkInfo() {
     const texto = qcBulkTexto.value;
     if (!texto.trim()) {
       qcCapsDetectados = [];
       qcBulkInfo.innerHTML = '';
       actualizarQcWc();
+      return;
+    }
+    if (texto.startsWith('[Contenido cargado desde ')) {
+      if (qcCapsDetectados.length > 0) renderPreviewDesdeCaps();
       return;
     }
     qcCapsDetectados = detectarEstructura(texto);
@@ -3135,13 +3367,43 @@
     const f = e.target.files?.[0]; e.target.value = '';
     if (!f) return;
     try {
-      const txt = await f.text();
-      if (quizasSugerirMulti(txt)) return;
-      qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + txt;
-      actualizarQcWc();
+      toast('Procesando ' + f.name + '…');
+      const res = await leerArchivo(f);
+      if (res.estructura) {
+        const totalCaps = contarTotalCaps(res.estructura);
+        if (totalCaps > 1) {
+          const ir = confirm(
+            'El archivo "' + f.name + '" contiene ' + totalCaps + ' capítulos.\n\n' +
+            'Aceptar = cambiar a la pestaña "Importar libro" para procesarlo completo.\n' +
+            'Cancelar = importarlo como un único capítulo con todo el texto pegado.'
+          );
+          if (ir) {
+            document.querySelectorAll('.qc-tab').forEach(t => t.classList.toggle('active', t.dataset.qcTab === 'varios'));
+            document.querySelectorAll('[data-qc-panel]').forEach(p => {
+              p.style.display = p.dataset.qcPanel === 'varios' ? '' : 'none';
+            });
+            qcTabActivo = 'varios';
+            qcCapsDetectados = res.estructura;
+            qcBulkTexto.value = '[Contenido cargado desde ' + f.name + ']';
+            renderPreviewDesdeCaps();
+            return;
+          }
+          const todoTexto = extraerTodoTexto(res.estructura);
+          qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + todoTexto;
+        } else if (totalCaps === 1) {
+          const c = res.estructura[0];
+          if (!qcTitulo.value.trim() || qcTitulo.value.startsWith('Capítulo ')) qcTitulo.value = c.titulo || qcTitulo.value;
+          qcResumen.value = c.resumen || '';
+        }
+        actualizarQcWc();
+      } else {
+        if (quizasSugerirMulti(res.texto)) return;
+        qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + res.texto;
+        actualizarQcWc();
+      }
       toast('Archivo cargado');
-    } catch {
-      toast('No se pudo leer el archivo');
+    } catch (err) {
+      toast(err.message || 'No se pudo procesar el archivo');
     }
   });
   $('#qcBulkPegar').addEventListener('click', async () => {
@@ -3160,12 +3422,24 @@
     const f = e.target.files?.[0]; e.target.value = '';
     if (!f) return;
     try {
-      const txt = await f.text();
-      qcBulkTexto.value = txt;
-      actualizarBulkInfo();
-      toast('Archivo cargado');
-    } catch {
-      toast('No se pudo leer el archivo');
+      toast('Procesando ' + f.name + '…');
+      const res = await leerArchivo(f);
+      if (res.estructura) {
+        qcCapsDetectados = res.estructura;
+        qcBulkTexto.value = '[Contenido cargado desde ' + f.name + ']';
+        renderPreviewDesdeCaps();
+        toast('EPUB procesado: ' + contarTotalCaps(res.estructura) + ' capítulos');
+      } else {
+        qcBulkTexto.value = res.texto;
+        actualizarBulkInfo();
+        toast('Archivo cargado');
+      }
+    } catch (err) {
+      toast(err.message || 'No se pudo procesar el archivo');
+      qcBulkInfo.innerHTML = '<strong style="color:var(--danger)">✗ ' + esc(err.message || 'Error') + '</strong>';
+      qcBulkTexto.value = '';
+      qcCapsDetectados = [];
+      actualizarQcWc();
     }
   });
 
@@ -3293,7 +3567,9 @@
     } else {
       const texto = qcBulkTexto.value;
       if (!texto.trim()) { toast('Pega o sube el texto primero'); return; }
-      const detectado = detectarEstructura(texto);
+      const detectado = (qcCapsDetectados && qcCapsDetectados.length)
+        ? qcCapsDetectados
+        : detectarEstructura(texto);
       if (!detectado.length) { toast('No hay texto para importar'); return; }
 
       const intros = detectado.filter(x => x.tipo === 'intro');
@@ -3440,8 +3716,6 @@
     const directos = (l.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
     const secciones = (l.secciones || []).filter(s => (s.titulo||'').trim());
 
-    // NOTA: la introducción YA NO se muestra en el cuerpo del lector.
-    // Solo se muestra en la tarjeta + botón "Leer introducción".
     if (!directos.length && !secciones.length) {
       rBody.classList.add('sin-texto');
       rBody.innerHTML = 'Este libro todavía no tiene contenido.<br><br>Pulsa el botón + de arriba para añadir.';
@@ -3623,7 +3897,6 @@
         actualizarWC();
       });
     });
-    // BUG FIX: usar btn.dataset.capDel
     cont.querySelectorAll('[data-cap-del]').forEach(btn => {
       btn.addEventListener('click', () => {
         if (!confirm('¿Eliminar este capítulo?')) return;
@@ -4249,7 +4522,6 @@
   }
 
   grid.addEventListener('click', (e) => {
-    // Botón "Leer introducción" (abre el modal de descripción, no el lector)
     const leerDesc = e.target.closest('[data-leer-desc]');
     if (leerDesc) {
       e.stopPropagation();

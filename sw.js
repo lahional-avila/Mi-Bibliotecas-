@@ -1,9 +1,10 @@
 // Service Worker — cache offline para la PWA
-const CACHE_NAME = 'biblioteca-v4';
+const CACHE_NAME = 'biblioteca-v5';
 const ASSETS = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js'
 ];
 
 self.addEventListener('install', (event) => {
@@ -29,10 +30,9 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  // No cachear peticiones a APIs externas
-  if (url.origin !== self.location.origin) return;
+  const esCDN = url.hostname.includes('jsdelivr.net');
 
-  // HTML: network-first (para recibir actualizaciones) con fallback al cache
+  // HTML: network-first con fallback al cache
   if (req.destination === 'document' || req.mode === 'navigate') {
     event.respondWith(
       fetch(req)
@@ -46,7 +46,24 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Resto de assets: cache-first con actualización en background
+  // CDN de JSZip: cache-first estricto
+  if (esCDN) {
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        if (cached) return cached;
+        return fetch(req).then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
+          }
+          return res;
+        }).catch(() => cached);
+      })
+    );
+    return;
+  }
+
+  // Resto: cache-first con actualización en background
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
