@@ -1,10 +1,9 @@
 // Service Worker — cache offline para la PWA
-const CACHE_NAME = 'biblioteca-v7';
+const CACHE_NAME = 'biblioteca-v9';
 const ASSETS = [
   './',
   './index.html',
-  './manifest.json',
-  'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js'
+  './manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
@@ -30,7 +29,7 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  const esCDN = url.hostname.includes('jsdelivr.net');
+  if (url.origin !== self.location.origin) return;
 
   if (req.destination === 'document' || req.mode === 'navigate') {
     event.respondWith(
@@ -41,22 +40,6 @@ self.addEventListener('fetch', (event) => {
           return res;
         })
         .catch(() => caches.match(req).then((r) => r || caches.match('./index.html')))
-    );
-    return;
-  }
-
-  if (esCDN) {
-    event.respondWith(
-      caches.match(req).then((cached) => {
-        if (cached) return cached;
-        return fetch(req).then((res) => {
-          if (res.ok) {
-            const copy = res.clone();
-            caches.open(CACHE_NAME).then((c) => c.put(req, copy)).catch(() => {});
-          }
-          return res;
-        }).catch(() => cached);
-      })
     );
     return;
   }

@@ -8,9 +8,7 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
-<link rel="manifest" href="manifest.json?v=7" />
-
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<link rel="manifest" href="manifest.json?v=9" />
 
 <script>
   try{
@@ -20,7 +18,7 @@
   }catch(e){}
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js?v=7').catch(()=>{});
+      navigator.serviceWorker.register('sw.js?v=9').catch(()=>{});
     });
   }
 </script>
@@ -411,6 +409,14 @@
   .cap-resumen p{margin:0 0 1em}
   .cap-resumen p:last-child{margin-bottom:0}
   .cap-resumen.vacio{font-style:italic;color:var(--muted);font-family:inherit;font-size:.85rem;padding-top:4px}
+  .cap-subtitulo{
+    font-family:var(--serif);font-size:1.08em;font-weight:800;
+    color:var(--cat-c1,var(--accent));
+    margin:1.4em 0 .6em;padding-top:.6em;
+    border-top:1px dashed color-mix(in srgb,var(--border) 70%, transparent);
+    line-height:1.3;
+  }
+  .cap-subtitulo:first-child{margin-top:0;border-top:none;padding-top:0}
   .cap-notas{margin-top:14px;padding-top:12px;border-top:1px dashed var(--border)}
   .cap-notas-label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
   .cap-notas-label svg{width:12px;height:12px;color:var(--nota)}
@@ -546,6 +552,7 @@
   .hint strong{color:var(--text)}
   .hint code{background:var(--surface-2);padding:1px 5px;border-radius:4px;font-size:.78rem;border:1px solid var(--border)}
   .hint a{color:var(--accent);text-decoration:underline}
+
   .sync-status{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;font-size:.85rem;margin-bottom:10px}
   .sync-status.ok{background:color-mix(in srgb,var(--ok) 12%, transparent);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 30%, transparent)}
   .sync-status.err{background:color-mix(in srgb,var(--danger) 10%, transparent);color:var(--danger);border:1px solid color-mix(in srgb,var(--danger) 30%, transparent)}
@@ -570,6 +577,7 @@
   .frag-controls input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%, transparent)}
   .frag-preview{font-family:var(--serif);font-size:.92rem;line-height:1.6;padding:11px 13px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);max-height:140px;overflow-y:auto;color:var(--text);font-style:italic}
   .frag-preview strong{font-style:normal;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+
   .qc-tabs{display:flex;gap:4px;background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:3px;margin-bottom:4px}
   .qc-tab{flex:1;font:inherit;font-size:.8rem;font-weight:700;padding:8px 12px;border-radius:8px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:.15s}
   .qc-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
@@ -617,6 +625,18 @@
   }
   .batch-errores ul{margin:4px 0 0;padding-left:18px}
   .batch-errores li{margin:2px 0;word-break:break-word}
+
+  .sync-divider{height:1px;background:var(--border);margin:6px 0}
+  .sync-checkbox{display:flex;align-items:center;gap:8px;font-size:.84rem;font-weight:600;color:var(--text);cursor:pointer;padding:8px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px}
+  .sync-checkbox input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
+  .sync-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+  .sync-buttons .btn{width:100%;padding:10px 12px;font-size:.84rem}
+  .sync-status-inline{font-size:.72rem;color:var(--muted);margin-top:6px;padding:6px 10px;background:var(--surface-2);border-radius:8px;border:1px dashed var(--border)}
+  .sync-status-inline.warn{color:#a16207;background:color-mix(in srgb,var(--nota) 10%, transparent);border-color:color-mix(in srgb,var(--nota) 40%, transparent)}
+
+  @media(max-width:640px){
+    .sync-buttons{grid-template-columns:1fr}
+  }
 
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
@@ -882,9 +902,9 @@
           <path d="M12 3v12"/>
         </svg>
         <strong>Cargar archivo(s)</strong>
-        <small>EPUB · TXT · MD — se extrae título, autor, género y portada</small>
+        <small>Solo <strong>.txt</strong> o <strong>.md</strong> — Convertí EPUB a TXT con Calibre</small>
       </button>
-      <p class="hint" style="margin:0;text-align:center">Podés cargar <strong>varios archivos a la vez</strong>. Se procesan en lote.</p>
+      <p class="hint" style="margin:0;text-align:center">Podés cargar <strong>varios archivos a la vez</strong>. Se procesan en lote y se busca la portada automáticamente en Google Books.</p>
       <button type="button" class="nuevo-opcion" id="nuevoVacio">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
@@ -893,7 +913,7 @@
         <small>Empezar con editor en blanco</small>
       </button>
     </div>
-    <input type="file" id="nuevoFileInput" accept=".epub,.txt,.md,application/epub+zip,text/plain" multiple hidden />
+    <input type="file" id="nuevoFileInput" accept=".txt,.md,text/plain,text/markdown" multiple hidden />
   </div>
 </dialog>
 
@@ -1026,17 +1046,19 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
               Subir archivo
             </button>
-            <input type="file" id="qcFile" accept=".epub,.txt,.md,application/epub+zip,text/plain" hidden />
+            <input type="file" id="qcFile" accept=".txt,.md,text/plain,text/markdown" hidden />
           </div>
         </div>
       </div>
 
       <div data-qc-panel="varios" style="display:none">
-        <p class="hint">Pega el libro completo o subí un <strong>EPUB / TXT / MD</strong>. Los EPUB se procesan por estructura real (capítulos, partes, TOC). Los MOBI/AZW/PDF no se pueden procesar: convertílos a EPUB con <a href="https://calibre-ebook.com/" target="_blank" rel="noopener">Calibre</a>.<br>
-        <strong>Si un EPUB sale raro</strong>, probá convertirlo a TXT con Calibre y subir el .txt.</p>
+        <p class="hint">Pega el libro completo o subí un <strong>TXT / MD</strong>. Los EPUB se convierten a TXT previamente con <a href="https://calibre-ebook.com/" target="_blank" rel="noopener">Calibre</a>.<br>
+        <strong>Secciones</strong>: <code>Parte I</code>, <code>PRIMERA PARTE:</code>, <code>LIBRO PRIMERO</code>.<br>
+        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>1. Título</code>, <code>1 TÍTULO</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>.<br>
+        <strong>Introducción / Prefacio</strong> se auto-asigna como descripción del libro.</p>
         <div class="field">
           <label for="qcBulkTexto">Texto completo</label>
-          <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero o subí un EPUB…" style="min-height:220px"></textarea>
+          <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero o subí un TXT…" style="min-height:220px"></textarea>
           <div class="qc-actions">
             <button type="button" class="btn btn-ghost btn-sm" id="qcBulkPegar">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
@@ -1046,7 +1068,7 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
               Subir archivo
             </button>
-            <input type="file" id="qcBulkFile" accept=".epub,.txt,.md,application/epub+zip,text/plain" hidden />
+            <input type="file" id="qcBulkFile" accept=".txt,.md,text/plain,text/markdown" hidden />
           </div>
         </div>
 
@@ -1124,9 +1146,13 @@
         <div class="cover-row">
           <div class="cover-mini" id="edCoverMini">Sin portada</div>
           <div class="cover-btns">
+            <button type="button" class="btn btn-primary" id="edBuscarPortadaAuto">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+              🔍 Buscar portada
+            </button>
             <button type="button" class="btn btn-ghost" id="edBuscarPortada">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-              Buscar en Google
+              Google Imágenes
             </button>
             <button type="button" class="btn btn-ghost" id="edSubirPortada">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
@@ -1196,23 +1222,60 @@
       </button>
     </header>
     <div class="editor-body">
-      <p class="hint">Usa un <strong>GitHub Gist secreto</strong> como nube. Token con permiso <code>gist</code> + ID del Gist.</p>
-      <p class="hint" style="color:#a16207"><strong>Nota:</strong> con 50+ libros el Gist puede ser lento. Para bibliotecas grandes, usá Exportar respaldo JSON.</p>
+      <p class="hint">Arquitectura de 2 capas: <strong>estado ligero en Gist</strong> (progreso, favoritos) + <strong>contenido completo en GitHub Releases</strong> (libros + portadas).</p>
+
       <div class="field">
         <label for="syncToken">Token de GitHub (PAT)</label>
         <input type="password" id="syncToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" />
       </div>
       <div class="field">
-        <label for="syncGistId">ID del Gist</label>
+        <label for="syncGistId">ID del Gist (estado ligero)</label>
         <input type="text" id="syncGistId" placeholder="Ej. 2decf6c462d9b4418f2" autocomplete="off" />
       </div>
-      <div id="syncStatus"></div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <button type="button" class="btn btn-primary" id="btnSyncUpload" style="width:100%">Subir mis datos a GitHub</button>
-        <button type="button" class="btn btn-ghost" id="btnSyncDownload" style="width:100%">Descargar datos desde GitHub</button>
-        <button type="button" class="btn btn-ghost" id="btnSyncAuto" style="width:100%">Sincronizar (el más reciente gana)</button>
+
+      <div class="sync-divider"></div>
+
+      <div class="field">
+        <label for="syncContenidoUrl">URL del contenido completo (opcional)</label>
+        <input type="url" id="syncContenidoUrl" placeholder="https://github.com/user/repo/releases/download/v1/biblioteca.json" autocomplete="off" />
+        <p class="hint" style="font-size:.72rem;margin:4px 0 0">
+          Subí el JSON a <strong>GitHub Releases</strong> y pegá la URL directa.
+        </p>
       </div>
-      <p class="hint" style="margin-top:8px">El token se guarda solo en este dispositivo.</p>
+
+      <label class="sync-checkbox">
+        <input type="checkbox" id="syncAutoEstado" />
+        Al abrir la app, descargar estado automáticamente
+      </label>
+
+      <div id="syncStatus"></div>
+      <div id="syncSizeInfo" class="sync-status-inline" style="display:none"></div>
+
+      <div class="sync-buttons">
+        <button type="button" class="btn btn-primary" id="btnSyncUploadEstado">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+          Subir estado
+        </button>
+        <button type="button" class="btn btn-ghost" id="btnSyncDownloadEstado">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          Descargar estado
+        </button>
+        <button type="button" class="btn btn-primary" id="btnSyncUploadContenido">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+          Subir contenido
+        </button>
+        <button type="button" class="btn btn-ghost" id="btnSyncDownloadContenido">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          Descargar contenido
+        </button>
+      </div>
+
+      <p class="hint" style="font-size:.72rem;margin-top:8px">
+        <strong>Flujo:</strong><br>
+        • Setup inicial: «Subir todo» en PC → «Descargar todo» en tablet/celular<br>
+        • Día a día: «Subir estado» → «Descargar estado» en el otro<br>
+        • Libros nuevos: «Subir contenido» → «Descargar contenido» en el otro
+      </p>
     </div>
     <footer class="editor-foot">
       <span class="wc" id="syncLast">Nunca sincronizado</span>
@@ -1334,6 +1397,8 @@
   const DB_BOOKS = 'books';
   const SYNC_TOKEN_KEY = 'biblioteca-sync-token';
   const SYNC_GIST_KEY = 'biblioteca-sync-gist';
+  const SYNC_CONTENIDO_URL_KEY = 'biblioteca-sync-contenido-url';
+  const SYNC_AUTO_ESTADO_KEY = 'biblioteca-sync-auto-estado';
   const SYNC_LAST_KEY = 'biblioteca-sync-last';
   const $ = (s) => document.querySelector(s);
 
@@ -1344,7 +1409,7 @@
     { id:'ciencia',   nombre:'Ciencia',              c1:'#0ea5e9', c2:'#06b6d4', keywords:['cosmos','fisica','cuantica','astrofisica','neurociencia','cerebro','agujero negro','universo','evolucion','gen','biologia','anatomia','astronomia','ciencia','science','physics','biology','astronomy','mathematics','math'] },
     { id:'filosofia', nombre:'Filosofía',             c1:'#8b5cf6', c2:'#d946ef', keywords:['meditaciones','estoico','seneca','maquiavelo','schopenhauer','nietzsche','camus','sisifo','filosofia','arte de la guerra','sun tzu','platon','aristoteles','philosophy','philosophical'] },
     { id:'psicologia',nombre:'Psicología',            c1:'#10b981', c2:'#059669', keywords:['psicologia','mente','emocional','sociopata','narcisista','trauma','terapia','psicoanalisis','freud','jung','conducta','gaslighting','manipulacion','psicologica','limites','asertividad','comunicacion no violenta','empatia','inteligencia emocional','psychology','mental health','therapy'] },
-    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','carisma','confianza','motivacion','proposito','manifestacion','poder del ahora','piense y hagase rico','12 reglas','padre rico','models','mark manson','self-help','self help','personal development','productivity','success','motivation','growth'] },
+    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','carisma','confianza','motivacion','proposito','manifestacion','poder del ahora','piense y hagase rico','12 reglas','padre rico','models','mark manson','self-help','self help','personal development','productivity','success','motivation','growth','tipo lindo','no more mr nice guy','robert glover'] },
     { id:'historia',  nombre:'Historia',              c1:'#a16207', c2:'#78350f', keywords:['historia','imperio','revolucion','siglo','antigua','roma','grecia','egipto','cristianismo','religion','history','historical','war'] },
     { id:'biografia', nombre:'Biografía',             c1:'#3b82f6', c2:'#6366f1', keywords:['memorias','diario','autobiografia','vida de','biografia','biography','autobiography','memoir'] },
     { id:'negocios',  nombre:'Negocios',              c1:'#14b8a6', c2:'#0ea5e9', keywords:['negocio','empresa','economia','marketing','ventas','inversion','finanzas','emprendedor','creatividad','business','economics','finance','entrepreneur'] },
@@ -1686,7 +1751,7 @@
     }
   }
 
-  /* ═══════════════ PERSISTENCIA (IndexedDB + migración) ═══════════════ */
+  /* ═══════════════ PERSISTENCIA ═══════════════ */
   function normalizarLibro(l) {
     if (!Array.isArray(l.capitulos)) l.capitulos = [];
     if (!Array.isArray(l.secciones)) l.secciones = [];
@@ -1699,7 +1764,6 @@
   }
 
   async function cargar() {
-    // 1. Try IndexedDB
     try {
       const raw = await dbGet(DB_BOOKS, 'main');
       if (raw && Array.isArray(raw)) {
@@ -1710,7 +1774,6 @@
       console.warn('IDB read failed, fallback to localStorage', e);
     }
 
-    // 2. Migrate from localStorage v7
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (raw) {
@@ -1722,7 +1785,6 @@
       }
     } catch {}
 
-    // 3. Migrate from v6
     try {
       const old = localStorage.getItem(LS_KEY_OLD);
       if (old) {
@@ -1756,7 +1818,6 @@
     saving = true;
     try {
       await dbPut(DB_BOOKS, 'main', libros);
-      // Fallback a localStorage solo si es chico
       try {
         const json = JSON.stringify(libros);
         if (json.length < 3 * 1024 * 1024) {
@@ -1777,7 +1838,6 @@
     }
   }
 
-  // Flush al ocultar/cerrar pestaña
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden' && saveTimer) {
       clearTimeout(saveTimer);
@@ -2271,6 +2331,13 @@
       totalFrags = parrafosFrags.reduce((a, f) => a + f.length, 0);
       let contador = 0;
       resumenHTML = parrafosFrags.map(frags => {
+        const firstFrag = frags[0] || '';
+        if (firstFrag.startsWith('\u200B#SUB#')) {
+          frags[0] = firstFrag.substring(6);
+          const texto = frags.join(' ').trim();
+          const i = contador++;
+          return `<h4 class="cap-subtitulo"><span class="tts-frag" data-frag="${i}">${esc(texto)}</span></h4>`;
+        }
         const spans = frags.map(f => {
           const i = contador++;
           return `<span class="tts-frag" data-frag="${i}">${esc(f)}</span>`;
@@ -2934,415 +3001,15 @@
     }
   }
 
-  /* ═══════════════ LECTOR MULTI-FORMATO ═══════════════ */
+  /* ═══════════════ LECTOR DE ARCHIVO (SOLO TXT/MD) ═══════════════ */
   async function leerArchivo(file) {
     const nombre = (file.name || '').toLowerCase();
     const ext = nombre.includes('.') ? nombre.slice(nombre.lastIndexOf('.')) : '';
-
-    if (ext === '.epub' || file.type === 'application/epub+zip') {
-      return await procesarEPUB(file);
-    }
-    if (ext === '.mobi' || ext === '.azw' || ext === '.azw3') {
-      throw new Error('Formato Amazon (MOBI/AZW) no soportado. Convertílo a EPUB con Calibre (calibre-ebook.com).');
-    }
-    if (ext === '.pdf' || file.type === 'application/pdf') {
-      throw new Error('PDF no soportado directamente. Convertílo a EPUB con Calibre.');
-    }
     if (ext === '.txt' || ext === '.md' || ext === '' || (file.type && file.type.startsWith('text/'))) {
       const txt = await file.text();
       return { texto: txt };
     }
-    throw new Error('Extensión no reconocida: ' + (ext || 'sin extensión'));
-  }
-
-  function esTituloTOC(titulo) {
-    const t = normalizar(titulo).replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
-    return /^(tabla de contenidos?|indices?|contenidos?|contents?|table of contents|sumario|indice general|sumario general)$/.test(t);
-  }
-  function esTituloIntro(titulo) {
-    const t = String(titulo || '').trim();
-    if (/^(introducci[oó]n|prefacio|pr[oó]logo|proemio|presentaci[oó]n|pr[eé]ambulo)(\s*[:.\-–—]\s*.*)?$/i.test(t)) return true;
-    if (/^(una\s+)?nota\s+(r[aá]pida\s+)?(para|del?|de\s+los?)\s+/i.test(t)) return true;
-    if (/^nota\s+(del?|de\s+los?)\s+autor\b/i.test(t)) return true;
-    return false;
-  }
-  function esTituloCapitulo(titulo) {
-    const t = String(titulo || '').trim();
-    return /^(cap[ií]tulo|chapter|cap\.|chap\.|parte|part|libro|secci[oó]n|section)\s+/i.test(t);
-  }
-
-  function procesarXHTML(body, ordenBase) {
-    const resultado = [];
-    const headings = body.querySelectorAll('h1, h2, h3, h4');
-    if (headings.length === 0) return resultado;
-
-    const allEls = body.querySelectorAll('*');
-    let marcadorActual = null;
-    let buffer = [];
-    let orden = 0;
-
-    const flushActual = () => {
-      if (!marcadorActual) return;
-      const resumen = buffer.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-      resultado.push({ ...marcadorActual, resumen, orden: ordenBase + orden });
-      orden++;
-    };
-
-    allEls.forEach(el => {
-      const tag = el.tagName.toLowerCase();
-      if (/^h[1-4]$/.test(tag)) {
-        flushActual();
-        const nivel = parseInt(tag[1], 10);
-        const titulo = el.textContent.trim();
-        if (!titulo) { marcadorActual = null; buffer = []; return; }
-
-        let tipo;
-        if (esTituloTOC(titulo)) tipo = 'toc';
-        else if (esTituloIntro(titulo)) tipo = 'intro';
-        else if (nivel === 1) tipo = 'sec';
-        else tipo = 'cap';
-
-        marcadorActual = { tipo, titulo, nivel };
-        buffer = [];
-      } else if (marcadorActual && /^(p|blockquote)$/.test(tag)) {
-        const txt = el.textContent.trim();
-        if (txt) buffer.push(txt);
-      } else if (marcadorActual && tag === 'ul') {
-        el.querySelectorAll(':scope > li').forEach(li => {
-          const txt = li.textContent.trim();
-          if (txt) buffer.push('• ' + txt);
-        });
-      } else if (marcadorActual && tag === 'ol') {
-        el.querySelectorAll(':scope > li').forEach((li, i) => {
-          const txt = li.textContent.trim();
-          if (txt) buffer.push((i + 1) + '. ' + txt);
-        });
-      }
-    });
-    flushActual();
-
-    return resultado;
-  }
-
-  function descartarEsqueletoInicial(items) {
-    if (items.length < 5) return items;
-    let primerContenido = -1;
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].resumen.length >= 150) {
-        const esCopyright = /copyright|derechos reservados|all rights reserved|isbn/i.test(items[i].resumen.slice(0, 150));
-        if (!esCopyright) { primerContenido = i; break; }
-      }
-    }
-    if (primerContenido <= 0) return items;
-    const antes = items.slice(0, primerContenido);
-    const conContenido = antes.filter(x => x.resumen.length >= 100).length;
-    const huerfanos = antes.filter(x => x.resumen.length < 50).length;
-    if (huerfanos < 3) return items;
-    if (conContenido > 1) return items;
-    return items.slice(primerContenido);
-  }
-
-  function normalizarTituloClave(t) {
-    return String(t || '').toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/^(cap[ií]tulo|chapter|parte|part|libro|secci[oó]n|section)\s+[ivxlcdm\d]+\s*[:.\-–—]?\s*/i, '')
-      .replace(/[^\w\s]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-  function eliminarDuplicados(items) {
-    const porClave = new Map();
-    items.forEach((item, i) => {
-      const key = normalizarTituloClave(item.titulo);
-      if (!key) return;
-      if (!porClave.has(key)) porClave.set(key, []);
-      porClave.get(key).push({ item, i });
-    });
-    const eliminar = new Set();
-    for (const [key, lista] of porClave) {
-      if (lista.length <= 1) continue;
-      const conContenido = lista.filter(x => x.item.resumen.length >= 100);
-      if (conContenido.length === 0) continue;
-      const mejor = conContenido.reduce((a, b) => a.item.resumen.length >= b.item.resumen.length ? a : b);
-      for (const x of lista) {
-        if (x !== mejor) eliminar.add(x.i);
-      }
-    }
-    return items.filter((_, i) => !eliminar.has(i));
-  }
-
-  function fusionarTitulosHuerfanos(items) {
-    const resultado = [];
-    for (let i = 0; i < items.length; i++) {
-      const actual = items[i];
-      const siguiente = items[i + 1];
-      if (actual.resumen.length < 30 &&
-          esTituloCapitulo(actual.titulo) &&
-          siguiente &&
-          siguiente.resumen.length >= 100 &&
-          siguiente.tipo !== 'intro' &&
-          siguiente.tipo !== 'toc') {
-        resultado.push({
-          tipo: 'cap',
-          titulo: actual.titulo + ': ' + siguiente.titulo,
-          nivel: 1,
-          resumen: siguiente.resumen,
-          orden: actual.orden
-        });
-        i++;
-        continue;
-      }
-      resultado.push(actual);
-    }
-    return resultado;
-  }
-
-  function limpiarItemsEPUB(items) {
-    let limpios = items.filter(x => x.tipo !== 'toc');
-    limpios = descartarEsqueletoInicial(limpios);
-    limpios = fusionarTitulosHuerfanos(limpios);
-    limpios = eliminarDuplicados(limpios);
-    return limpios;
-  }
-
-  function agruparEnSecciones(items) {
-    const intros = [];
-    const flujo = [];
-    let secActual = null;
-
-    for (const item of items) {
-      if (item.tipo === 'intro') {
-        intros.push(item);
-        secActual = null;
-        continue;
-      }
-      if (item.tipo === 'sec') {
-        const sec = { tipo: 'sec', titulo: item.titulo, capitulos: [] };
-        if (item.resumen.length >= 200) {
-          sec.capitulos.push({ tipo: 'cap', titulo: 'Introducción', resumen: item.resumen });
-        }
-        flujo.push(sec);
-        secActual = sec;
-      } else if (item.tipo === 'cap') {
-        if (secActual) secActual.capitulos.push(item);
-        else flujo.push(item);
-      }
-    }
-
-    const resultado = flujo.map(x => {
-      if (x.tipo === 'sec' && x.capitulos.length === 0) {
-        return { tipo: 'cap', titulo: x.titulo, resumen: '' };
-      }
-      return x;
-    });
-
-    return { intros, resultado };
-  }
-
-  async function extraerMetadatosEPUB(opfDoc, zip, opfDir, manifest) {
-    function getDC(tag) {
-      const el = opfDoc.querySelector(`metadata > *[localName="${tag}"]`) ||
-                 opfDoc.querySelector(`metadata > ${tag}`) ||
-                 opfDoc.querySelector(`metadata > dc\\:${tag}`);
-      return el ? el.textContent.trim() : '';
-    }
-
-    const titulo = getDC('title');
-    const autor = getDC('creator');
-    const descripcion = getDC('description');
-
-    const subjects = [];
-    opfDoc.querySelectorAll('metadata > *[localName="subject"], metadata > subject, metadata > dc\\:subject').forEach(el => {
-      const s = el.textContent.trim();
-      if (s) subjects.push(s);
-    });
-
-    const categoria = detectarCategoria(titulo, autor, subjects);
-
-    let coverId = null;
-    opfDoc.querySelectorAll('metadata > meta').forEach(el => {
-      if ((el.getAttribute('name') || '').toLowerCase() === 'cover') {
-        coverId = el.getAttribute('content');
-      }
-    });
-
-    let coverItem = null;
-    if (coverId && manifest[coverId]) {
-      coverItem = manifest[coverId];
-    } else {
-      for (const id in manifest) {
-        if (manifest[id].properties && manifest[id].properties.includes('cover-image')) {
-          coverItem = manifest[id];
-          break;
-        }
-      }
-    }
-    if (!coverItem) {
-      for (const id in manifest) {
-        if (/cover/i.test(id) && /\.(jpe?g|png|gif|webp)$/i.test(manifest[id].href)) {
-          coverItem = manifest[id];
-          break;
-        }
-      }
-    }
-
-    let coverBlob = null;
-    if (coverItem) {
-      try {
-        const imgFile = zip.file(coverItem.href);
-        if (imgFile) coverBlob = await imgFile.async('blob');
-      } catch (e) { console.warn('Cover extraction failed', e); }
-    }
-
-    return { titulo, autor, descripcion, categoria, coverBlob, subjects };
-  }
-
-  async function procesarEPUB(file) {
-    if (typeof JSZip === 'undefined') {
-      throw new Error('El lector EPUB no está cargado. Conectate a internet una vez y volvé a intentar.');
-    }
-    const zip = await JSZip.loadAsync(file);
-
-    const containerFile = zip.file('META-INF/container.xml');
-    if (!containerFile) throw new Error('EPUB inválido: sin META-INF/container.xml');
-    const containerXml = await containerFile.async('string');
-    const containerDoc = new DOMParser().parseFromString(containerXml, 'application/xml');
-    const rootfileEl = containerDoc.querySelector('rootfile');
-    if (!rootfileEl) throw new Error('EPUB inválido: sin rootfile');
-    const opfPath = rootfileEl.getAttribute('full-path');
-
-    const opfFile = zip.file(opfPath);
-    if (!opfFile) throw new Error('EPUB inválido: sin ' + opfPath);
-    const opfXml = await opfFile.async('string');
-    const opfDir = opfPath.includes('/') ? opfPath.slice(0, opfPath.lastIndexOf('/') + 1) : '';
-    const opfDoc = new DOMParser().parseFromString(opfXml, 'application/xml');
-
-    const manifest = {};
-    opfDoc.querySelectorAll('manifest > item').forEach(item => {
-      const id = item.getAttribute('id');
-      const href = item.getAttribute('href');
-      const props = item.getAttribute('properties') || '';
-      if (id && href) manifest[id] = { href: opfDir + href, properties: props };
-    });
-
-    const spine = [];
-    opfDoc.querySelectorAll('spine > itemref').forEach(ref => {
-      const idref = ref.getAttribute('idref');
-      if (idref && manifest[idref]) spine.push(manifest[idref].href);
-    });
-
-    // Metadata (título, autor, descripción, categoría, portada)
-    const meta = await extraerMetadatosEPUB(opfDoc, zip, opfDir, manifest);
-
-    // navMap
-    const navMap = {};
-    let navPath = null;
-    for (const id in manifest) {
-      if (manifest[id].properties && manifest[id].properties.includes('nav')) {
-        navPath = manifest[id].href;
-        break;
-      }
-    }
-    if (navPath) {
-      try {
-        const navXml = await zip.file(navPath)?.async('string');
-        if (navXml) {
-          const navDoc = new DOMParser().parseFromString(navXml, 'application/xhtml+xml');
-          navDoc.querySelectorAll('nav a[href]').forEach(a => {
-            const href = a.getAttribute('href');
-            if (!href) return;
-            const cleaned = href.split('#')[0];
-            const base = navPath.includes('/') ? navPath.slice(0, navPath.lastIndexOf('/') + 1) : '';
-            const fullHref = base + cleaned;
-            const label = a.textContent.trim();
-            if (!navMap[fullHref] && label) navMap[fullHref] = label;
-          });
-        }
-      } catch {}
-    }
-    const spineEl = opfDoc.querySelector('spine');
-    const tocId = spineEl?.getAttribute('toc');
-    if (tocId && manifest[tocId]) {
-      const ncxPath = manifest[tocId].href;
-      try {
-        const ncxXml = await zip.file(ncxPath)?.async('string');
-        if (ncxXml) {
-          const ncxDoc = new DOMParser().parseFromString(ncxXml, 'application/xml');
-          ncxDoc.querySelectorAll('navPoint').forEach(np => {
-            const label = np.querySelector('navLabel text')?.textContent?.trim();
-            const src = np.querySelector('content')?.getAttribute('src');
-            if (label && src) {
-              const href = src.split('#')[0];
-              const base = ncxPath.includes('/') ? ncxPath.slice(0, ncxPath.lastIndexOf('/') + 1) : '';
-              const fullHref = base + href;
-              if (!navMap[fullHref]) navMap[fullHref] = label;
-            }
-          });
-        }
-      } catch {}
-    }
-
-    const items = [];
-    let ordenGlobal = 0;
-    for (const itemPath of spine) {
-      const xhtml = await zip.file(itemPath)?.async('string');
-      if (!xhtml) continue;
-
-      let doc = new DOMParser().parseFromString(xhtml, 'application/xhtml+xml');
-      if (doc.querySelector('parsererror')) {
-        doc = new DOMParser().parseFromString(xhtml, 'text/html');
-      }
-      const body = doc.body || doc.documentElement;
-      if (!body) continue;
-
-      const itemsArchivo = procesarXHTML(body, ordenGlobal);
-
-      if (itemsArchivo.length === 0) {
-        const texto = textoPlanoDe(body);
-        const tituloNav = navMap[itemPath] || doc.querySelector('title')?.textContent?.trim() || '';
-        if (texto && texto.trim().length > 100 && tituloNav) {
-          itemsArchivo.push({
-            tipo: esTituloTOC(tituloNav) ? 'toc' : esTituloIntro(tituloNav) ? 'intro' : 'cap',
-            titulo: tituloNav,
-            nivel: 2,
-            resumen: texto.trim(),
-            orden: ordenGlobal
-          });
-        }
-      }
-
-      items.push(...itemsArchivo);
-      ordenGlobal += Math.max(itemsArchivo.length, 1);
-    }
-
-    const itemsLimpios = limpiarItemsEPUB(items);
-    const { intros, resultado } = agruparEnSecciones(itemsLimpios);
-
-    const final = [];
-    if (intros.length > 0) {
-      const textoIntro = intros.map(i => i.resumen).filter(Boolean).join('\n\n');
-      if (textoIntro) final.push({ tipo: 'intro', titulo: 'Introducción', resumen: textoIntro });
-    }
-    final.push(...resultado);
-
-    return {
-      estructura: final,
-      titulo: meta.titulo || '',
-      autor: meta.autor || '',
-      descripcion: meta.descripcion || '',
-      categoria: meta.categoria || 'general',
-      coverBlob: meta.coverBlob
-    };
-  }
-
-  function textoPlanoDe(el) {
-    const partes = [];
-    el.querySelectorAll('p, li, blockquote').forEach(p => {
-      const t = p.textContent.trim();
-      if (t) partes.push(t);
-    });
-    if (partes.length === 0) return el.textContent.replace(/\s+/g, ' ').trim();
-    return partes.join('\n\n');
+    throw new Error('Solo se aceptan archivos .txt o .md. Convertí tu EPUB a TXT con Calibre primero.');
   }
 
   /* ═══════════════ DETECTOR DE ESTRUCTURA (TXT/MD) ═══════════════ */
@@ -3700,38 +3367,9 @@
     try {
       toast('Procesando ' + f.name + '…');
       const res = await leerArchivo(f);
-      if (res.estructura) {
-        const totalCaps = contarTotalCaps(res.estructura);
-        if (totalCaps > 1) {
-          const ir = confirm(
-            'El archivo "' + f.name + '" contiene ' + totalCaps + ' capítulos.\n\n' +
-            'Aceptar = cambiar a la pestaña "Importar libro".\n' +
-            'Cancelar = importarlo como un único capítulo.'
-          );
-          if (ir) {
-            document.querySelectorAll('.qc-tab').forEach(t => t.classList.toggle('active', t.dataset.qcTab === 'varios'));
-            document.querySelectorAll('[data-qc-panel]').forEach(p => {
-              p.style.display = p.dataset.qcPanel === 'varios' ? '' : 'none';
-            });
-            qcTabActivo = 'varios';
-            qcCapsDetectados = res.estructura;
-            qcBulkTexto.value = '[Contenido cargado desde ' + f.name + ']';
-            renderPreviewDesdeCaps();
-            return;
-          }
-          const todoTexto = extraerTodoTexto(res.estructura);
-          qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + todoTexto;
-        } else if (totalCaps === 1) {
-          const c = res.estructura[0];
-          if (!qcTitulo.value.trim() || qcTitulo.value.startsWith('Capítulo ')) qcTitulo.value = c.titulo || qcTitulo.value;
-          qcResumen.value = c.resumen || '';
-        }
-        actualizarQcWc();
-      } else {
-        if (quizasSugerirMulti(res.texto)) return;
-        qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + res.texto;
-        actualizarQcWc();
-      }
+      if (quizasSugerirMulti(res.texto)) return;
+      qcResumen.value = (qcResumen.value ? qcResumen.value + '\n\n' : '') + res.texto;
+      actualizarQcWc();
       toast('Archivo cargado');
     } catch (err) {
       toast(err.message || 'No se pudo procesar el archivo');
@@ -3755,24 +3393,11 @@
     try {
       toast('Procesando ' + f.name + '…');
       const res = await leerArchivo(f);
-      if (res.estructura) {
-        qcCapsDetectados = res.estructura;
-        qcBulkTexto.value = '[Contenido cargado desde ' + f.name + ']';
-        renderPreviewDesdeCaps();
-        const total = contarTotalCaps(res.estructura);
-        const secs = res.estructura.filter(x => x.tipo === 'sec').length;
-        toast(`EPUB: ${secs} sección${secs===1?'':'es'} · ${total} capítulo${total===1?'':'s'}`);
-      } else {
-        qcBulkTexto.value = res.texto;
-        actualizarBulkInfo();
-        toast('Archivo cargado');
-      }
+      qcBulkTexto.value = res.texto;
+      actualizarBulkInfo();
+      toast('Archivo cargado');
     } catch (err) {
       toast(err.message || 'No se pudo procesar el archivo');
-      qcBulkInfo.innerHTML = '<strong style="color:var(--danger)">✗ ' + esc(err.message || 'Error') + '</strong>';
-      qcBulkTexto.value = '';
-      qcCapsDetectados = [];
-      actualizarQcWc();
     }
   });
 
@@ -4054,6 +3679,112 @@
         elegirMejorVoz();
       }, 60);
     });
+  }
+
+  /* ═══════════════ BUSCAR PORTADA EN INTERNET ═══════════════ */
+  async function buscarPortadaEnInternet(titulo, autor) {
+    if (!titulo) return null;
+
+    // 1. Google Books
+    try {
+      const queries = [];
+      if (autor) queries.push(`intitle:${titulo} inauthor:${autor}`);
+      queries.push(`intitle:${titulo}`);
+      if (autor) queries.push(`${titulo} ${autor}`);
+
+      for (const q of queries) {
+        try {
+          const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}&maxResults=10&printType=books`;
+          const res = await fetch(url);
+          if (!res.ok) continue;
+          const data = await res.json();
+          if (!data.items) continue;
+
+          for (const item of data.items) {
+            const vi = item.volumeInfo;
+            if (!vi) continue;
+            let coverUrl = null;
+            if (vi.imageLinks) {
+              coverUrl = vi.imageLinks.thumbnail || vi.imageLinks.smallThumbnail || vi.imageLinks.small || vi.imageLinks.medium;
+            }
+            if (!coverUrl && item.id) {
+              coverUrl = `https://books.google.com/books/content?id=${item.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api`;
+            }
+            if (!coverUrl) continue;
+
+            // Google Books thumbnails suelen ser http → forzar https
+            coverUrl = coverUrl.replace(/^http:/, 'https:');
+            // Subir zoom para mejor calidad
+            coverUrl = coverUrl.replace(/&zoom=\d/, '&zoom=2');
+
+            try {
+              const imgRes = await fetch(coverUrl, { mode: 'cors' });
+              if (imgRes.ok) {
+                const blob = await imgRes.blob();
+                if (blob.type.startsWith('image/') && blob.size > 3000) {
+                  return blob;
+                }
+              }
+            } catch (e) {
+              console.warn('Cover fetch failed:', coverUrl, e.message);
+            }
+          }
+        } catch (e) {
+          console.warn('Google Books query failed:', q, e.message);
+        }
+      }
+    } catch (e) {
+      console.warn('Google Books search failed:', e);
+    }
+
+    // 2. Open Library
+    try {
+      const q = encodeURIComponent(titulo + (autor ? ' ' + autor : ''));
+      const res = await fetch(`https://openlibrary.org/search.json?q=${q}&limit=10`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.docs) {
+          for (const doc of data.docs) {
+            if (!doc.cover_i) continue;
+            const urls = [
+              `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
+              `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`
+            ];
+            for (const url of urls) {
+              try {
+                const imgRes = await fetch(url, { mode: 'cors' });
+                if (imgRes.ok) {
+                  const blob = await imgRes.blob();
+                  if (blob.type.startsWith('image/') && blob.size > 3000) {
+                    return blob;
+                  }
+                }
+              } catch (e) {
+                console.warn('Open Library cover fetch failed:', url, e.message);
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Open Library search failed:', e);
+    }
+
+    return null;
+  }
+
+  function extraerMetaDelNombre(nombreArchivo) {
+    const sinExt = String(nombreArchivo || '').replace(/\.(txt|md|epub|pdf|mobi|azw3?)$/i, '').trim();
+    const separadores = [' — ', ' – ', ' - ', ' | '];
+    for (const sep of separadores) {
+      if (sinExt.includes(sep)) {
+        const partes = sinExt.split(sep).map(p => p.trim()).filter(Boolean);
+        if (partes.length >= 2) {
+          return { titulo: partes[0], autor: partes[1] };
+        }
+      }
+    }
+    return { titulo: sinExt, autor: '' };
   }
 
   /* ═══════════════ EDITOR DE LIBRO ═══════════════ */
@@ -4348,7 +4079,6 @@
     refrescarCoverEditor();
     $('#edUrlPortada').value = '';
 
-    // estructuras
     const directos = [];
     const secciones = [];
     const introsExtra = [];
@@ -4424,6 +4154,33 @@
       const inp = last?.querySelector('.sec-titulo-input');
       if (inp) inp.focus();
     }, 50);
+  });
+
+  $('#edBuscarPortadaAuto').addEventListener('click', async () => {
+    const titulo = $('#fTitulo').value.trim();
+    const autor = $('#fAutor').value.trim();
+    if (!titulo) { toast('Escribe el título primero'); $('#fTitulo').focus(); return; }
+    const btn = $('#edBuscarPortadaAuto');
+    const htmlOrig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.5"/></svg> Buscando…';
+    try {
+      toast('Buscando portada en Google Books…');
+      const blob = await buscarPortadaEnInternet(titulo, autor);
+      if (blob) {
+        portadaPendiente = new File([blob], 'portada.jpg', { type: blob.type || 'image/jpeg' });
+        borrarPortadaPendiente = false;
+        refrescarCoverEditor();
+        toast('✓ Portada encontrada');
+      } else {
+        toast('No se encontró portada automáticamente');
+      }
+    } catch (e) {
+      toast('Error: ' + (e.message || 'sin conexión'));
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = htmlOrig;
+    }
   });
 
   $('#edBuscarPortada').addEventListener('click', () => {
@@ -4582,7 +4339,7 @@
     render();
   });
 
-  /* ═══════════════ NUEVO (con Cargar) ═══════════════ */
+  /* ═══════════════ NUEVO (CARGAR) ═══════════════ */
   const nuevoDialog = $('#nuevoDialog');
   const nuevoFileInput = $('#nuevoFileInput');
 
@@ -4614,36 +4371,31 @@
     try {
       toast('Procesando ' + file.name + '…');
       const res = await leerArchivo(file);
+      const meta = extraerMetaDelNombre(file.name);
+      const det = detectarEstructura(res.texto);
+      const estructura = det.length > 1 ? det : [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: res.texto }];
+      const intros = estructura.filter(x => x.tipo === 'intro');
+      const contenido = estructura.filter(x => x.tipo !== 'intro');
+      const descripcion = intros.map(i => i.resumen).filter(Boolean).join('\n\n');
 
-      if (res.estructura) {
-        // EPUB
-        const tituloFinal = res.titulo || file.name.replace(/\.[^.]+$/, '');
-        abrirEditorConDatos({
-          titulo: tituloFinal,
-          autor: res.autor || '',
-          descripcion: res.descripcion || '',
-          categoria: res.categoria || detectarCategoria(tituloFinal, res.autor),
-          estructura: res.estructura,
-          coverBlob: res.coverBlob
-        });
-      } else {
-        // TXT/MD
-        const tituloFinal = file.name.replace(/\.[^.]+$/, '');
-        const det = detectarEstructura(res.texto);
-        const estructura = det.length > 1 ? det : [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: res.texto }];
-        const intros = estructura.filter(x => x.tipo === 'intro');
-        const contenido = estructura.filter(x => x.tipo !== 'intro');
-        const descripcion = intros.map(i => i.resumen).filter(Boolean).join('\n\n');
-        abrirEditorConDatos({
-          titulo: tituloFinal,
-          autor: '',
-          descripcion,
-          categoria: detectarCategoria(tituloFinal, ''),
-          estructura: contenido.length ? contenido : [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: res.texto }],
-          coverBlob: null
-        });
+      // Buscar portada automáticamente
+      let coverBlob = null;
+      try {
+        toast('Buscando portada…');
+        coverBlob = await buscarPortadaEnInternet(meta.titulo, meta.autor);
+      } catch (e) {
+        console.warn('Cover search failed:', e.message);
       }
-      toast('Archivo cargado');
+
+      abrirEditorConDatos({
+        titulo: meta.titulo,
+        autor: meta.autor,
+        descripcion,
+        categoria: detectarCategoria(meta.titulo, meta.autor),
+        estructura: contenido.length ? contenido : [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: res.texto }],
+        coverBlob
+      });
+      toast(coverBlob ? '✓ Libro + portada cargados' : 'Libro cargado (sin portada)');
     } catch (err) {
       alert('Error: ' + (err.message || 'no se pudo procesar'));
     }
@@ -4657,21 +4409,18 @@
     const total = files.length;
 
     if (total > 200) {
-      if (!confirm(`Vas a cargar ${total} libros. Puede tardar mucho y ocupar bastante espacio.\n\n¿Continuar?`)) return;
+      if (!confirm(`Vas a cargar ${total} libros. Puede tardar bastante.\n\n¿Continuar?`)) return;
     } else if (total > 50) {
-      if (!confirm(`Vas a cargar ${total} libros. Puede tomar varios minutos.\n\n¿Continuar?`)) return;
+      if (!confirm(`Vas a cargar ${total} libros. Puede tomar varios minutos (busca portada uno por uno).\n\n¿Continuar?`)) return;
     }
 
-    // Capacity check
     try {
       const est = await navigator.storage.estimate();
       const libreMB = (est.quota - est.usage) / (1024*1024);
       const tamTotalMB = files.reduce((a, f) => a + f.size, 0) / (1024*1024);
       const estimadoMB = tamTotalMB * 1.5;
       if (estimadoMB > libreMB * 0.85) {
-        const msg = `Espacio disponible: ${Math.round(libreMB)} MB\n` +
-                    `Espacio estimado: ~${Math.round(estimadoMB)} MB\n\n` +
-                    `Estás muy cerca del límite. ¿Continuar de todas formas?`;
+        const msg = `Espacio disponible: ${Math.round(libreMB)} MB\nEspacio estimado: ~${Math.round(estimadoMB)} MB\n\n¿Continuar de todas formas?`;
         if (!confirm(msg)) return;
       }
     } catch {}
@@ -4694,109 +4443,67 @@
       const pct = Math.round((i / total) * 100);
       $('#batchProgressBar').style.width = pct + '%';
       $('#batchStatus').textContent = `Importando ${i + 1} de ${total}…`;
-      $('#batchDetail').textContent = f.name;
+      $('#batchDetail').textContent = f.name + ' — procesando texto…';
       $('#batchCount').textContent = `${ok} OK · ${err} errores`;
 
       try {
         const res = await leerArchivo(f);
-        let libro;
+        const meta = extraerMetaDelNombre(f.name);
+        const det = detectarEstructura(res.texto);
 
-        if (res.estructura) {
-          // EPUB con metadata
-          const tituloFinal = res.titulo || f.name.replace(/\.[^.]+$/, '');
-          libro = {
-            id: uid(),
-            fecha: Date.now(),
-            leido: false,
-            favorito: false,
-            scrollTop: 0,
-            titulo: tituloFinal,
-            autor: res.autor || '',
-            descripcion: res.descripcion || '',
-            categoria: res.categoria || detectarCategoria(tituloFinal, res.autor),
-            puntos: 0,
-            capitulos: [],
-            secciones: [],
-            hasCover: false
-          };
+        const libro = {
+          id: uid(),
+          fecha: Date.now(),
+          leido: false,
+          favorito: false,
+          scrollTop: 0,
+          titulo: meta.titulo,
+          autor: meta.autor,
+          descripcion: '',
+          categoria: detectarCategoria(meta.titulo, meta.autor),
+          puntos: 0,
+          capitulos: [],
+          secciones: [],
+          hasCover: false
+        };
 
-          const intros = res.estructura.filter(x => x.tipo === 'intro');
-          const contenido = res.estructura.filter(x => x.tipo !== 'intro');
+        const intros = det.filter(x => x.tipo === 'intro');
+        const contenido = det.filter(x => x.tipo !== 'intro');
+        if (intros.length) {
+          libro.descripcion = intros.map(x => x.resumen).filter(Boolean).join('\n\n');
+        }
 
-          if (intros.length) {
-            const extra = intros.map(x => x.resumen).filter(Boolean).join('\n\n');
-            if (extra && !libro.descripcion.includes(extra)) {
-              libro.descripcion = (libro.descripcion ? libro.descripcion + '\n\n' : '') + extra;
-            }
+        for (const item of contenido) {
+          if (item.tipo === 'sec') {
+            libro.secciones.push({
+              id: uid(),
+              titulo: item.titulo,
+              capitulos: (item.capitulos || []).map(c => ({
+                id: uid(), titulo: c.titulo, resumen: c.resumen || '', notas: [], ttsIndice: 0
+              }))
+            });
+          } else if (item.tipo === 'cap') {
+            libro.capitulos.push({
+              id: uid(), titulo: item.titulo, resumen: item.resumen || '', notas: [], ttsIndice: 0
+            });
           }
+        }
+        if (!libro.capitulos.length && !libro.secciones.length) {
+          libro.capitulos.push({ id: uid(), titulo: 'Capítulo 1', resumen: res.texto, notas: [], ttsIndice: 0 });
+        }
 
-          for (const item of contenido) {
-            if (item.tipo === 'sec') {
-              libro.secciones.push({
-                id: uid(),
-                titulo: item.titulo,
-                capitulos: (item.capitulos || []).map(c => ({
-                  id: uid(), titulo: c.titulo, resumen: c.resumen || '', notas: [], ttsIndice: 0
-                }))
-              });
-            } else if (item.tipo === 'cap') {
-              libro.capitulos.push({
-                id: uid(), titulo: item.titulo, resumen: item.resumen || '', notas: [], ttsIndice: 0
-              });
-            }
-          }
+        libros.push(libro);
 
-          libros.push(libro);
-
-          if (res.coverBlob) {
-            try {
-              await setCover(libro.id, res.coverBlob);
-              libro.hasCover = true;
-            } catch {}
+        // Buscar portada
+        $('#batchDetail').textContent = f.name + ' — buscando portada…';
+        try {
+          const coverBlob = await buscarPortadaEnInternet(meta.titulo, meta.autor);
+          if (coverBlob) {
+            await setCover(libro.id, coverBlob);
+            libro.hasCover = true;
           }
-        } else {
-          // TXT
-          const tituloFinal = f.name.replace(/\.[^.]+$/, '');
-          const det = detectarEstructura(res.texto);
-          libro = {
-            id: uid(),
-            fecha: Date.now(),
-            leido: false,
-            favorito: false,
-            scrollTop: 0,
-            titulo: tituloFinal,
-            autor: '',
-            descripcion: '',
-            categoria: detectarCategoria(tituloFinal, ''),
-            puntos: 0,
-            capitulos: [],
-            secciones: [],
-            hasCover: false
-          };
-          const intros = det.filter(x => x.tipo === 'intro');
-          const contenido = det.filter(x => x.tipo !== 'intro');
-          if (intros.length) {
-            libro.descripcion = intros.map(x => x.resumen).filter(Boolean).join('\n\n');
-          }
-          for (const item of contenido) {
-            if (item.tipo === 'sec') {
-              libro.secciones.push({
-                id: uid(),
-                titulo: item.titulo,
-                capitulos: (item.capitulos || []).map(c => ({
-                  id: uid(), titulo: c.titulo, resumen: c.resumen || '', notas: [], ttsIndice: 0
-                }))
-              });
-            } else if (item.tipo === 'cap') {
-              libro.capitulos.push({
-                id: uid(), titulo: item.titulo, resumen: item.resumen || '', notas: [], ttsIndice: 0
-              });
-            }
-          }
-          if (!libro.capitulos.length && !libro.secciones.length) {
-            libro.capitulos.push({ id: uid(), titulo: 'Capítulo 1', resumen: res.texto, notas: [], ttsIndice: 0 });
-          }
-          libros.push(libro);
+        } catch (e) {
+          console.warn('Cover search failed for', meta.titulo, e.message);
         }
 
         ok++;
@@ -4805,13 +4512,12 @@
         errores.push({ archivo: f.name, error: e.message || 'Error' });
       }
 
-      // Yield cada 2 archivos
-      if (i % 2 === 1) await new Promise(r => setTimeout(r, 0));
+      await new Promise(r => setTimeout(r, 0));
     }
 
     $('#batchProgressBar').style.width = '100%';
     $('#batchStatus').textContent = 'Completado';
-    $('#batchDetail').textContent = `${ok} libro${ok === 1 ? '' : 's'} importado${ok === 1 ? '' : 's'} correctamente${err > 0 ? ` · ${err} con error` : ''}`;
+    $('#batchDetail').textContent = `${ok} libro${ok === 1 ? '' : 's'} importado${ok === 1 ? '' : 's'}${err > 0 ? ` · ${err} con error` : ''}`;
     $('#batchCount').textContent = `${ok} OK · ${err} errores`;
 
     if (errores.length) {
@@ -4829,22 +4535,160 @@
     batchDialog.close();
   });
 
-  /* ═══════════════ SYNC GITHUB GIST ═══════════════ */
+  /* ═══════════════ SYNC GITHUB (2 CAPAS) ═══════════════ */
   const syncDialog = $('#syncDialog');
+  
   let syncToken = localStorage.getItem(SYNC_TOKEN_KEY) || '';
   let syncGistId = localStorage.getItem(SYNC_GIST_KEY) || '';
+  let syncContenidoUrl = localStorage.getItem(SYNC_CONTENIDO_URL_KEY) || '';
+  let syncAutoEstado = localStorage.getItem(SYNC_AUTO_ESTADO_KEY) === '1';
   let syncLast = localStorage.getItem(SYNC_LAST_KEY) || '';
 
   function cargarSyncConfig() {
     $('#syncToken').value = syncToken;
     $('#syncGistId').value = syncGistId;
+    $('#syncContenidoUrl').value = syncContenidoUrl;
+    $('#syncAutoEstado').checked = syncAutoEstado;
     if (syncLast) {
       try {
         const d = new Date(syncLast);
         $('#syncLast').textContent = 'Última sync: ' + d.toLocaleString('es');
       } catch { $('#syncLast').textContent = 'Nunca sincronizado'; }
     }
+    actualizarSyncSizeInfo();
   }
+
+  function guardarSyncConfig() {
+    localStorage.setItem(SYNC_TOKEN_KEY, syncToken);
+    localStorage.setItem(SYNC_GIST_KEY, syncGistId);
+    localStorage.setItem(SYNC_CONTENIDO_URL_KEY, syncContenidoUrl);
+    localStorage.setItem(SYNC_AUTO_ESTADO_KEY, syncAutoEstado ? '1' : '0');
+  }
+
+  async function actualizarSyncSizeInfo() {
+    const el = $('#syncSizeInfo');
+    if (!el) return;
+    try {
+      const contenido = await extraerContenido();
+      const estado = extraerEstado();
+      const contentJson = JSON.stringify(contenido);
+      const estadoJson = JSON.stringify(estado);
+      const contentMB = contentJson.length / (1024*1024);
+      const estadoKB = estadoJson.length / 1024;
+      
+      let html = `📦 Estado: <strong>${estadoKB.toFixed(1)} KB</strong> · 📚 Contenido: <strong>${contentMB.toFixed(2)} MB</strong>`;
+      if (contentMB > 9) {
+        html += `<br><span style="color:#a16207">⚠ El contenido supera 9 MB — no cabe en Gist. Usá <strong>Descargar/Subir contenido</strong> vía URL externa (GitHub Releases).</span>`;
+        el.classList.add('warn');
+      } else {
+        el.classList.remove('warn');
+      }
+      el.innerHTML = html;
+      el.style.display = 'block';
+    } catch (e) {
+      el.style.display = 'none';
+    }
+  }
+
+  function extraerEstado() {
+    const estadoLibros = {};
+    for (const l of libros) {
+      const caps = {};
+      for (const c of (l.capitulos || [])) {
+        if (c.ttsIndice && c.ttsIndice > 0) caps[c.id] = c.ttsIndice;
+      }
+      for (const s of (l.secciones || [])) {
+        for (const c of (s.capitulos || [])) {
+          if (c.ttsIndice && c.ttsIndice > 0) caps[c.id] = c.ttsIndice;
+        }
+      }
+      estadoLibros[l.id] = {
+        leido: !!l.leido,
+        favorito: !!l.favorito,
+        puntos: l.puntos || 0,
+        scrollTop: l.scrollTop || 0,
+        capitulos: caps
+      };
+    }
+    return {
+      version: 12,
+      exportado: new Date().toISOString(),
+      preferencias: {
+        tema: localStorage.getItem('tema') || 'light',
+        fontSize: localStorage.getItem('fontSize') || 'md',
+        iconSize: localStorage.getItem('iconSize') || 'md'
+      },
+      estadoLibros
+    };
+  }
+
+  function aplicarEstado(estado) {
+    if (!estado || !estado.estadoLibros) return 0;
+    let aplicados = 0;
+    for (const l of libros) {
+      const e = estado.estadoLibros[l.id];
+      if (!e) continue;
+      l.leido = !!e.leido;
+      l.favorito = !!e.favorito;
+      l.puntos = e.puntos || 0;
+      l.scrollTop = e.scrollTop || 0;
+      const capsEstado = e.capitulos || {};
+      for (const c of (l.capitulos || [])) {
+        if (capsEstado[c.id] !== undefined) c.ttsIndice = capsEstado[c.id];
+      }
+      for (const s of (l.secciones || [])) {
+        for (const c of (s.capitulos || [])) {
+          if (capsEstado[c.id] !== undefined) c.ttsIndice = capsEstado[c.id];
+        }
+      }
+      aplicados++;
+    }
+    if (estado.preferencias) {
+      if (estado.preferencias.tema) localStorage.setItem('tema', estado.preferencias.tema);
+      if (estado.preferencias.fontSize) localStorage.setItem('fontSize', estado.preferencias.fontSize);
+      if (estado.preferencias.iconSize) localStorage.setItem('iconSize', estado.preferencias.iconSize);
+      aplicarConfiguracionVisual();
+    }
+    return aplicados;
+  }
+
+  async function extraerContenido() {
+    const portadas = {};
+    for (const l of libros) {
+      if (!l.hasCover) continue;
+      try {
+        const blob = await dbGet(DB_COVERS, l.id);
+        if (blob) portadas[l.id] = await blobToBase64(blob);
+      } catch {}
+    }
+    return {
+      version: 12,
+      exportado: new Date().toISOString(),
+      libros: libros.map(l => ({ ...l })),
+      portadas
+    };
+  }
+
+  async function aplicarContenido(contenido) {
+    if (!contenido || !Array.isArray(contenido.libros)) throw new Error('Formato inválido');
+    libros = contenido.libros.map(normalizarLibro);
+    await guardarInmediato();
+    await dbClearAll(DB_COVERS);
+    coversCache.forEach(u => URL.revokeObjectURL(u));
+    coversCache.clear();
+    for (const [id, b64] of Object.entries(contenido.portadas || {})) {
+      try {
+        const blob = base64ToBlob(b64);
+        await dbPut(DB_COVERS, id, blob);
+        const l = libros.find(x => x.id === id);
+        if (l) l.hasCover = true;
+      } catch {}
+    }
+    await precargarCovers();
+    render();
+    return libros.length;
+  }
+
   async function ghRequest(method, path, body) {
     if (!syncToken || !syncGistId) throw new Error('Falta token o Gist ID');
     const res = await fetch(`https://api.github.com${path}`, {
@@ -4862,28 +4706,22 @@
     }
     return res.json();
   }
-  async function subirASync() {
-    const portadas = {};
-    for (const l of libros) {
-      if (!l.hasCover) continue;
-      try {
-        const blob = await dbGet(DB_COVERS, l.id);
-        if (blob) portadas[l.id] = await blobToBase64(blob);
-      } catch {}
-    }
-    const data = { version: 10, exportado: new Date().toISOString(), libros, portadas };
+
+  async function subirEstado() {
+    const estado = extraerEstado();
+    const json = JSON.stringify(estado, null, 2);
     await ghRequest('PATCH', `/gists/${syncGistId}`, {
-      files: { 'biblioteca.json': { content: JSON.stringify(data) } }
+      files: { 'estado.json': { content: json } }
     });
     syncLast = new Date().toISOString();
     localStorage.setItem(SYNC_LAST_KEY, syncLast);
-    cargarSyncConfig();
-    return data.libros.length;
+    return libros.length;
   }
-  async function bajarDeSync() {
+
+  async function bajarEstado() {
     const gist = await ghRequest('GET', `/gists/${syncGistId}`);
-    const file = gist.files && gist.files['biblioteca.json'];
-    if (!file) throw new Error('El Gist no contiene biblioteca.json');
+    const file = gist.files && gist.files['estado.json'];
+    if (!file) throw new Error('El Gist no tiene estado.json');
     let contenido;
     if (file.truncated) {
       const raw = await fetch(file.raw_url);
@@ -4891,29 +4729,42 @@
     } else {
       contenido = file.content;
     }
-    const data = JSON.parse(contenido);
-    if (!data.libros) throw new Error('Formato inválido');
-
-    libros = data.libros.map(normalizarLibro);
+    const estado = JSON.parse(contenido);
+    const aplicados = aplicarEstado(estado);
     await guardarInmediato();
-    await dbClearAll(DB_COVERS);
-    coversCache.forEach(u => URL.revokeObjectURL(u));
-    coversCache.clear();
-    for (const [id, b64] of Object.entries(data.portadas || {})) {
-      try {
-        const blob = base64ToBlob(b64);
-        await dbPut(DB_COVERS, id, blob);
-        const l = libros.find(x => x.id === id);
-        if (l) l.hasCover = true;
-      } catch {}
-    }
-    await precargarCovers();
     render();
     syncLast = new Date().toISOString();
     localStorage.setItem(SYNC_LAST_KEY, syncLast);
-    cargarSyncConfig();
-    return data.libros.length;
+    return aplicados;
   }
+
+  async function bajarContenido() {
+    let url;
+    if (syncContenidoUrl) {
+      url = syncContenidoUrl;
+    } else {
+      const gist = await ghRequest('GET', `/gists/${syncGistId}`);
+      const file = gist.files && gist.files['contenido.json'];
+      if (!file) throw new Error('No hay URL de contenido configurada ni contenido.json en el Gist');
+      url = file.truncated ? file.raw_url : null;
+      if (!url) {
+        const contenido = JSON.parse(file.content);
+        const n = await aplicarContenido(contenido);
+        syncLast = new Date().toISOString();
+        localStorage.setItem(SYNC_LAST_KEY, syncLast);
+        return n;
+      }
+    }
+    if (!/^https?:\/\//i.test(url)) throw new Error('URL inválida');
+    const res = await fetch(url, { mode: 'cors' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const contenido = await res.json();
+    const n = await aplicarContenido(contenido);
+    syncLast = new Date().toISOString();
+    localStorage.setItem(SYNC_LAST_KEY, syncLast);
+    return n;
+  }
+
   function blobToBase64(blob) {
     return new Promise((res, rej) => {
       const r = new FileReader();
@@ -4930,6 +4781,7 @@
     for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
     return new Blob([arr], { type: mime });
   }
+
   function setSyncStatus(tipo, msg) {
     const el = $('#syncStatus');
     el.className = 'sync-status ' + tipo;
@@ -4945,63 +4797,87 @@
   });
   $('#syncCerrar').addEventListener('click', () => syncDialog.close());
   $('#syncCancelar').addEventListener('click', () => syncDialog.close());
+
   $('#syncToken').addEventListener('input', (e) => {
     syncToken = e.target.value.trim();
-    localStorage.setItem(SYNC_TOKEN_KEY, syncToken);
+    guardarSyncConfig();
   });
   $('#syncGistId').addEventListener('input', (e) => {
     syncGistId = e.target.value.trim();
-    localStorage.setItem(SYNC_GIST_KEY, syncGistId);
+    guardarSyncConfig();
   });
-  $('#btnSyncUpload').addEventListener('click', async () => {
-    try {
-      setSyncStatus('info', 'Subiendo…');
-      const n = await subirASync();
-      setSyncStatus('ok', `✓ Subidos ${n} libros a GitHub`);
-      toast('Datos subidos');
-    } catch (err) {
-      setSyncStatus('err', '✗ ' + err.message);
-    }
+  $('#syncContenidoUrl').addEventListener('input', (e) => {
+    syncContenidoUrl = e.target.value.trim();
+    guardarSyncConfig();
   });
-  $('#btnSyncDownload').addEventListener('click', async () => {
-    if (!confirm('Esto reemplaza TODOS los datos locales con los de GitHub. ¿Continuar?')) return;
-    try {
-      setSyncStatus('info', 'Descargando…');
-      const n = await bajarDeSync();
-      setSyncStatus('ok', `✓ Descargados ${n} libros desde GitHub`);
-      toast('Datos descargados');
-    } catch (err) {
-      setSyncStatus('err', '✗ ' + err.message);
-    }
+  $('#syncAutoEstado').addEventListener('change', (e) => {
+    syncAutoEstado = e.target.checked;
+    guardarSyncConfig();
   });
-  $('#btnSyncAuto').addEventListener('click', async () => {
-    try {
-      setSyncStatus('info', 'Comparando fechas…');
-      const gist = await ghRequest('GET', `/gists/${syncGistId}`);
-      const file = gist.files && gist.files['biblioteca.json'];
-      if (!file) throw new Error('El Gist no contiene biblioteca.json');
-      let contenido;
-      if (file.truncated) {
-        const raw = await fetch(file.raw_url);
-        contenido = await raw.text();
-      } else {
-        contenido = file.content;
-      }
-      const data = JSON.parse(contenido);
-      const fechaRemota = data.exportado ? new Date(data.exportado) : new Date(0);
-      const fechaLocal = syncLast ? new Date(syncLast) : new Date(0);
 
-      if (fechaRemota > fechaLocal) {
-        if (!confirm('GitHub tiene datos más recientes.\n¿Descargarlos y reemplazar los locales?')) return;
-        setSyncStatus('info', 'Descargando versión más reciente…');
-        await bajarDeSync();
-        setSyncStatus('ok', '✓ Sincronizado: versión de GitHub aplicada');
-      } else {
-        setSyncStatus('info', 'Subiendo versión local más reciente…');
-        await subirASync();
-        setSyncStatus('ok', '✓ Sincronizado: tu versión local subida');
+  $('#btnSyncUploadEstado').addEventListener('click', async () => {
+    try {
+      setSyncStatus('info', 'Subiendo estado…');
+      const n = await subirEstado();
+      cargarSyncConfig();
+      setSyncStatus('ok', `✓ Estado subido (${n} libros)`);
+      toast('Estado subido');
+    } catch (err) {
+      setSyncStatus('err', '✗ ' + err.message);
+    }
+  });
+
+  $('#btnSyncDownloadEstado').addEventListener('click', async () => {
+    try {
+      setSyncStatus('info', 'Descargando estado…');
+      const n = await bajarEstado();
+      cargarSyncConfig();
+      setSyncStatus('ok', `✓ Estado aplicado a ${n} libros`);
+      toast('Estado descargado');
+    } catch (err) {
+      setSyncStatus('err', '✗ ' + err.message);
+    }
+  });
+
+  $('#btnSyncUploadContenido').addEventListener('click', async () => {
+    try {
+      setSyncStatus('info', 'Preparando contenido…');
+      const contenido = await extraerContenido();
+      const json = JSON.stringify(contenido);
+      const sizeMB = json.length / (1024*1024);
+
+      if (sizeMB > 9) {
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `biblioteca-contenido-${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        setSyncStatus('info', `Contenido: ${sizeMB.toFixed(1)} MB — descargado como archivo. Subilo a GitHub Releases y pegá la URL.`);
+        toast('Archivo descargado — subilo a GitHub Releases');
+        return;
       }
-      toast('Sincronización completada');
+
+      setSyncStatus('info', `Subiendo contenido (${sizeMB.toFixed(2)} MB)…`);
+      await ghRequest('PATCH', `/gists/${syncGistId}`, {
+        files: { 'contenido.json': { content: json } }
+      });
+      setSyncStatus('ok', `✓ Contenido subido (${sizeMB.toFixed(2)} MB · ${libros.length} libros)`);
+      toast('Contenido subido');
+    } catch (err) {
+      setSyncStatus('err', '✗ ' + err.message);
+    }
+  });
+
+  $('#btnSyncDownloadContenido').addEventListener('click', async () => {
+    if (!confirm('Esto reemplaza TODOS los libros locales con el contenido de la nube. ¿Continuar?')) return;
+    try {
+      setSyncStatus('info', 'Descargando contenido…');
+      const n = await bajarContenido();
+      cargarSyncConfig();
+      setSyncStatus('ok', `✓ ${n} libros descargados`);
+      toast('Contenido descargado');
     } catch (err) {
       setSyncStatus('err', '✗ ' + err.message);
     }
@@ -5025,15 +4901,7 @@
   $('#imCancelar').addEventListener('click', () => menu.close());
 
   $('#btnExportar').addEventListener('click', async () => {
-    const portadas = {};
-    for (const l of libros) {
-      if (!l.hasCover) continue;
-      try {
-        const blob = await dbGet(DB_COVERS, l.id);
-        if (blob) portadas[l.id] = await blobToBase64(blob);
-      } catch {}
-    }
-    const data = { version: 10, exportado: new Date().toISOString(), libros, portadas };
+    const data = await extraerContenido();
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -5052,21 +4920,7 @@
       const txt = await f.text();
       const data = JSON.parse(txt);
       if (!data.libros) throw new Error('Formato inválido');
-      libros = data.libros.map(normalizarLibro);
-      await guardarInmediato();
-      await dbClearAll(DB_COVERS);
-      for (const [id, b64] of Object.entries(data.portadas || {})) {
-        try {
-          const blob = base64ToBlob(b64);
-          await dbPut(DB_COVERS, id, blob);
-          const l = libros.find(x => x.id === id);
-          if (l) l.hasCover = true;
-        } catch {}
-      }
-      coversCache.forEach(u => URL.revokeObjectURL(u));
-      coversCache.clear();
-      await precargarCovers();
-      render();
+      await aplicarContenido(data);
       menu.close();
       toast('Respaldo importado');
     } catch (err) {
@@ -5237,7 +5091,23 @@
     if (navigator.storage && navigator.storage.persist) {
       navigator.storage.persist().catch(() => {});
     }
+    if (syncAutoEstado && syncToken && syncGistId) {
+      setTimeout(async () => {
+        try {
+          const n = await bajarEstado();
+          if (n > 0) toast('Estado sincronizado desde la nube');
+        } catch (e) {
+          console.warn('Auto-sync estado falló:', e.message);
+        }
+      }, 2000);
+    }
   }
+
+  // Estilos de animación para el spinner del botón "Buscar portada"
+  const styleSpin = document.createElement('style');
+  styleSpin.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+  document.head.appendChild(styleSpin);
+
   init();
 })();
 </script>
