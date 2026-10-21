@@ -8,7 +8,7 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
-<link rel="manifest" href="manifest.json?v=6" />
+<link rel="manifest" href="manifest.json?v=7" />
 
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
@@ -20,7 +20,7 @@
   }catch(e){}
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js?v=6').catch(()=>{});
+      navigator.serviceWorker.register('sw.js?v=7').catch(()=>{});
     });
   }
 </script>
@@ -451,13 +451,16 @@
   .desc-reader-foot{display:flex;gap:8px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
   .desc-reader-foot .btn{padding:9px 14px;font-size:.84rem;flex:1;min-width:0;font-weight:700}
 
-  #editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog{width:min(720px,96vw);max-height:94vh}
+  #editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog, #nuevoDialog, #batchDialog{width:min(720px,96vw);max-height:94vh}
+  #nuevoDialog{width:min(480px,96vw)}
   #fragDialog{width:min(400px,94vw)}
-  @media(max-width:640px){#editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+  #batchDialog{width:min(520px,96vw)}
+  @media(max-width:640px){#editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog, #batchDialog{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+  @media(max-width:640px){#nuevoDialog{width:100vw;height:auto;max-height:80vh;border-radius:16px;width:92vw}}
   @media(max-width:640px){#fragDialog{height:auto;max-height:80vh;border-radius:16px;width:92vw}}
   .editor-wrap{display:flex;flex-direction:column;max-height:94vh}
   @media(max-width:640px){.editor-wrap{height:100dvh;max-height:100dvh}}
-  @media(max-width:640px){#fragDialog .editor-wrap{height:auto;max-height:80vh}}
+  @media(max-width:640px){#fragDialog .editor-wrap, #nuevoDialog .editor-wrap{height:auto;max-height:80vh}}
   .editor-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
   .editor-head h2{margin:0;font-size:1rem;letter-spacing:-.02em}
   .editor-body{padding:18px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:13px;flex:1}
@@ -587,6 +590,34 @@
   .qc-bulk-info .tag-vacio{background:color-mix(in srgb,var(--danger) 15%, transparent);color:var(--danger)}
   .qc-bulk-info .len-info{font-size:.66rem;color:var(--muted);opacity:.7}
 
+  .nuevo-opcion{
+    display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:14px;
+    border:2px solid var(--border);background:var(--surface-2);cursor:pointer;
+    transition:.18s;text-align:center;
+  }
+  .nuevo-opcion:hover{border-color:var(--accent);background:var(--surface);transform:translateY(-2px)}
+  .nuevo-opcion.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
+  .nuevo-opcion.primary:hover{filter:brightness(1.06);transform:translateY(-2px)}
+  .nuevo-opcion svg{width:32px;height:32px;margin:0 auto}
+  .nuevo-opcion strong{font-size:.96rem}
+  .nuevo-opcion small{font-size:.78rem;opacity:.8}
+
+  .batch-progress-outer{
+    width:100%;height:12px;background:var(--surface-2);border-radius:6px;
+    overflow:hidden;border:1px solid var(--border);margin-top:10px;
+  }
+  .batch-progress-inner{
+    height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    transition:width .25s ease;width:0%;
+  }
+  .batch-errores{
+    font-size:.78rem;color:var(--danger);background:color-mix(in srgb,var(--danger) 8%, transparent);
+    border:1px solid color-mix(in srgb,var(--danger) 30%, transparent);
+    border-radius:8px;padding:8px 10px;max-height:180px;overflow-y:auto;margin-top:8px;
+  }
+  .batch-errores ul{margin:4px 0 0;padding-left:18px}
+  .batch-errores li{margin:2px 0;word-break:break-word}
+
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
@@ -686,6 +717,7 @@
     .desc-reader-head{padding:14px 16px;gap:10px}
     .desc-reader-head .cover{width:46px;height:64px;font-size:1.3rem}
     .desc-reader-body{padding:14px 16px;font-size:1rem}
+    .nuevo-opcion{padding:16px}
   }
   @media(min-width:641px) and (max-width:900px){
     .grid:not(.list-view){grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
@@ -743,6 +775,7 @@
     <div class="stats">
       <div class="stat"><strong id="sLibros">0</strong><span>Libros</span></div>
       <div class="stat"><strong id="sLeidos">0</strong><span>Leídos</span></div>
+      <div class="stat"><strong id="sStorage">—</strong><span>Almacenamiento</span></div>
     </div>
   </section>
 
@@ -830,6 +863,59 @@
     </div>
     <div class="reader-progress"><div class="fill" id="rProgressFill"></div></div>
     <div class="reader-body" id="rBody"></div>
+  </div>
+</dialog>
+
+<dialog id="nuevoDialog">
+  <div class="editor-wrap">
+    <header class="editor-head">
+      <h2>Nuevo libro</h2>
+      <button type="button" class="icon-btn" id="nuevoCerrar" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+    <div class="editor-body">
+      <button type="button" class="nuevo-opcion primary" id="nuevoCargarArchivo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <path d="M17 8l-5-5-5 5"/>
+          <path d="M12 3v12"/>
+        </svg>
+        <strong>Cargar archivo(s)</strong>
+        <small>EPUB · TXT · MD — se extrae título, autor, género y portada</small>
+      </button>
+      <p class="hint" style="margin:0;text-align:center">Podés cargar <strong>varios archivos a la vez</strong>. Se procesan en lote.</p>
+      <button type="button" class="nuevo-opcion" id="nuevoVacio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
+        </svg>
+        <strong>Crear libro vacío</strong>
+        <small>Empezar con editor en blanco</small>
+      </button>
+    </div>
+    <input type="file" id="nuevoFileInput" accept=".epub,.txt,.md,application/epub+zip,text/plain" multiple hidden />
+  </div>
+</dialog>
+
+<dialog id="batchDialog">
+  <div class="editor-wrap">
+    <header class="editor-head">
+      <h2 id="batchTitle">Importando libros</h2>
+    </header>
+    <div class="editor-body">
+      <p id="batchStatus" style="font-weight:600;color:var(--text);margin:0">Preparando…</p>
+      <div class="batch-progress-outer">
+        <div class="batch-progress-inner" id="batchProgressBar"></div>
+      </div>
+      <p id="batchDetail" class="hint" style="margin:8px 0 0;font-size:.78rem"></p>
+      <div id="batchErroresCont"></div>
+    </div>
+    <footer class="editor-foot">
+      <span class="wc" id="batchCount"></span>
+      <div class="editor-actions">
+        <button type="button" class="btn btn-primary" id="batchCerrarBtn" style="display:none">Cerrar</button>
+      </div>
+    </footer>
   </div>
 </dialog>
 
@@ -947,9 +1033,7 @@
 
       <div data-qc-panel="varios" style="display:none">
         <p class="hint">Pega el libro completo o subí un <strong>EPUB / TXT / MD</strong>. Los EPUB se procesan por estructura real (capítulos, partes, TOC). Los MOBI/AZW/PDF no se pueden procesar: convertílos a EPUB con <a href="https://calibre-ebook.com/" target="_blank" rel="noopener">Calibre</a>.<br>
-        <strong>Si un EPUB sale raro</strong>, probá convertirlo a TXT con Calibre (Convertir libros → TXT) y subir el .txt.<br>
-        <strong>TXT/MD — Secciones</strong>: <code>Parte I</code>, <code>I.- Título</code>, <code>PRIMERA PARTE:</code>.<br>
-        <strong>TXT/MD — Capítulos</strong>: <code>Capítulo 1</code>, <code>1. Título</code>, <code>1 TÍTULO</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>.</p>
+        <strong>Si un EPUB sale raro</strong>, probá convertirlo a TXT con Calibre y subir el .txt.</p>
         <div class="field">
           <label for="qcBulkTexto">Texto completo</label>
           <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero o subí un EPUB…" style="min-height:220px"></textarea>
@@ -962,7 +1046,7 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
               Subir archivo
             </button>
-            <input type="file" id="qcBulkFile" accept=".epub,.txt,.md,.mobi,.azw,.azw3,.pdf,application/epub+zip,text/plain,application/pdf" hidden />
+            <input type="file" id="qcBulkFile" accept=".epub,.txt,.md,application/epub+zip,text/plain" hidden />
           </div>
         </div>
 
@@ -1112,7 +1196,8 @@
       </button>
     </header>
     <div class="editor-body">
-      <p class="hint">Usa un <strong>GitHub Gist secreto</strong> como nube. Necesitas un token con permiso <code>gist</code> y el ID del Gist.</p>
+      <p class="hint">Usa un <strong>GitHub Gist secreto</strong> como nube. Token con permiso <code>gist</code> + ID del Gist.</p>
+      <p class="hint" style="color:#a16207"><strong>Nota:</strong> con 50+ libros el Gist puede ser lento. Para bibliotecas grandes, usá Exportar respaldo JSON.</p>
       <div class="field">
         <label for="syncToken">Token de GitHub (PAT)</label>
         <input type="password" id="syncToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" />
@@ -1244,7 +1329,9 @@
   const LS_KEY = 'biblioteca-libros-v7';
   const LS_KEY_OLD = 'biblioteca-libros-v6';
   const DB_NAME = 'biblioteca-db-v3';
+  const DB_VERSION = 3;
   const DB_COVERS = 'covers';
+  const DB_BOOKS = 'books';
   const SYNC_TOKEN_KEY = 'biblioteca-sync-token';
   const SYNC_GIST_KEY = 'biblioteca-sync-gist';
   const SYNC_LAST_KEY = 'biblioteca-sync-last';
@@ -1253,16 +1340,16 @@
   /* ═══════════════ CATEGORÍAS ═══════════════ */
   const CATEGORIAS = [
     { id:'general',   nombre:'General',              c1:'#6366f1', c2:'#8b5cf6', keywords:[] },
-    { id:'ficcion',   nombre:'Ficción',              c1:'#ec4899', c2:'#f43f5e', keywords:['novela','cuento','relato','ficcion'] },
-    { id:'ciencia',   nombre:'Ciencia',              c1:'#0ea5e9', c2:'#06b6d4', keywords:['cosmos','fisica','cuantica','astrofisica','neurociencia','cerebro','agujero negro','universo','evolucion','gen','biologia','anatomia','astronomia','ciencia'] },
-    { id:'filosofia', nombre:'Filosofía',             c1:'#8b5cf6', c2:'#d946ef', keywords:['meditaciones','estoico','seneca','maquiavelo','schopenhauer','nietzsche','camus','sisifo','filosofia','arte de la guerra','sun tzu','platon','aristoteles'] },
-    { id:'psicologia',nombre:'Psicología',            c1:'#10b981', c2:'#059669', keywords:['psicologia','mente','emocional','sociopata','narcisista','trauma','terapia','psicoanalisis','freud','jung','conducta','gaslighting','manipulacion','psicologica','limites','asertividad','comunicacion no violenta','empatia','inteligencia emocional'] },
-    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','carisma','confianza','motivacion','proposito','manifestacion','poder del ahora','piense y hagase rico','12 reglas','padre rico','models','mark manson'] },
-    { id:'historia',  nombre:'Historia',              c1:'#a16207', c2:'#78350f', keywords:['historia','imperio','revolucion','siglo','antigua','roma','grecia','egipto','cristianismo','religion'] },
-    { id:'biografia', nombre:'Biografía',             c1:'#3b82f6', c2:'#6366f1', keywords:['memorias','diario','autobiografia','vida de','biografia'] },
-    { id:'negocios',  nombre:'Negocios',              c1:'#14b8a6', c2:'#0ea5e9', keywords:['negocio','empresa','economia','marketing','ventas','inversion','finanzas','emprendedor','creatividad'] },
-    { id:'terror',    nombre:'Terror',                c1:'#1f2937', c2:'#7f1d1d', keywords:['terror','horror','fantasma','zombi','muerto','oscuro','lovecraft','king','dracula','miedo','resplandor'] },
-    { id:'poesia',    nombre:'Poesía',                c1:'#db2777', c2:'#f472b6', keywords:['poesia','poema','verso','cantar','oda'] }
+    { id:'ficcion',   nombre:'Ficción',              c1:'#ec4899', c2:'#f43f5e', keywords:['novela','cuento','relato','ficcion','fiction','novel','fantasy','romance','mystery','thriller'] },
+    { id:'ciencia',   nombre:'Ciencia',              c1:'#0ea5e9', c2:'#06b6d4', keywords:['cosmos','fisica','cuantica','astrofisica','neurociencia','cerebro','agujero negro','universo','evolucion','gen','biologia','anatomia','astronomia','ciencia','science','physics','biology','astronomy','mathematics','math'] },
+    { id:'filosofia', nombre:'Filosofía',             c1:'#8b5cf6', c2:'#d946ef', keywords:['meditaciones','estoico','seneca','maquiavelo','schopenhauer','nietzsche','camus','sisifo','filosofia','arte de la guerra','sun tzu','platon','aristoteles','philosophy','philosophical'] },
+    { id:'psicologia',nombre:'Psicología',            c1:'#10b981', c2:'#059669', keywords:['psicologia','mente','emocional','sociopata','narcisista','trauma','terapia','psicoanalisis','freud','jung','conducta','gaslighting','manipulacion','psicologica','limites','asertividad','comunicacion no violenta','empatia','inteligencia emocional','psychology','mental health','therapy'] },
+    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','carisma','confianza','motivacion','proposito','manifestacion','poder del ahora','piense y hagase rico','12 reglas','padre rico','models','mark manson','self-help','self help','personal development','productivity','success','motivation','growth'] },
+    { id:'historia',  nombre:'Historia',              c1:'#a16207', c2:'#78350f', keywords:['historia','imperio','revolucion','siglo','antigua','roma','grecia','egipto','cristianismo','religion','history','historical','war'] },
+    { id:'biografia', nombre:'Biografía',             c1:'#3b82f6', c2:'#6366f1', keywords:['memorias','diario','autobiografia','vida de','biografia','biography','autobiography','memoir'] },
+    { id:'negocios',  nombre:'Negocios',              c1:'#14b8a6', c2:'#0ea5e9', keywords:['negocio','empresa','economia','marketing','ventas','inversion','finanzas','emprendedor','creatividad','business','economics','finance','entrepreneur'] },
+    { id:'terror',    nombre:'Terror',                c1:'#1f2937', c2:'#7f1d1d', keywords:['terror','horror','fantasma','zombi','muerto','oscuro','lovecraft','king','dracula','miedo','resplandor','supernatural'] },
+    { id:'poesia',    nombre:'Poesía',                c1:'#db2777', c2:'#f472b6', keywords:['poesia','poema','verso','cantar','oda','poetry','poem'] }
   ];
 
   function normalizar(s) {
@@ -1271,8 +1358,9 @@
       .replace(/^[¡!¿?]+/, '').trim();
   }
 
-  function detectarCategoria(titulo, autor) {
-    const t = normalizar((titulo || '') + ' ' + (autor || ''));
+  function detectarCategoria(titulo, autor, subjects) {
+    const subs = Array.isArray(subjects) ? subjects : (subjects ? [subjects] : []);
+    const t = normalizar((titulo || '') + ' ' + (autor || '') + ' ' + subs.join(' '));
     let best = { cat: CATEGORIAS[0], score: 0 };
     for (const cat of CATEGORIAS) {
       let score = 0;
@@ -1326,6 +1414,8 @@
   let drTtsIndice = 0;
   let drTtsGen = 0;
   let drTtsActivo = false;
+
+  let batchEnCurso = false;
 
   /* ═══════════════ UTILIDADES ═══════════════ */
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
@@ -1513,21 +1603,22 @@
     if (dbPromise) return dbPromise;
     dbPromise = new Promise((resolve, reject) => {
       if (!('indexedDB' in window)) return reject(new Error('Sin IndexedDB'));
-      const req = indexedDB.open(DB_NAME, 2);
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
       req.onupgradeneeded = (e) => {
         const db = e.target.result;
         if (!db.objectStoreNames.contains(DB_COVERS)) db.createObjectStore(DB_COVERS);
+        if (!db.objectStoreNames.contains(DB_BOOKS)) db.createObjectStore(DB_BOOKS);
       };
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
     return dbPromise;
   }
-  async function dbPut(store, id, blob) {
+  async function dbPut(store, id, val) {
     const db = await getDB();
     return new Promise((res, rej) => {
       const tx = db.transaction(store, 'readwrite');
-      tx.objectStore(store).put(blob, id);
+      tx.objectStore(store).put(val, id);
       tx.oncomplete = res; tx.onerror = () => rej(tx.error);
     });
   }
@@ -1595,7 +1686,7 @@
     }
   }
 
-  /* ═══════════════ PERSISTENCIA + MIGRACIÓN ═══════════════ */
+  /* ═══════════════ PERSISTENCIA (IndexedDB + migración) ═══════════════ */
   function normalizarLibro(l) {
     if (!Array.isArray(l.capitulos)) l.capitulos = [];
     if (!Array.isArray(l.secciones)) l.secciones = [];
@@ -1607,21 +1698,38 @@
     return l;
   }
 
-  function cargar() {
+  async function cargar() {
+    // 1. Try IndexedDB
+    try {
+      const raw = await dbGet(DB_BOOKS, 'main');
+      if (raw && Array.isArray(raw)) {
+        libros = raw.map(normalizarLibro);
+        return;
+      }
+    } catch (e) {
+      console.warn('IDB read failed, fallback to localStorage', e);
+    }
+
+    // 2. Migrate from localStorage v7
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (raw) {
         libros = (JSON.parse(raw) || []).map(normalizarLibro);
+        await guardarInmediato();
+        localStorage.removeItem(LS_KEY);
+        toast(`Migrados ${libros.length} libros a almacenamiento nuevo`);
         return;
       }
     } catch {}
 
+    // 3. Migrate from v6
     try {
       const old = localStorage.getItem(LS_KEY_OLD);
       if (old) {
         libros = (JSON.parse(old) || []).map(normalizarLibro);
-        guardar();
-        toast(`Migrados ${libros.length} libros desde versión anterior`);
+        await guardarInmediato();
+        localStorage.removeItem(LS_KEY_OLD);
+        toast(`Migrados ${libros.length} libros desde v6`);
         return;
       }
     } catch {}
@@ -1629,11 +1737,83 @@
     libros = [];
   }
 
+  let saveTimer = null;
+  let saving = false;
+  let pendingSave = false;
+
   function guardar() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(guardarInmediato, 1200);
+  }
+
+  async function guardarInmediato() {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+    if (saving) {
+      pendingSave = true;
+      return;
+    }
+    saving = true;
     try {
-      localStorage.setItem(LS_KEY, JSON.stringify(libros));
+      await dbPut(DB_BOOKS, 'main', libros);
+      // Fallback a localStorage solo si es chico
+      try {
+        const json = JSON.stringify(libros);
+        if (json.length < 3 * 1024 * 1024) {
+          localStorage.setItem(LS_KEY, json);
+        } else {
+          localStorage.removeItem(LS_KEY);
+        }
+      } catch {}
     } catch (e) {
-      toast('Almacenamiento lleno: no se pudo guardar');
+      console.warn('Save failed', e);
+      toast('Error al guardar: ' + (e.message || 'desconocido'));
+    } finally {
+      saving = false;
+      if (pendingSave) {
+        pendingSave = false;
+        guardarInmediato();
+      }
+    }
+  }
+
+  // Flush al ocultar/cerrar pestaña
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden' && saveTimer) {
+      clearTimeout(saveTimer);
+      guardarInmediato();
+    }
+  });
+  window.addEventListener('pagehide', () => {
+    if (saveTimer) {
+      clearTimeout(saveTimer);
+      guardarInmediato();
+    }
+  });
+
+  async function calcularUsoAlmacenamiento() {
+    try {
+      const est = await navigator.storage.estimate();
+      const usoMB = (est.usage / (1024*1024));
+      const cuotaMB = (est.quota / (1024*1024));
+      return { usoMB, cuotaMB };
+    } catch {
+      return null;
+    }
+  }
+
+  async function actualizarStats() {
+    const total = libros.length;
+    const leidos = libros.filter(l => l.leido === true).length;
+    $('#sLibros').textContent = total;
+    $('#sLeidos').textContent = leidos;
+    const est = await calcularUsoAlmacenamiento();
+    if (est) {
+      const uso = est.usoMB < 10 ? est.usoMB.toFixed(1) : Math.round(est.usoMB);
+      $('#sStorage').textContent = uso + ' MB';
+      $('#sStorage').title = `Uso: ${est.usoMB.toFixed(1)} MB de ${est.cuotaMB.toFixed(0)} MB disponibles`;
+    } else {
+      $('#sStorage').textContent = '—';
     }
   }
 
@@ -1708,13 +1888,6 @@
     });
   }
 
-  function renderStats() {
-    const total = libros.length;
-    const leidos = libros.filter(l => l.leido === true).length;
-    $('#sLibros').textContent = total;
-    $('#sLeidos').textContent = leidos;
-  }
-
   function renderCoverHTML(l, cls = '') {
     const [c1, c2] = colorLibro(l);
     const inicial = esc(((l.titulo||'?').trim()[0]||'?').toUpperCase());
@@ -1724,14 +1897,14 @@
   }
 
   function render() {
-    renderStats();
     renderContadoresChips();
+    actualizarStats();
     const lista = listaFiltrada();
 
     if (!lista.length) {
       grid.innerHTML = '';
       vacio.innerHTML = libros.length === 0
-        ? `<div class="empty"><h3>Tu biblioteca está vacía</h3><p>Toca «Nuevo» para añadir tu primer libro, o abre «Gestión» para importar.</p></div>`
+        ? `<div class="empty"><h3>Tu biblioteca está vacía</h3><p>Toca «Nuevo» para cargar tu primer libro.</p></div>`
         : `<div class="empty"><h3>Sin resultados</h3><p>Prueba con otro filtro o búsqueda.</p></div>`;
       return;
     }
@@ -2767,23 +2940,21 @@
     const ext = nombre.includes('.') ? nombre.slice(nombre.lastIndexOf('.')) : '';
 
     if (ext === '.epub' || file.type === 'application/epub+zip') {
-      const estructura = await procesarEPUB(file);
-      return { estructura };
+      return await procesarEPUB(file);
     }
     if (ext === '.mobi' || ext === '.azw' || ext === '.azw3') {
-      throw new Error('Formato Amazon (MOBI/AZW) no soportado directamente. Convertílo a EPUB con Calibre (calibre-ebook.com) y volvé a intentar. Es rápido: arrastrás el archivo → "Convertir libros" → EPUB.');
+      throw new Error('Formato Amazon (MOBI/AZW) no soportado. Convertílo a EPUB con Calibre (calibre-ebook.com).');
     }
     if (ext === '.pdf' || file.type === 'application/pdf') {
-      throw new Error('PDF no soportado directamente (no tiene estructura de capítulos). Convertílo a EPUB con Calibre y volvé a intentar.');
+      throw new Error('PDF no soportado directamente. Convertílo a EPUB con Calibre.');
     }
     if (ext === '.txt' || ext === '.md' || ext === '' || (file.type && file.type.startsWith('text/'))) {
       const txt = await file.text();
       return { texto: txt };
     }
-    throw new Error('Extensión no reconocida: ' + (ext || 'sin extensión') + '. Formatos aceptados: EPUB, TXT, MD.');
+    throw new Error('Extensión no reconocida: ' + (ext || 'sin extensión'));
   }
 
-  // ── Clasificar un título de heading ──
   function esTituloTOC(titulo) {
     const t = normalizar(titulo).replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
     return /^(tabla de contenidos?|indices?|contenidos?|contents?|table of contents|sumario|indice general|sumario general)$/.test(t);
@@ -2800,15 +2971,10 @@
     return /^(cap[ií]tulo|chapter|cap\.|chap\.|parte|part|libro|secci[oó]n|section)\s+/i.test(t);
   }
 
-  // ── Procesar un archivo XHTML del EPUB: extrae items ──
   function procesarXHTML(body, ordenBase) {
     const resultado = [];
     const headings = body.querySelectorAll('h1, h2, h3, h4');
-    if (headings.length === 0) {
-      // Sin headings: si hay texto sustancial, lo tratamos como un cap anónimo
-      // (esto lo resolvemos fuera con navMap)
-      return resultado;
-    }
+    if (headings.length === 0) return resultado;
 
     const allEls = body.querySelectorAll('*');
     let marcadorActual = null;
@@ -2858,11 +3024,8 @@
     return resultado;
   }
 
-  // ── Descartar el "esqueleto" inicial (headings huérfanos al principio) ──
   function descartarEsqueletoInicial(items) {
     if (items.length < 5) return items;
-
-    // Encontrar primer item con contenido real (>=150 chars) que NO sea copyright
     let primerContenido = -1;
     for (let i = 0; i < items.length; i++) {
       if (items[i].resumen.length >= 150) {
@@ -2870,22 +3033,15 @@
         if (!esCopyright) { primerContenido = i; break; }
       }
     }
-
     if (primerContenido <= 0) return items;
-
     const antes = items.slice(0, primerContenido);
     const conContenido = antes.filter(x => x.resumen.length >= 100).length;
     const huerfanos = antes.filter(x => x.resumen.length < 50).length;
-
-    // Solo descartar si hay un "esqueleto claro": >=3 huérfanos Y <=1 con contenido
     if (huerfanos < 3) return items;
     if (conContenido > 1) return items;
-
-    console.log(`[EPUB] Descartados ${primerContenido} items de esqueleto inicial`);
     return items.slice(primerContenido);
   }
 
-  // ── Eliminar duplicados (mismo título, uno vacío y otro con contenido) ──
   function normalizarTituloClave(t) {
     return String(t || '').toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -2902,13 +3058,11 @@
       if (!porClave.has(key)) porClave.set(key, []);
       porClave.get(key).push({ item, i });
     });
-
     const eliminar = new Set();
     for (const [key, lista] of porClave) {
       if (lista.length <= 1) continue;
       const conContenido = lista.filter(x => x.item.resumen.length >= 100);
       if (conContenido.length === 0) continue;
-      // Quedarse con el de MÁS contenido
       const mejor = conContenido.reduce((a, b) => a.item.resumen.length >= b.item.resumen.length ? a : b);
       for (const x of lista) {
         if (x !== mejor) eliminar.add(x.i);
@@ -2917,13 +3071,11 @@
     return items.filter((_, i) => !eliminar.has(i));
   }
 
-  // ── Fusionar "Capítulo N" huérfano con siguiente cap con contenido ──
   function fusionarTitulosHuerfanos(items) {
     const resultado = [];
     for (let i = 0; i < items.length; i++) {
       const actual = items[i];
       const siguiente = items[i + 1];
-
       if (actual.resumen.length < 30 &&
           esTituloCapitulo(actual.titulo) &&
           siguiente &&
@@ -2945,20 +3097,14 @@
     return resultado;
   }
 
-  // ── Limpiar y ordenar todos los items ──
   function limpiarItemsEPUB(items) {
-    // 1. Descartar TOC
     let limpios = items.filter(x => x.tipo !== 'toc');
-    // 2. Descartar esqueleto inicial
     limpios = descartarEsqueletoInicial(limpios);
-    // 3. Fusionar títulos huérfanos (Capítulo N vacío + subtítulo siguiente)
     limpios = fusionarTitulosHuerfanos(limpios);
-    // 4. Eliminar duplicados
     limpios = eliminarDuplicados(limpios);
     return limpios;
   }
 
-  // ── Agrupar en secciones + caps ──
   function agruparEnSecciones(items) {
     const intros = [];
     const flujo = [];
@@ -2967,10 +3113,9 @@
     for (const item of items) {
       if (item.tipo === 'intro') {
         intros.push(item);
-        secActual = null; // reset: los caps siguientes NO son hijos de la intro
+        secActual = null;
         continue;
       }
-
       if (item.tipo === 'sec') {
         const sec = { tipo: 'sec', titulo: item.titulo, capitulos: [] };
         if (item.resumen.length >= 200) {
@@ -2979,15 +3124,11 @@
         flujo.push(sec);
         secActual = sec;
       } else if (item.tipo === 'cap') {
-        if (secActual) {
-          secActual.capitulos.push(item);
-        } else {
-          flujo.push(item);
-        }
+        if (secActual) secActual.capitulos.push(item);
+        else flujo.push(item);
       }
     }
 
-    // Secciones vacías → capítulos directos
     const resultado = flujo.map(x => {
       if (x.tipo === 'sec' && x.capitulos.length === 0) {
         return { tipo: 'cap', titulo: x.titulo, resumen: '' };
@@ -2998,22 +3139,80 @@
     return { intros, resultado };
   }
 
+  async function extraerMetadatosEPUB(opfDoc, zip, opfDir, manifest) {
+    function getDC(tag) {
+      const el = opfDoc.querySelector(`metadata > *[localName="${tag}"]`) ||
+                 opfDoc.querySelector(`metadata > ${tag}`) ||
+                 opfDoc.querySelector(`metadata > dc\\:${tag}`);
+      return el ? el.textContent.trim() : '';
+    }
+
+    const titulo = getDC('title');
+    const autor = getDC('creator');
+    const descripcion = getDC('description');
+
+    const subjects = [];
+    opfDoc.querySelectorAll('metadata > *[localName="subject"], metadata > subject, metadata > dc\\:subject').forEach(el => {
+      const s = el.textContent.trim();
+      if (s) subjects.push(s);
+    });
+
+    const categoria = detectarCategoria(titulo, autor, subjects);
+
+    let coverId = null;
+    opfDoc.querySelectorAll('metadata > meta').forEach(el => {
+      if ((el.getAttribute('name') || '').toLowerCase() === 'cover') {
+        coverId = el.getAttribute('content');
+      }
+    });
+
+    let coverItem = null;
+    if (coverId && manifest[coverId]) {
+      coverItem = manifest[coverId];
+    } else {
+      for (const id in manifest) {
+        if (manifest[id].properties && manifest[id].properties.includes('cover-image')) {
+          coverItem = manifest[id];
+          break;
+        }
+      }
+    }
+    if (!coverItem) {
+      for (const id in manifest) {
+        if (/cover/i.test(id) && /\.(jpe?g|png|gif|webp)$/i.test(manifest[id].href)) {
+          coverItem = manifest[id];
+          break;
+        }
+      }
+    }
+
+    let coverBlob = null;
+    if (coverItem) {
+      try {
+        const imgFile = zip.file(coverItem.href);
+        if (imgFile) coverBlob = await imgFile.async('blob');
+      } catch (e) { console.warn('Cover extraction failed', e); }
+    }
+
+    return { titulo, autor, descripcion, categoria, coverBlob, subjects };
+  }
+
   async function procesarEPUB(file) {
     if (typeof JSZip === 'undefined') {
-      throw new Error('El lector EPUB no está cargado. Conectate a internet una vez y volvé a intentar. Después queda cacheado para uso offline.');
+      throw new Error('El lector EPUB no está cargado. Conectate a internet una vez y volvé a intentar.');
     }
     const zip = await JSZip.loadAsync(file);
 
     const containerFile = zip.file('META-INF/container.xml');
-    if (!containerFile) throw new Error('EPUB inválido: no se encontró META-INF/container.xml');
+    if (!containerFile) throw new Error('EPUB inválido: sin META-INF/container.xml');
     const containerXml = await containerFile.async('string');
     const containerDoc = new DOMParser().parseFromString(containerXml, 'application/xml');
     const rootfileEl = containerDoc.querySelector('rootfile');
-    if (!rootfileEl) throw new Error('EPUB inválido: no se encontró rootfile en container.xml');
+    if (!rootfileEl) throw new Error('EPUB inválido: sin rootfile');
     const opfPath = rootfileEl.getAttribute('full-path');
 
     const opfFile = zip.file(opfPath);
-    if (!opfFile) throw new Error('EPUB inválido: no se encontró ' + opfPath);
+    if (!opfFile) throw new Error('EPUB inválido: sin ' + opfPath);
     const opfXml = await opfFile.async('string');
     const opfDir = opfPath.includes('/') ? opfPath.slice(0, opfPath.lastIndexOf('/') + 1) : '';
     const opfDoc = new DOMParser().parseFromString(opfXml, 'application/xml');
@@ -3023,9 +3222,7 @@
       const id = item.getAttribute('id');
       const href = item.getAttribute('href');
       const props = item.getAttribute('properties') || '';
-      if (id && href) {
-        manifest[id] = { href: opfDir + href, properties: props };
-      }
+      if (id && href) manifest[id] = { href: opfDir + href, properties: props };
     });
 
     const spine = [];
@@ -3034,7 +3231,10 @@
       if (idref && manifest[idref]) spine.push(manifest[idref].href);
     });
 
-    // navMap: para EPUBs sin headings, usar los labels de la TOC
+    // Metadata (título, autor, descripción, categoría, portada)
+    const meta = await extraerMetadatosEPUB(opfDoc, zip, opfDir, manifest);
+
+    // navMap
     const navMap = {};
     let navPath = null;
     for (const id in manifest) {
@@ -3082,7 +3282,6 @@
       } catch {}
     }
 
-    // Recolectar items de todos los archivos
     const items = [];
     let ordenGlobal = 0;
     for (const itemPath of spine) {
@@ -3098,7 +3297,6 @@
 
       const itemsArchivo = procesarXHTML(body, ordenGlobal);
 
-      // Si no hay headings pero sí contenido Y hay navMap, crear cap con label del navMap
       if (itemsArchivo.length === 0) {
         const texto = textoPlanoDe(body);
         const tituloNav = navMap[itemPath] || doc.querySelector('title')?.textContent?.trim() || '';
@@ -3117,24 +3315,24 @@
       ordenGlobal += Math.max(itemsArchivo.length, 1);
     }
 
-    // Limpiar + agrupar
     const itemsLimpios = limpiarItemsEPUB(items);
-    console.log('[EPUB] Items tras limpiar:', itemsLimpios.map(x => `[${x.tipo}] ${x.titulo} (${x.resumen.length}c)`));
-
     const { intros, resultado } = agruparEnSecciones(itemsLimpios);
 
-    // Prepend intros como item 'intro' (van a descripción)
     const final = [];
     if (intros.length > 0) {
       const textoIntro = intros.map(i => i.resumen).filter(Boolean).join('\n\n');
-      if (textoIntro) {
-        final.push({ tipo: 'intro', titulo: 'Introducción', resumen: textoIntro });
-      }
+      if (textoIntro) final.push({ tipo: 'intro', titulo: 'Introducción', resumen: textoIntro });
     }
     final.push(...resultado);
 
-    console.log('[EPUB] Estructura final:', final);
-    return final;
+    return {
+      estructura: final,
+      titulo: meta.titulo || '',
+      autor: meta.autor || '',
+      descripcion: meta.descripcion || '',
+      categoria: meta.categoria || 'general',
+      coverBlob: meta.coverBlob
+    };
   }
 
   function textoPlanoDe(el) {
@@ -3167,17 +3365,10 @@
       const t = limpiar(raw);
       if (!t || t.length > 180) return null;
 
-      if (/^(tabla de contenidos?|[ií]ndice general|[ií]ndice|indice|contenidos?|contents|table of contents|sumario|sumario general)$/i.test(t)) {
-        return 'toc';
-      }
-
-      if (/^(introducci[oó]n|prefacio|pr[oó]logo|proemio|presentaci[oó]n|pr[eé]ambulo)(\s*[:.\-–—]\s*.*)?$/i.test(t)) {
-        return 'intro';
-      }
+      if (/^(tabla de contenidos?|[ií]ndice general|[ií]ndice|indice|contenidos?|contents|table of contents|sumario|sumario general)$/i.test(t)) return 'toc';
+      if (/^(introducci[oó]n|prefacio|pr[oó]logo|proemio|presentaci[oó]n|pr[eé]ambulo)(\s*[:.\-–—]\s*.*)?$/i.test(t)) return 'intro';
       if (/^(una\s+)?nota\s+(r[aá]pida\s+)?(para|del?|de\s+los?)\s+/i.test(t) ||
-          /^nota\s+(del?|de\s+los?)\s+autor\b/i.test(t)) {
-        return 'intro';
-      }
+          /^nota\s+(del?|de\s+los?)\s+autor\b/i.test(t)) return 'intro';
 
       if (/^[ivxlcdm]+\s*\.\s*[-–—]\s*\S/i.test(t)) return 'sec';
       if (/^(parte|libro|secci[oó]n)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|s[eé]ptima|octavo|noveno|d[eé]cimo|d[eé]cima|und[eé]cimo|und[eé]cima|duod[eé]cimo|duod[eé]cima)\b/i.test(t)) return 'sec';
@@ -3206,7 +3397,6 @@
     for (let i = 0; i < nLineas; i++) {
       if (tipoMarcador(lineas[i]) === 'toc') { tocIdx = i; break; }
     }
-
     if (tocIdx >= 0) {
       for (let i = tocIdx + 1; i < nLineas; i++) {
         const tipo = tipoMarcador(lineas[i]);
@@ -3217,10 +3407,7 @@
           contentChars += lineas[j].trim().length;
           if (contentChars > 300) break;
         }
-        if (contentChars > 300) {
-          inicioReal = i;
-          break;
-        }
+        if (contentChars > 300) { inicioReal = i; break; }
       }
       if (inicioReal === 0) {
         for (let i = tocIdx + 1; i < nLineas; i++) {
@@ -3232,9 +3419,7 @@
     const allMarkers = [];
     for (let i = inicioReal; i < nLineas; i++) {
       const tipo = tipoMarcador(lineas[i]);
-      if (tipo && tipo !== 'toc') {
-        allMarkers.push({ idx: i, tipo, titulo: limpiar(lineas[i]) });
-      }
+      if (tipo && tipo !== 'toc') allMarkers.push({ idx: i, tipo, titulo: limpiar(lineas[i]) });
     }
 
     function contenidoEntre(aIdx, bIdx) {
@@ -3288,9 +3473,7 @@
 
       const lineasResumen = [];
       for (let j = m.idx + 1; j < fin; j++) {
-        if (!tipoMarcador(lineas[j])) {
-          lineasResumen.push(lineas[j]);
-        }
+        if (!tipoMarcador(lineas[j])) lineasResumen.push(lineas[j]);
       }
       while (lineasResumen.length && !lineasResumen[0].trim()) lineasResumen.shift();
       while (lineasResumen.length && !lineasResumen[lineasResumen.length - 1].trim()) lineasResumen.pop();
@@ -3304,9 +3487,7 @@
           const base = matchColon[1].trim();
           const resto = matchColon[2].trim();
           titulo = base;
-          if (!resumen.startsWith(resto)) {
-            resumen = resto + (resumen ? '\n\n' + resumen : '');
-          }
+          if (!resumen.startsWith(resto)) resumen = resto + (resumen ? '\n\n' + resumen : '');
         }
       }
 
@@ -3317,19 +3498,13 @@
         for (let k = 0; k < Math.min(rLineas.length, 4); k++) {
           const l = rLineas[k].trim();
           if (!l) continue;
-          if (l.length >= 3 && l.length <= 90 && !/[.!?]$/.test(l)) {
-            idxSub = k;
-            break;
-          }
+          if (l.length >= 3 && l.length <= 90 && !/[.!?]$/.test(l)) { idxSub = k; break; }
           break;
         }
         if (idxSub >= 0) {
           const subtitulo = rLineas[idxSub].trim();
           const resto = rLineas.slice(idxSub + 1).join('\n').trim();
-          if (resto.length >= 100) {
-            titulo = titulo + ': ' + subtitulo;
-            resumen = resto;
-          }
+          if (resto.length >= 100) { titulo = titulo + ': ' + subtitulo; resumen = resto; }
         }
       }
 
@@ -3340,10 +3515,7 @@
         for (let k = 0; k < Math.min(rLineas.length, 4); k++) {
           const l = rLineas[k].trim();
           if (!l) continue;
-          if (l.length >= 3 && l.length <= 100 && !/[.!?]$/.test(l)) {
-            idxSub = k;
-            break;
-          }
+          if (l.length >= 3 && l.length <= 100 && !/[.!?]$/.test(l)) { idxSub = k; break; }
           break;
         }
         if (idxSub >= 0) {
@@ -3366,22 +3538,16 @@
         estructura.push({ tipo: 'intro', titulo, resumen });
       } else {
         const cap = { tipo: 'cap', titulo, resumen };
-        if (seccionActual) {
-          seccionActual.capitulos.push(cap);
-        } else {
-          estructura.push(cap);
-        }
+        if (seccionActual) seccionActual.capitulos.push(cap);
+        else estructura.push(cap);
       }
     }
 
     const limpia = [];
     for (const item of estructura) {
       if (item.tipo === 'sec') {
-        if (item.capitulos.length === 0) {
-          limpia.push({ tipo: 'cap', titulo: item.titulo, resumen: '' });
-        } else {
-          limpia.push(item);
-        }
+        if (item.capitulos.length === 0) limpia.push({ tipo: 'cap', titulo: item.titulo, resumen: '' });
+        else limpia.push(item);
       } else {
         limpia.push(item);
       }
@@ -3444,19 +3610,18 @@
         html += `<li class="sec-item">§ ${esc(item.titulo)} (${(item.capitulos || []).length} cap${(item.capitulos || []).length === 1 ? '' : 's'})</li>`;
         for (const c of (item.capitulos || [])) {
           if (cont >= 50) break;
-          html += `<li class="cap-item">${tagTipoHTML(c)}${esc(c.titulo)} <span class="len-info">· ${nPalabras(c.resumen).toLocaleString('es')} pal · ${(c.resumen||'').length} chars</span></li>`;
+          html += `<li class="cap-item">${tagTipoHTML(c)}${esc(c.titulo)} <span class="len-info">· ${nPalabras(c.resumen).toLocaleString('es')} pal</span></li>`;
           cont++;
         }
         cont++;
       } else if (item.tipo === 'intro') {
         html += `<li class="intro-item">${tagTipoHTML(item)}${esc(item.titulo)} → descripción del libro · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
       } else {
-        html += `<li class="cap-item">${tagTipoHTML(item)}${esc(item.titulo)} <span class="len-info">· ${nPalabras(item.resumen).toLocaleString('es')} pal · ${(item.resumen||'').length} chars</span></li>`;
+        html += `<li class="cap-item">${tagTipoHTML(item)}${esc(item.titulo)} <span class="len-info">· ${nPalabras(item.resumen).toLocaleString('es')} pal</span></li>`;
         cont++;
       }
     }
     html += '</ul>';
-    html += `<p style="margin-top:8px;font-size:.72rem;color:var(--muted)">💡 Si algo no calza, probá convertir el libro a TXT con Calibre y subir el .txt.</p>`;
     qcBulkInfo.innerHTML = html;
     actualizarQcWc();
   }
@@ -3503,7 +3668,7 @@
     if (totalCaps <= 1) return false;
     const usar = confirm(
       `El texto tiene ${texto.length.toLocaleString('es')} caracteres y se detectaron ${totalCaps} capítulos.\n\n` +
-      `¿Quieres importarlo como varios capítulos? Se abrirá la pestaña "Importar libro" con la vista previa.`
+      `¿Quieres importarlo como varios capítulos?`
     );
     if (!usar) return false;
     document.querySelectorAll('.qc-tab').forEach(t => t.classList.toggle('active', t.dataset.qcTab === 'varios'));
@@ -3540,8 +3705,8 @@
         if (totalCaps > 1) {
           const ir = confirm(
             'El archivo "' + f.name + '" contiene ' + totalCaps + ' capítulos.\n\n' +
-            'Aceptar = cambiar a la pestaña "Importar libro" para procesarlo completo.\n' +
-            'Cancelar = importarlo como un único capítulo con todo el texto pegado.'
+            'Aceptar = cambiar a la pestaña "Importar libro".\n' +
+            'Cancelar = importarlo como un único capítulo.'
           );
           if (ir) {
             document.querySelectorAll('.qc-tab').forEach(t => t.classList.toggle('active', t.dataset.qcTab === 'varios'));
@@ -3659,20 +3824,12 @@
           id: uid(),
           titulo: item.titulo,
           capitulos: (item.capitulos || []).map(c => ({
-            id: uid(),
-            titulo: c.titulo,
-            resumen: c.resumen || '',
-            notas: [],
-            ttsIndice: 0
+            id: uid(), titulo: c.titulo, resumen: c.resumen || '', notas: [], ttsIndice: 0
           }))
         });
       } else if (item.tipo === 'cap') {
         l.capitulos.push({
-          id: uid(),
-          titulo: item.titulo,
-          resumen: item.resumen || '',
-          notas: [],
-          ttsIndice: 0
+          id: uid(), titulo: item.titulo, resumen: item.resumen || '', notas: [], ttsIndice: 0
         });
       }
     }
@@ -3717,11 +3874,7 @@
         const l = libros.find(x => x.id === libroAbierto.id);
         let sec = (l.secciones || []).find(s => normalizar(s.titulo) === normalizar(secTitulo));
         if (!sec) {
-          insertarEnLibroYRender([{
-            tipo: 'sec',
-            titulo: secTitulo,
-            capitulos: [{ titulo, resumen }]
-          }]);
+          insertarEnLibroYRender([{ tipo: 'sec', titulo: secTitulo, capitulos: [{ titulo, resumen }] }]);
         } else {
           sec.capitulos = sec.capitulos || [];
           sec.capitulos.push({ id: uid(), titulo, resumen, notas: [], ttsIndice: 0 });
@@ -3735,9 +3888,7 @@
     } else {
       const texto = qcBulkTexto.value;
       if (!texto.trim()) { toast('Pega o sube el texto primero'); return; }
-      const detectado = (qcCapsDetectados && qcCapsDetectados.length)
-        ? qcCapsDetectados
-        : detectarEstructura(texto);
+      const detectado = (qcCapsDetectados && qcCapsDetectados.length) ? qcCapsDetectados : detectarEstructura(texto);
       if (!detectado.length) { toast('No hay texto para importar'); return; }
 
       const intros = detectado.filter(x => x.tipo === 'intro');
@@ -4183,6 +4334,53 @@
     setTimeout(() => { if (!libro) $('#fTitulo').focus(); }, 50);
   }
 
+  function abrirEditorConDatos(datos) {
+    editandoId = null;
+    portadaPendiente = datos.coverBlob ? new File([datos.coverBlob], 'cover.jpg', { type: datos.coverBlob.type || 'image/jpeg' }) : null;
+    borrarPortadaPendiente = false;
+    categoriaManual = true;
+    $('#editorTitulo').textContent = 'Nuevo libro';
+    $('#fTitulo').value = datos.titulo || '';
+    $('#fAutor').value = datos.autor || '';
+    $('#fDescripcion').value = datos.descripcion || '';
+    $('#fCategoria').value = datos.categoria || 'general';
+    pintarRating(0);
+    refrescarCoverEditor();
+    $('#edUrlPortada').value = '';
+
+    // estructuras
+    const directos = [];
+    const secciones = [];
+    const introsExtra = [];
+    for (const item of (datos.estructura || [])) {
+      if (item.tipo === 'sec') {
+        secciones.push({
+          tipo: 'sec', id: uid(), titulo: item.titulo || '',
+          capitulos: (item.capitulos || []).map(c => ({
+            id: uid(), titulo: c.titulo || '', resumen: c.resumen || '', notas: [], ttsIndice: 0
+          }))
+        });
+      } else if (item.tipo === 'cap') {
+        directos.push({
+          tipo: 'cap', id: uid(), titulo: item.titulo || '', resumen: item.resumen || '', notas: [], ttsIndice: 0
+        });
+      } else if (item.tipo === 'intro') {
+        introsExtra.push(item.resumen);
+      }
+    }
+    if (introsExtra.length) {
+      const extra = introsExtra.filter(Boolean).join('\n\n');
+      if (extra && !$('#fDescripcion').value.includes(extra)) {
+        $('#fDescripcion').value = ($('#fDescripcion').value ? $('#fDescripcion').value + '\n\n' : '') + extra;
+      }
+    }
+    estructuraEditor = [...directos, ...secciones];
+    renderEditorCaps();
+
+    editor.showModal();
+    setTimeout(() => $('#fTitulo').focus(), 50);
+  }
+
   function initCategoriasSelect() {
     const sel = $('#fCategoria');
     sel.innerHTML = CATEGORIAS.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
@@ -4204,7 +4402,6 @@
     refrescarCoverEditor();
   });
 
-  $('#btnNuevo').addEventListener('click', () => abrirEditor(null));
   $('#edCerrar').addEventListener('click', () => editor.close());
   $('#edCancelar').addEventListener('click', () => editor.close());
 
@@ -4269,7 +4466,7 @@
     if (!/^https?:\/\//i.test(url)) throw new Error('URL inválida');
     let res;
     try { res = await fetch(url, { mode: 'cors' }); }
-    catch { throw new Error('No se pudo descargar (CORS). Prueba subiendo la imagen.'); }
+    catch { throw new Error('No se pudo descargar (CORS). Probá subiendo la imagen.'); }
     if (!res.ok) throw new Error('Error ' + res.status);
     const blob = await res.blob();
     if (!blob.type.startsWith('image/')) throw new Error('La URL no es una imagen');
@@ -4363,7 +4560,7 @@
       toast('Guardado');
     } else {
       targetId = uid();
-      libros.push({ id: targetId, fecha: Date.now(), leido: false, favorito: false, scrollTop: 0, ...datos });
+      libros.push({ id: targetId, fecha: Date.now(), leido: false, favorito: false, scrollTop: 0, hasCover: false, ...datos });
       toast('Libro añadido');
     }
 
@@ -4380,9 +4577,256 @@
       if (idx > -1) libros[idx].hasCover = false;
     }
 
-    guardar();
+    await guardarInmediato();
     editor.close();
     render();
+  });
+
+  /* ═══════════════ NUEVO (con Cargar) ═══════════════ */
+  const nuevoDialog = $('#nuevoDialog');
+  const nuevoFileInput = $('#nuevoFileInput');
+
+  $('#btnNuevo').addEventListener('click', () => {
+    nuevoDialog.showModal();
+  });
+  $('#nuevoCerrar').addEventListener('click', () => nuevoDialog.close());
+  $('#nuevoCargarArchivo').addEventListener('click', () => {
+    nuevoFileInput.value = '';
+    nuevoFileInput.click();
+  });
+  $('#nuevoVacio').addEventListener('click', () => {
+    nuevoDialog.close();
+    abrirEditor(null);
+  });
+  nuevoFileInput.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files || []);
+    e.target.value = '';
+    if (!files.length) return;
+    nuevoDialog.close();
+    if (files.length === 1) {
+      await cargarUnArchivoEnEditor(files[0]);
+    } else {
+      await importarMultiplesArchivos(files);
+    }
+  });
+
+  async function cargarUnArchivoEnEditor(file) {
+    try {
+      toast('Procesando ' + file.name + '…');
+      const res = await leerArchivo(file);
+
+      if (res.estructura) {
+        // EPUB
+        const tituloFinal = res.titulo || file.name.replace(/\.[^.]+$/, '');
+        abrirEditorConDatos({
+          titulo: tituloFinal,
+          autor: res.autor || '',
+          descripcion: res.descripcion || '',
+          categoria: res.categoria || detectarCategoria(tituloFinal, res.autor),
+          estructura: res.estructura,
+          coverBlob: res.coverBlob
+        });
+      } else {
+        // TXT/MD
+        const tituloFinal = file.name.replace(/\.[^.]+$/, '');
+        const det = detectarEstructura(res.texto);
+        const estructura = det.length > 1 ? det : [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: res.texto }];
+        const intros = estructura.filter(x => x.tipo === 'intro');
+        const contenido = estructura.filter(x => x.tipo !== 'intro');
+        const descripcion = intros.map(i => i.resumen).filter(Boolean).join('\n\n');
+        abrirEditorConDatos({
+          titulo: tituloFinal,
+          autor: '',
+          descripcion,
+          categoria: detectarCategoria(tituloFinal, ''),
+          estructura: contenido.length ? contenido : [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: res.texto }],
+          coverBlob: null
+        });
+      }
+      toast('Archivo cargado');
+    } catch (err) {
+      alert('Error: ' + (err.message || 'no se pudo procesar'));
+    }
+  }
+
+  /* ═══════════════ IMPORTACIÓN EN LOTE ═══════════════ */
+  const batchDialog = $('#batchDialog');
+
+  async function importarMultiplesArchivos(files) {
+    if (batchEnCurso) { toast('Ya hay una importación en curso'); return; }
+    const total = files.length;
+
+    if (total > 200) {
+      if (!confirm(`Vas a cargar ${total} libros. Puede tardar mucho y ocupar bastante espacio.\n\n¿Continuar?`)) return;
+    } else if (total > 50) {
+      if (!confirm(`Vas a cargar ${total} libros. Puede tomar varios minutos.\n\n¿Continuar?`)) return;
+    }
+
+    // Capacity check
+    try {
+      const est = await navigator.storage.estimate();
+      const libreMB = (est.quota - est.usage) / (1024*1024);
+      const tamTotalMB = files.reduce((a, f) => a + f.size, 0) / (1024*1024);
+      const estimadoMB = tamTotalMB * 1.5;
+      if (estimadoMB > libreMB * 0.85) {
+        const msg = `Espacio disponible: ${Math.round(libreMB)} MB\n` +
+                    `Espacio estimado: ~${Math.round(estimadoMB)} MB\n\n` +
+                    `Estás muy cerca del límite. ¿Continuar de todas formas?`;
+        if (!confirm(msg)) return;
+      }
+    } catch {}
+
+    batchEnCurso = true;
+    $('#batchProgressBar').style.width = '0%';
+    $('#batchTitle').textContent = 'Importando libros';
+    $('#batchStatus').textContent = 'Preparando…';
+    $('#batchDetail').textContent = '';
+    $('#batchCount').textContent = '';
+    $('#batchErroresCont').innerHTML = '';
+    $('#batchCerrarBtn').style.display = 'none';
+    batchDialog.showModal();
+
+    let ok = 0, err = 0;
+    const errores = [];
+
+    for (let i = 0; i < total; i++) {
+      const f = files[i];
+      const pct = Math.round((i / total) * 100);
+      $('#batchProgressBar').style.width = pct + '%';
+      $('#batchStatus').textContent = `Importando ${i + 1} de ${total}…`;
+      $('#batchDetail').textContent = f.name;
+      $('#batchCount').textContent = `${ok} OK · ${err} errores`;
+
+      try {
+        const res = await leerArchivo(f);
+        let libro;
+
+        if (res.estructura) {
+          // EPUB con metadata
+          const tituloFinal = res.titulo || f.name.replace(/\.[^.]+$/, '');
+          libro = {
+            id: uid(),
+            fecha: Date.now(),
+            leido: false,
+            favorito: false,
+            scrollTop: 0,
+            titulo: tituloFinal,
+            autor: res.autor || '',
+            descripcion: res.descripcion || '',
+            categoria: res.categoria || detectarCategoria(tituloFinal, res.autor),
+            puntos: 0,
+            capitulos: [],
+            secciones: [],
+            hasCover: false
+          };
+
+          const intros = res.estructura.filter(x => x.tipo === 'intro');
+          const contenido = res.estructura.filter(x => x.tipo !== 'intro');
+
+          if (intros.length) {
+            const extra = intros.map(x => x.resumen).filter(Boolean).join('\n\n');
+            if (extra && !libro.descripcion.includes(extra)) {
+              libro.descripcion = (libro.descripcion ? libro.descripcion + '\n\n' : '') + extra;
+            }
+          }
+
+          for (const item of contenido) {
+            if (item.tipo === 'sec') {
+              libro.secciones.push({
+                id: uid(),
+                titulo: item.titulo,
+                capitulos: (item.capitulos || []).map(c => ({
+                  id: uid(), titulo: c.titulo, resumen: c.resumen || '', notas: [], ttsIndice: 0
+                }))
+              });
+            } else if (item.tipo === 'cap') {
+              libro.capitulos.push({
+                id: uid(), titulo: item.titulo, resumen: item.resumen || '', notas: [], ttsIndice: 0
+              });
+            }
+          }
+
+          libros.push(libro);
+
+          if (res.coverBlob) {
+            try {
+              await setCover(libro.id, res.coverBlob);
+              libro.hasCover = true;
+            } catch {}
+          }
+        } else {
+          // TXT
+          const tituloFinal = f.name.replace(/\.[^.]+$/, '');
+          const det = detectarEstructura(res.texto);
+          libro = {
+            id: uid(),
+            fecha: Date.now(),
+            leido: false,
+            favorito: false,
+            scrollTop: 0,
+            titulo: tituloFinal,
+            autor: '',
+            descripcion: '',
+            categoria: detectarCategoria(tituloFinal, ''),
+            puntos: 0,
+            capitulos: [],
+            secciones: [],
+            hasCover: false
+          };
+          const intros = det.filter(x => x.tipo === 'intro');
+          const contenido = det.filter(x => x.tipo !== 'intro');
+          if (intros.length) {
+            libro.descripcion = intros.map(x => x.resumen).filter(Boolean).join('\n\n');
+          }
+          for (const item of contenido) {
+            if (item.tipo === 'sec') {
+              libro.secciones.push({
+                id: uid(),
+                titulo: item.titulo,
+                capitulos: (item.capitulos || []).map(c => ({
+                  id: uid(), titulo: c.titulo, resumen: c.resumen || '', notas: [], ttsIndice: 0
+                }))
+              });
+            } else if (item.tipo === 'cap') {
+              libro.capitulos.push({
+                id: uid(), titulo: item.titulo, resumen: item.resumen || '', notas: [], ttsIndice: 0
+              });
+            }
+          }
+          if (!libro.capitulos.length && !libro.secciones.length) {
+            libro.capitulos.push({ id: uid(), titulo: 'Capítulo 1', resumen: res.texto, notas: [], ttsIndice: 0 });
+          }
+          libros.push(libro);
+        }
+
+        ok++;
+      } catch (e) {
+        err++;
+        errores.push({ archivo: f.name, error: e.message || 'Error' });
+      }
+
+      // Yield cada 2 archivos
+      if (i % 2 === 1) await new Promise(r => setTimeout(r, 0));
+    }
+
+    $('#batchProgressBar').style.width = '100%';
+    $('#batchStatus').textContent = 'Completado';
+    $('#batchDetail').textContent = `${ok} libro${ok === 1 ? '' : 's'} importado${ok === 1 ? '' : 's'} correctamente${err > 0 ? ` · ${err} con error` : ''}`;
+    $('#batchCount').textContent = `${ok} OK · ${err} errores`;
+
+    if (errores.length) {
+      $('#batchErroresCont').innerHTML = `<div class="batch-errores"><strong>Errores (${errores.length}):</strong><ul>${errores.map(e => `<li><strong>${esc(e.archivo)}</strong>: ${esc(e.error)}</li>`).join('')}</ul></div>`;
+    }
+
+    await guardarInmediato();
+    await actualizarStats();
+    batchEnCurso = false;
+    $('#batchCerrarBtn').style.display = 'inline-flex';
+    render();
+  }
+
+  $('#batchCerrarBtn').addEventListener('click', () => {
+    batchDialog.close();
   });
 
   /* ═══════════════ SYNC GITHUB GIST ═══════════════ */
@@ -4427,7 +4871,7 @@
         if (blob) portadas[l.id] = await blobToBase64(blob);
       } catch {}
     }
-    const data = { version: 9, exportado: new Date().toISOString(), libros, portadas };
+    const data = { version: 10, exportado: new Date().toISOString(), libros, portadas };
     await ghRequest('PATCH', `/gists/${syncGistId}`, {
       files: { 'biblioteca.json': { content: JSON.stringify(data) } }
     });
@@ -4451,7 +4895,7 @@
     if (!data.libros) throw new Error('Formato inválido');
 
     libros = data.libros.map(normalizarLibro);
-    guardar();
+    await guardarInmediato();
     await dbClearAll(DB_COVERS);
     coversCache.forEach(u => URL.revokeObjectURL(u));
     coversCache.clear();
@@ -4565,9 +5009,16 @@
 
   /* ═══════════════ GESTIÓN ═══════════════ */
   const menu = $('#importador');
-  $('#btnMenu').addEventListener('click', () => {
+  $('#btnMenu').addEventListener('click', async () => {
     $('#fImportar').value = '';
-    $('#imCount').textContent = libros.length + ' libros en la biblioteca';
+    const est = await calcularUsoAlmacenamiento();
+    if (est) {
+      const uso = est.usoMB < 10 ? est.usoMB.toFixed(1) : Math.round(est.usoMB);
+      const cuota = Math.round(est.cuotaMB);
+      $('#imCount').textContent = `${libros.length} libros · ${uso} / ${cuota} MB`;
+    } else {
+      $('#imCount').textContent = libros.length + ' libros en la biblioteca';
+    }
     menu.showModal();
   });
   $('#imCerrar').addEventListener('click', () => menu.close());
@@ -4582,7 +5033,7 @@
         if (blob) portadas[l.id] = await blobToBase64(blob);
       } catch {}
     }
-    const data = { version: 9, exportado: new Date().toISOString(), libros, portadas };
+    const data = { version: 10, exportado: new Date().toISOString(), libros, portadas };
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -4602,7 +5053,7 @@
       const data = JSON.parse(txt);
       if (!data.libros) throw new Error('Formato inválido');
       libros = data.libros.map(normalizarLibro);
-      guardar();
+      await guardarInmediato();
       await dbClearAll(DB_COVERS);
       for (const [id, b64] of Object.entries(data.portadas || {})) {
         try {
@@ -4642,7 +5093,7 @@
     const n = $('#fImportar').value.split('\n').filter(l => l.trim()).length;
     $('#imCount').textContent = n + (n === 1 ? ' libro a añadir' : ' libros a añadir');
   });
-  $('#imImportar').addEventListener('click', () => {
+  $('#imImportar').addEventListener('click', async () => {
     const lineas = $('#fImportar').value.split('\n');
     const existentes = new Set(libros.map(l => (normalizar(l.titulo) + '|' + normalizar(l.autor)).toLowerCase()));
     let ok = 0, dup = 0;
@@ -4655,11 +5106,11 @@
         id: uid(), titulo: p.titulo, autor: p.autor,
         capitulos: [], secciones: [], descripcion: '',
         categoria: detectarCategoria(p.titulo, p.autor),
-        puntos: 0, leido: false, favorito: false, fecha: Date.now(), scrollTop: 0
+        puntos: 0, leido: false, favorito: false, fecha: Date.now(), scrollTop: 0, hasCover: false
       });
       existentes.add(k); ok++;
     });
-    if (ok) { guardar(); render(); toast(`${ok} añadidos${dup ? ` · ${dup} duplicados` : ''}`); }
+    if (ok) { await guardarInmediato(); render(); toast(`${ok} añadidos${dup ? ` · ${dup} duplicados` : ''}`); }
     else if (dup) toast(`Todos ya existían (${dup})`);
     else toast('No hay libros válidos');
     $('#fImportar').value = '';
@@ -4669,7 +5120,7 @@
     if (!confirm('¿Borrar TODOS los libros, capítulos, secciones, notas y portadas?\n\nNo se puede deshacer.')) return;
     if (!confirm('¿Estás completamente seguro?')) return;
     libros = [];
-    guardar();
+    await guardarInmediato();
     await dbClearAll(DB_COVERS);
     coversCache.forEach(u => URL.revokeObjectURL(u));
     coversCache.clear();
@@ -4684,7 +5135,7 @@
     if (!confirm(`¿Eliminar «${l.titulo}»?\n\nSe borrarán también sus capítulos, secciones, notas y portada.`)) return;
     await removeCover(id);
     libros = libros.filter(x => x.id !== id);
-    guardar();
+    await guardarInmediato();
     render();
     toast('Libro eliminado');
   }
@@ -4779,7 +5230,7 @@
   /* ═══════════════ INIT ═══════════════ */
   async function init() {
     initCategoriasSelect();
-    cargar();
+    await cargar();
     await precargarCovers();
     aplicarConfiguracionVisual();
     render();

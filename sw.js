@@ -1,5 +1,5 @@
 // Service Worker — cache offline para la PWA
-const CACHE_NAME = 'biblioteca-v6';
+const CACHE_NAME = 'biblioteca-v7';
 const ASSETS = [
   './',
   './index.html',
