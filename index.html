@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#6366f1" />
 <title>Mi Biblioteca Personal</title>
 
-<!-- ═══ Favicon + iconos PWA ═══ -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
 <link rel="manifest" href="manifest.json?v=4" />
@@ -118,6 +117,8 @@
   .icon-btn.fav:hover{color:var(--fav);border-color:color-mix(in srgb,var(--fav) 45%, var(--border))}
   .icon-btn.fav.activo{color:var(--fav);border-color:color-mix(in srgb,var(--fav) 45%, var(--border));background:color-mix(in srgb,var(--fav) 8%, var(--surface))}
   .icon-btn.fav.activo svg{fill:var(--fav)}
+  .icon-btn.leido-btn:hover{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%, var(--border))}
+  .icon-btn.leido-btn.activo{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%, var(--border));background:color-mix(in srgb,var(--ok) 10%, var(--surface))}
 
   .hero{padding:26px 0 6px}
   .hero-title{margin:0;font-size:clamp(1.5rem,4.4vw,2.3rem);line-height:1.15;letter-spacing:-.03em;font-weight:800}
@@ -190,6 +191,7 @@
   .grid.list-view .author{font-size:.78rem}
   .grid.list-view .meta-row{margin-top:3px}
   .grid.list-view .preview{display:none}
+  .grid.list-view .leer-mas-btn{display:none}
   .grid.list-view .card-foot{border-top:none;padding-top:0;margin-top:0;flex-shrink:0;flex-direction:column;align-items:flex-end;gap:4px}
   .grid.list-view .fecha{font-size:.7rem}
   .grid.list-view .badge-read{position:static;border-radius:6px;padding:2px 6px;font-size:.6rem;margin-left:6px}
@@ -232,11 +234,23 @@
   .pill.nota{background:color-mix(in srgb,var(--nota) 16%, transparent);color:#a16207;border-color:color-mix(in srgb,var(--nota) 40%, transparent)}
   .pill.progreso{background:color-mix(in srgb,#0ea5e9 16%, transparent);color:#0284c7;border-color:color-mix(in srgb,#0ea5e9 40%, transparent)}
   .pill.fav{background:color-mix(in srgb,var(--fav) 14%, transparent);color:var(--fav);border-color:color-mix(in srgb,var(--fav) 35%, transparent)}
+  .pill.pct{background:color-mix(in srgb,var(--ok) 15%, transparent);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%, transparent);font-weight:800}
+  .pill.pct.full{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-color:transparent}
   [data-theme="dark"] .pill.progreso{background:color-mix(in srgb,#0ea5e9 20%, transparent);color:#38bdf8;border-color:color-mix(in srgb,#0ea5e9 42%, transparent)}
 
   .preview{margin:0;font-size:.84rem;color:var(--muted);
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
   .preview.vacio{font-style:italic;opacity:.7}
+  .leer-mas-btn{
+    font:inherit;font-size:.74rem;font-weight:700;
+    background:color-mix(in srgb,var(--accent) 12%, transparent);
+    color:var(--accent);
+    border:1px solid color-mix(in srgb,var(--accent) 30%, transparent);
+    border-radius:8px;padding:5px 10px;cursor:pointer;transition:.15s;
+    margin-top:6px;display:inline-flex;align-items:center;gap:4px;
+  }
+  .leer-mas-btn:hover{background:color-mix(in srgb,var(--accent) 22%, transparent)}
+  .leer-mas-btn svg{width:11px;height:11px}
   .card-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;
     margin-top:auto;padding-top:11px;border-top:1px solid var(--border)}
   .fecha{font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -296,7 +310,7 @@
   .reader-meta h2{margin:0;font-family:var(--serif);font-size:clamp(1.1rem,3vw,1.4rem);line-height:1.22;letter-spacing:-.02em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .reader-meta .autor{margin-top:3px;font-size:.85rem;white-space:normal;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
   .reader-sub{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 8px;font-size:.72rem;color:var(--muted);align-items:center}
-  .reader-head-actions{display:flex;gap:6px;flex-shrink:0}
+  .reader-head-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;max-width:140px}
 
   .reader-toc{background:var(--surface-2);border-bottom:1px solid var(--border);flex-shrink:0;max-height:0;overflow:hidden;transition:max-height .25s ease}
   .reader-toc.open{max-height:60vh;overflow-y:auto}
@@ -443,14 +457,6 @@
   .nota-add input:focus{border-color:var(--nota);box-shadow:0 0 0 3px color-mix(in srgb,var(--nota) 20%, transparent)}
   .nota-add button{font:inherit;font-size:.8rem;font-weight:700;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;flex-shrink:0;transition:.15s}
   .nota-add button:hover{background:var(--nota);color:#fff;border-color:var(--nota)}
-
-  .reader-foot{display:flex;gap:8px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
-  .reader-foot .btn{padding:9px 14px;font-size:.84rem;flex:1;min-width:0;font-weight:700}
-  .btn-leido{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none}
-  .btn-leido.activo{background:var(--surface);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 50%, var(--border))}
-  .btn-fav{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
-  .btn-fav.activo{background:color-mix(in srgb,var(--fav) 12%, transparent);color:var(--fav);border-color:color-mix(in srgb,var(--fav) 45%, var(--border))}
-  .btn-fav.activo svg{fill:var(--fav)}
 
   #editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog{width:min(720px,96vw);max-height:94vh}
   #fragDialog{width:min(400px,94vw)}
@@ -616,6 +622,7 @@
     .grid:not(.list-view) .meta-row{gap:3px;margin-top:4px}
     .grid:not(.list-view) .pill{font-size:.58rem;padding:2px 6px;min-width:42px;height:17px}
     .grid:not(.list-view) .preview{display:none}
+    .grid:not(.list-view) .leer-mas-btn{display:none}
     .grid:not(.list-view) .card-foot{padding-top:7px;border-top:none;margin-top:auto;flex-direction:column;align-items:flex-start;gap:3px}
     .grid:not(.list-view) .fecha{font-size:.62rem;line-height:1.2}
     .grid:not(.list-view) .card-menu-btn{top:6px;right:6px;width:26px;height:26px;background:rgba(255,255,255,.9)}
@@ -644,12 +651,10 @@
     .row2{grid-template-columns:1fr}
     .reader-head{padding:14px 16px;gap:10px}
     .reader-head .cover{width:52px;height:72px;font-size:1.6rem}
-    .reader-head-actions{gap:4px}
+    .reader-head-actions{gap:4px;max-width:120px}
     .reader-head-actions .icon-btn{width:32px;height:32px;border-radius:8px}
     .reader-head-actions .icon-btn svg{width:16px;height:16px}
     .reader-body{padding:12px 12px 20px}
-    .reader-foot{padding:10px 10px}
-    .reader-foot .btn{flex:1;min-width:0;padding:9px 8px;font-size:.78rem}
     .editor-body{padding:14px 16px}
     .editor-foot{padding:11px 16px}
     .editor-actions{flex:1}
@@ -793,14 +798,23 @@
         <div class="reader-sub" id="rSub"></div>
       </div>
       <div class="reader-head-actions">
-        <button class="icon-btn" id="rAddCap" title="Añadir contenido">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        <button class="icon-btn leido-btn" id="rLeido" title="Marcar como leído" aria-label="Marcar como leído">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
         </button>
-        <button class="icon-btn" id="rEditDesc" title="Introducción del libro">
+        <button class="icon-btn fav" id="rFavorito" title="Favorito" aria-label="Favorito">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="icon-btn" id="rEditar" title="Editar libro" aria-label="Editar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+        <button class="icon-btn" id="rEditDesc" title="Introducción del libro" aria-label="Introducción">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
           </svg>
+        </button>
+        <button class="icon-btn" id="rAddCap" title="Añadir contenido" aria-label="Añadir">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <button class="icon-btn" id="rCerrar" aria-label="Cerrar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -816,16 +830,6 @@
     </div>
     <div class="reader-progress"><div class="fill" id="rProgressFill"></div></div>
     <div class="reader-body" id="rBody"></div>
-    <footer class="reader-foot">
-      <button class="btn btn-leido" id="rLeido" title="Marcar como leído">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-        <span id="rLeidoTxt">Marcar leído</span>
-      </button>
-      <button class="btn btn-fav" id="rFavorito" title="Marcar como favorito">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span id="rFavoritoTxt">Favorito</span>
-      </button>
-    </footer>
   </div>
 </dialog>
 
@@ -943,8 +947,8 @@
 
       <div data-qc-panel="varios" style="display:none">
         <p class="hint">Pega el libro completo. Detecta secciones y capítulos automáticamente, e <strong>ignora la tabla de contenido</strong> al inicio.<br>
-        <strong>Secciones</strong>: <code>Parte I</code>, <code>Libro Primero</code>, <code>SECCIÓN 1</code>.<br>
-        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>, <code>1.</code>, etc.<br>
+        <strong>Secciones</strong>: <code>Parte I</code>, <code>I.- Título</code>, <code>PRIMERA PARTE:</code>, <code>LIBRO PRIMERO</code>.<br>
+        <strong>Capítulos</strong>: <code>Capítulo 1</code>, <code>1. Título</code>, <code>1 TÍTULO</code>, <code>1-"Título"</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>.<br>
         <strong>Introducción</strong> y <strong>Prefacio</strong> se auto-asignan como introducción del libro.</p>
         <div class="field">
           <label for="qcBulkTexto">Texto completo</label>
@@ -1253,7 +1257,7 @@
     { id:'ciencia',   nombre:'Ciencia',              c1:'#0ea5e9', c2:'#06b6d4', keywords:['cosmos','fisica','cuantica','astrofisica','neurociencia','cerebro','agujero negro','universo','evolucion','gen','biologia','anatomia','astronomia','ciencia'] },
     { id:'filosofia', nombre:'Filosofía',             c1:'#8b5cf6', c2:'#d946ef', keywords:['meditaciones','estoico','seneca','maquiavelo','schopenhauer','nietzsche','camus','sisifo','filosofia','arte de la guerra','sun tzu','platon','aristoteles'] },
     { id:'psicologia',nombre:'Psicología',            c1:'#10b981', c2:'#059669', keywords:['psicologia','mente','emocional','sociopata','narcisista','trauma','terapia','psicoanalisis','freud','jung','conducta','gaslighting','manipulacion','psicologica','limites','asertividad','comunicacion no violenta','empatia','inteligencia emocional'] },
-    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','carisma','confianza','motivacion','proposito','manifestacion','poder del ahora','piense y hagase rico','12 reglas','padre rico'] },
+    { id:'desarrollo',nombre:'Desarrollo personal',   c1:'#f59e0b', c2:'#ef4444', keywords:['habitos','atomicos','exito','millonario','rico','riqueza','lider','liderazgo','seduccion','carisma','confianza','motivacion','proposito','manifestacion','poder del ahora','piense y hagase rico','12 reglas','padre rico','models','mark manson'] },
     { id:'historia',  nombre:'Historia',              c1:'#a16207', c2:'#78350f', keywords:['historia','imperio','revolucion','siglo','antigua','roma','grecia','egipto','cristianismo','religion'] },
     { id:'biografia', nombre:'Biografía',             c1:'#3b82f6', c2:'#6366f1', keywords:['memorias','diario','autobiografia','vida de','biografia'] },
     { id:'negocios',  nombre:'Negocios',              c1:'#14b8a6', c2:'#0ea5e9', keywords:['negocio','empresa','economia','marketing','ventas','inversion','finanzas','emprendedor','creatividad'] },
@@ -1367,6 +1371,41 @@
     toastTimer = setTimeout(() => el.classList.remove('show'), 2300);
   }
 
+  /* ═══════════════ PORCENTAJE DE LECTURA ═══════════════ */
+  // Calcula % de un capítulo según fragmentos de TTS recorridos.
+  // Se puede usar antes de definir dividirResumenEnFragmentos() porque
+  // los fragmentos se cuentan por caracteres/párrafos.
+  function porcentajeCapitulo(cap) {
+    const txt = String(cap?.resumen || '').trim();
+    if (!txt) return (cap && cap.ttsIndice > 0) ? 100 : 0;
+    // Contar fragmentos aproximados: párrafos no vacíos separados por líneas
+    const parrafos = txt.split(/\n+/).map(p => p.trim()).filter(Boolean);
+    let total = 0;
+    for (const p of parrafos) {
+      // ~220 chars por fragmento, dividiendo por fin de oración
+      total += Math.max(1, Math.ceil(p.length / 220));
+    }
+    if (total === 0) return 0;
+    const idx = Math.max(0, Math.min(total, cap.ttsIndice || 0));
+    return Math.min(100, Math.round((idx / total) * 100));
+  }
+
+  function porcentajeLibro(l) {
+    if (l.leido) return 100;
+    const caps = [];
+    for (const c of (l.capitulos || [])) {
+      if ((c.titulo || '').trim() || (c.resumen || '').trim()) caps.push(c);
+    }
+    for (const s of (l.secciones || [])) {
+      for (const c of (s.capitulos || [])) {
+        if ((c.titulo || '').trim() || (c.resumen || '').trim()) caps.push(c);
+      }
+    }
+    if (!caps.length) return 0;
+    const suma = caps.reduce((a, c) => a + porcentajeCapitulo(c), 0);
+    return Math.round(suma / caps.length);
+  }
+
   /* ═══════════════ INDEXEDDB ═══════════════ */
   let dbPromise = null;
   function getDB() {
@@ -1468,7 +1507,6 @@
   }
 
   function cargar() {
-    // 1) Intentar versión actual (v7)
     try {
       const raw = localStorage.getItem(LS_KEY);
       if (raw) {
@@ -1477,19 +1515,16 @@
       }
     } catch {}
 
-    // 2) Intentar migrar desde v6
     try {
       const old = localStorage.getItem(LS_KEY_OLD);
       if (old) {
         libros = (JSON.parse(old) || []).map(normalizarLibro);
         guardar();
-        // No borramos v6 por seguridad; queda como respaldo.
         toast(`Migrados ${libros.length} libros desde versión anterior`);
         return;
       }
     } catch {}
 
-    // 3) Arrancar vacío (usuario empieza de cero)
     libros = [];
   }
 
@@ -1622,6 +1657,8 @@
         }
       }
       const enProgreso = libroEnProgreso(l);
+      const pct = porcentajeLibro(l);
+      const pctClass = pct >= 100 ? 'full' : '';
 
       return `
         <article class="card ${l.leido ? 'read' : ''}" data-id="${l.id}" tabindex="0" role="button" style="animation-delay:${Math.min(i*20, 200)}ms">
@@ -1652,6 +1689,7 @@
               <div class="meta-row">
                 <span class="pill" style="background:color-mix(in srgb, ${cat.c1} 15%, transparent);color:${cat.c1};border-color:color-mix(in srgb, ${cat.c1} 40%, transparent)">${cat.nombre}</span>
                 ${l.favorito ? `<span class="pill fav">❤ Fav</span>` : ''}
+                ${pct > 0 ? `<span class="pill pct ${pctClass}">${pct}%</span>` : ''}
                 ${enProgreso ? `<span class="pill progreso">En progreso</span>` : ''}
                 ${c.secciones > 0 ? `<span class="pill sec">${c.secciones} sec</span>` : ''}
                 ${c.caps > 0 ? `<span class="pill cap">${c.caps} cap</span>` : `<span class="pill">Sin cap.</span>`}
@@ -1661,6 +1699,10 @@
             </div>
           </div>
           ${preview ? `<p class="preview">${esc(preview)}</p>` : `<p class="preview vacio">Sin resumen todavía</p>`}
+          ${(l.descripcion || '').trim() ? `<button class="leer-mas-btn" data-leer-desc="${l.id}" title="Leer introducción completa">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Leer introducción
+          </button>` : ''}
           <div class="card-foot">
             <span class="fecha">${c.palabras.toLocaleString('es')} palabras</span>
           </div>
@@ -1731,10 +1773,14 @@
   function actualizarBotonFavorito() {
     if (!libroAbierto) return;
     const btn = $('#rFavorito');
-    const txt = $('#rFavoritoTxt');
     if (libroAbierto.favorito) btn.classList.add('activo');
     else btn.classList.remove('activo');
-    txt.textContent = 'Favorito';
+  }
+  function actualizarBotonLeido() {
+    if (!libroAbierto) return;
+    const btn = $('#rLeido');
+    if (libroAbierto.leido) btn.classList.add('activo');
+    else btn.classList.remove('activo');
   }
 
   /* ═══════════════ TTS ═══════════════ */
@@ -2554,18 +2600,6 @@
     reader.close();
     libroAbierto = null;
   }
-  function actualizarBotonLeido() {
-    if (!libroAbierto) return;
-    const btn = $('#rLeido');
-    const txt = $('#rLeidoTxt');
-    if (libroAbierto.leido) {
-      btn.classList.add('activo');
-      txt.textContent = 'Leído ✓';
-    } else {
-      btn.classList.remove('activo');
-      txt.textContent = 'Marcar leído';
-    }
-  }
   function actualizarProgreso() {
     if (!libroAbierto) return;
     const max = rBody.scrollHeight - rBody.clientHeight;
@@ -2624,6 +2658,15 @@
       render();
       toast(libros[i].leido ? 'Marcado como leído' : 'Marcado como no leído');
     }
+  });
+  $('#rEditar').addEventListener('click', () => {
+    if (!libroAbierto) return;
+    const l = libros.find(x => x.id === libroAbierto.id);
+    if (!l) return;
+    guardarScroll();
+    reader.close();
+    libroAbierto = null;
+    abrirEditor(l);
   });
 
   /* ═══════════════ INTRODUCCIÓN ═══════════════ */
@@ -2693,7 +2736,7 @@
     }
   }
 
-  /* ═══════════════ DETECTOR DE ESTRUCTURA ═══════════════ */
+  /* ═══════════════ DETECTOR DE ESTRUCTURA (v2) ═══════════════ */
   function detectarEstructura(texto) {
     const lineas = String(texto || '').split('\n');
     const nLineas = lineas.length;
@@ -2710,70 +2753,108 @@
     }
 
     function tipoMarcador(linea) {
-      const t = limpiar(linea);
-      if (!t || t.length > 160) return null;
+      const raw = String(linea || '');
+      const t = limpiar(raw);
+      if (!t || t.length > 180) return null;
 
-      if (/^(tabla de contenido|[ií]ndice|indice|contenido|contents|table of contents)$/i.test(t)) {
+      // ── TOC ──
+      if (/^(tabla de contenidos?|[ií]ndice general|[ií]ndice|indice|contenidos?|contents|table of contents|sumario|sumario general)$/i.test(t)) {
         return 'toc';
       }
-      if (/^(introducci[oó]n|prefacio|proemio)\s*$/i.test(t)) {
+
+      // ── Introducción / Prefacio / Prólogo → descripción ──
+      if (/^(introducci[oó]n|prefacio|pr[oó]logo|proemio|presentaci[oó]n|pr[eé]ambulo)(\s*[:.\-–—]\s*.*)?$/i.test(t)) {
         return 'intro';
       }
-      if (/^(parte|libro|secci[oó]n)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|octavo|noveno|d[eé]cimo)\b/i.test(t)) {
-        return 'sec';
+      if (/^(una\s+)?nota\s+(r[aá]pida\s+)?(para|del?|de\s+los?)\s+/i.test(t) ||
+          /^nota\s+(del?|de\s+los?)\s+autor\b/i.test(t)) {
+        return 'intro';
       }
-      if (/^(cap[ií]tulo|cap\.?)\s+([\divxlcdm]+|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|diecis[eé]is|diecisiete|dieciocho|diecinueve|veinte|veintiuno|veintid[oó]s|veintitr[eé]s|veinticuatro|veinticinco|veintis[eé]is|veintisiete|veintiocho|veintinueve|treinta)\b/i.test(t)) {
+
+      // ── Partes / Libros / Secciones ──
+      // "I.- Título" / "II.- Título"
+      if (/^[ivxlcdm]+\s*\.\s*[-–—]\s*\S/i.test(t)) return 'sec';
+      // "Parte I", "Parte 1", "Parte Primera", "Parte I: Título"
+      if (/^(parte|libro|secci[oó]n)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|s[eé]ptima|octavo|noveno|d[eé]cimo|d[eé]cima|und[eé]cimo|und[eé]cima|duod[eé]cimo|duod[eé]cima)\b/i.test(t)) return 'sec';
+      // "PRIMERA PARTE", "SEGUNDA PARTE:", "TERCERA PARTE —"
+      if (/^(primera|segunda|tercera|cuarta|quinta|sexta|s[eé]ptima|octava|novena|d[eé]cima|und[eé]cima|duod[eé]cima)\s+parte\b/i.test(t)) return 'sec';
+      // "LIBRO PRIMERO", "LIBRO I"
+      if (/^libro\s+(primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|octavo|noveno|d[eé]cimo|[ivxlcdm]+|\d+)\b/i.test(t)) return 'sec';
+
+      // ── Capítulos con la palabra ──
+      if (/^(cap[ií]tulo|cap\.|chapter|chap\.)\s+([\divxlcdm]+|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince|diecis[eé]is|diecisiete|dieciocho|diecinueve|veinte|veintiuno|veintid[oó]s|veintitr[eé]s|veinticuatro|veinticinco|veintis[eé]is|veintisiete|veintiocho|veintinueve|treinta)\b/i.test(t)) return 'cap';
+
+      // ── Capítulos especiales sin número ──
+      if (/^(ep[ií]logo|conclusi[oó]n(es)?|cierre(\s+sexual)?|final|glosario|bibliograf[ií]a|referencias|lecturas\s+(adicionales|recomendadas)|recursos\s+recomendados|ap[eé]ndice\b|anexo\b|agradecimientos|dedicatoria|ep[ií]grafe|advertencia|sobre\s+(el|los|la|las)\s+autor(es|a|as)?|acerca\s+de(l|\s+los|\s+la|\s+las)?\s+autor(es|a|as)?|notas?\s+finales?|[ií]ndice\s+(anal[ií]tico|onom[aá]stico|tem[aá]tico)|cr[eé]ditos\s+de\s+ilustraciones|soluciones\s+de\s+los\s+ejercicios)\b/i.test(t)) return 'cap';
+
+      // ── Markdown headings ──
+      if (/^#{1,6}\s+\S/.test(raw.trim())) {
+        if (/^#{1,2}\s+(parte|libro|secci[oó]n)\b/i.test(raw)) return 'sec';
         return 'cap';
       }
-      if (/^(pr[oó]logo|ep[ií]logo|prefacio|conclusi[oó]n|cierre sexual|cierre|glosario|bibliograf[ií]a|lecturas adicionales|lecturas recomendadas|sobre el autor|agradecimientos|ap[eé]ndice|dedicatoria|nota del autor|nota r[aá]pida)\b/i.test(t)) {
-        return 'cap';
-      }
-      if (/^#{1,6}\s+\S/.test(t)) {
-        if (/^#{1,2}\s+(parte|libro|secci[oó]n)\b/i.test(t)) return 'sec';
-        return 'cap';
-      }
-      if (/^\d{1,3}[\.\)]\s+[A-ZÁÉÍÓÚÑ]/.test(t)) return 'cap';
+
+      // ── "1. Título" (número + punto + espacio + Mayúscula) ──
+      if (/^\d{1,3}\.\s+[A-ZÁÉÍÓÚÑ]/.test(t) && t.length < 200) return 'cap';
+
+      // ── "1 TÍTULO EN MAYÚSCULAS" (sin punto) ──
+      if (/^\d{1,3}\s+[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s\d"'¡!¿?.,:;()\-]{5,}$/.test(t) && t.length < 150) return 'cap';
+
+      // ── "1) Título" / "1- Título" / "1 – Título" / "1.- Título" ──
+      if (/^\d{1,3}\s*[)\-–—.]\s*[A-ZÁÉÍÓÚÑ"“«]/.test(t) && t.length < 200) return 'cap';
+
+      // ── '1-"Título"' (los 200 consejos de Ángel Daro) ──
+      if (/^\d{1,3}\s*[-–—]\s*["“«]/.test(t) && t.length < 250) return 'cap';
+
       return null;
     }
 
-    let inicioProcesamiento = 0;
+    // ── PASO 1: encontrar el fin de la TOC ──
+    // Estrategia: buscar el primer marcador (no toc) que esté seguido por texto real
+    // (>100 caracteres en alguna de las próximas ~15 líneas).
+    let inicioReal = 0;
+    let hayTOC = false;
     for (let i = 0; i < nLineas; i++) {
-      if (!lineas[i].trim()) continue;
-      if (tipoMarcador(lineas[i]) === 'toc') {
-        for (let j = i + 1; j < nLineas; j++) {
-          if (!tipoMarcador(lineas[j])) continue;
-          let siguienteMarcador = -1;
-          for (let k = j + 1; k < nLineas; k++) {
-            if (tipoMarcador(lineas[k])) { siguienteMarcador = k; break; }
+      if (tipoMarcador(lineas[i]) === 'toc') { hayTOC = true; break; }
+    }
+    if (hayTOC) {
+      for (let i = 0; i < nLineas; i++) {
+        const tipo = tipoMarcador(lineas[i]);
+        if (tipo && tipo !== 'toc') {
+          let textoReal = 0;
+          for (let j = i + 1; j < Math.min(nLineas, i + 20); j++) {
+            if (lineas[j].trim().length > 100) { textoReal++; break; }
           }
-          const fin = siguienteMarcador >= 0 ? siguienteMarcador : nLineas;
-          let chars = 0;
-          for (let k = j + 1; k < fin; k++) {
-            if (!tipoMarcador(lineas[k])) chars += lineas[k].trim().length;
-          }
-          if (chars >= 200) {
-            inicioProcesamiento = j;
+          if (textoReal >= 1) {
+            inicioReal = i;
             break;
           }
         }
-        break;
+      }
+      if (inicioReal === 0) {
+        // Fallback: saltar hasta 300 líneas o hasta línea larga
+        for (let i = 1; i < nLineas; i++) {
+          if (lineas[i].trim().length > 100) { inicioReal = i; break; }
+        }
       }
     }
 
+    // ── PASO 2: recolectar marcadores ──
     const marcadores = [];
-    for (let i = inicioProcesamiento; i < nLineas; i++) {
+    for (let i = inicioReal; i < nLineas; i++) {
       const tipo = tipoMarcador(lineas[i]);
       if (tipo && tipo !== 'toc') {
         marcadores.push({ idx: i, tipo, titulo: limpiar(lineas[i]) });
       }
     }
 
+    // Si no hay marcadores, todo va como un capítulo
     if (marcadores.length === 0) {
       const limpio = String(texto || '').trim();
       if (!limpio) return [];
       return [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: limpio }];
     }
 
+    // ── PASO 3: armar estructura ──
     const estructura = [];
     let seccionActual = null;
 
@@ -2793,6 +2874,7 @@
 
       let titulo = m.titulo;
 
+      // Separar "Capítulo 1: Título" cuando hay mucho contenido tras ":"
       if (m.tipo === 'cap') {
         const matchColon = titulo.match(/^([^:]{2,90}):\s*(.{40,})$/);
         if (matchColon) {
@@ -2805,6 +2887,7 @@
         }
       }
 
+      // Fusionar "Capítulo N" solo + subtítulo en la línea siguiente
       const esSoloCap = /^(cap[ií]tulo|parte|secci[oó]n)\s+[\divxlcdm]+\s*$/i.test(titulo);
       if (esSoloCap && resumen) {
         const rLineas = resumen.split('\n');
@@ -2828,11 +2911,58 @@
         }
       }
 
+      // Fusionar "PRIMERA PARTE" + subtítulo en la línea siguiente
+      const esSoloParte = /^(primera|segunda|tercera|cuarta|quinta|sexta|s[eé]ptima|octava|novena|d[eé]cima|und[eé]cima|duod[eé]cima)\s+parte\s*$/i.test(titulo);
+      if (esSoloParte && resumen) {
+        const rLineas = resumen.split('\n');
+        let idxSub = -1;
+        for (let k = 0; k < Math.min(rLineas.length, 4); k++) {
+          const l = rLineas[k].trim();
+          if (!l) continue;
+          if (l.length >= 3 && l.length <= 100 && !/[.!?]$/.test(l)) {
+            idxSub = k;
+            break;
+          }
+          break;
+        }
+        if (idxSub >= 0) {
+          const subtitulo = rLineas[idxSub].trim();
+          const resto = rLineas.slice(idxSub + 1).join('\n').trim();
+          // Aunque no haya mucho texto, quitamos el subtítulo del resumen
+          titulo = titulo + ': ' + subtitulo;
+          resumen = resto;
+        }
+      }
+
       if (titulo.length > 120) titulo = titulo.slice(0, 120).trim() + '…';
 
       if (m.tipo === 'sec') {
         seccionActual = { tipo: 'sec', titulo, capitulos: [] };
         estructura.push(seccionActual);
+        // Si la sección tiene resumen introductorio, lo metemos como primer cap hijo
+        // Solo si hay >=80 chars y no empieza con mayúscula-de-título corto
+        if (resumen && resumen.length >= 80) {
+          const primerParrafo = resumen.split(/\n\n/)[0].trim();
+          const resto = resumen.slice(primerParrafo.length).trim();
+          if (resto.length >= 100) {
+            // Tiene más texto después: el primer párrafo parece intro, resto va al cap
+            // Lo más simple: guardamos TODO el resumen como "intro" de sección
+            // y creamos un cap "Introducción" dentro. Pero el usuario pidió
+            // evitar caps basura. Mejor: si hay más de 1 párrafo grande, crear
+            // un cap con el contenido completo.
+            if (resumen.length >= 200) {
+              seccionActual.capitulos.push({
+                titulo: 'Introducción',
+                resumen
+              });
+            }
+          } else if (resumen.length >= 200) {
+            seccionActual.capitulos.push({
+              titulo: 'Introducción',
+              resumen
+            });
+          }
+        }
       } else if (m.tipo === 'intro') {
         estructura.push({ tipo: 'intro', titulo, resumen });
       } else {
@@ -2844,7 +2974,23 @@
         }
       }
     }
-    return estructura;
+
+    // ── PASO 4: limpiar secciones vacías ──
+    const limpia = [];
+    for (const item of estructura) {
+      if (item.tipo === 'sec') {
+        if (item.capitulos.length === 0) {
+          // Sección sin hijos → se convierte en capítulo directo con el título
+          limpia.push({ tipo: 'cap', titulo: item.titulo, resumen: '' });
+        } else {
+          limpia.push(item);
+        }
+      } else {
+        limpia.push(item);
+      }
+    }
+
+    return limpia;
   }
 
   function actualizarBulkInfo() {
@@ -2876,11 +3022,11 @@
     let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros.length ? ', <span style="color:var(--accent)">'+intros.length+' introducción</span>' : ''}<ul>`;
     let cont = 0;
     for (const item of qcCapsDetectados) {
-      if (cont >= 30) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
+      if (cont >= 40) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
       if (item.tipo === 'sec') {
         html += `<li class="sec-item">§ ${esc(item.titulo)} (${item.capitulos.length} cap${item.capitulos.length === 1 ? '' : 's'})</li>`;
         for (const c of item.capitulos) {
-          if (cont >= 30) break;
+          if (cont >= 40) break;
           html += `<li class="cap-item">${esc(c.titulo)} · ${nPalabras(c.resumen).toLocaleString('es')} palabras</li>`;
           cont++;
         }
@@ -3230,9 +3376,10 @@
     $('#rAutor').textContent = (l.autor && l.autor !== '—') ? l.autor : '';
 
     const c = contarLibro(l);
+    const pct = porcentajeLibro(l);
     const sub = [];
     sub.push(`<span style="background:color-mix(in srgb, ${cat.c1} 18%, transparent);color:${cat.c1};padding:1px 7px;border-radius:10px;font-weight:700">${cat.nombre}</span>`);
-    if (l.favorito) sub.push(`<span style="color:var(--fav);font-weight:700">❤ Favorito</span>`);
+    if (pct > 0) sub.push(`<span style="color:var(--ok);font-weight:800">${pct}% leído</span>`);
     if (l.puntos > 0) sub.push(`<span style="color:var(--star)">${estrellas(l.puntos)}</span>`);
     if (c.secciones > 0) sub.push(`<span>${c.secciones} sec · ${c.caps} cap</span>`);
     else sub.push(`<span>${c.caps} cap</span>`);
@@ -3430,16 +3577,18 @@
         actualizarWC();
       });
     });
+    // BUG FIX: btn.dataset.capDel (no btn.dataset.id)
     cont.querySelectorAll('[data-cap-del]').forEach(btn => {
       btn.addEventListener('click', () => {
         if (!confirm('¿Eliminar este capítulo?')) return;
-        const { path, id } = btn.dataset;
+        const path = btn.dataset.path;
+        const id = btn.dataset.capDel;
         if (path === 'direct') {
           estructuraEditor = estructuraEditor.filter(x => !(x.tipo === 'cap' && x.id === id));
-        } else if (path.startsWith('sec:')) {
+        } else if (path && path.startsWith('sec:')) {
           const secId = path.slice(4);
           const sec = estructuraEditor.find(x => x.tipo === 'sec' && x.id === secId);
-          if (sec) sec.capitulos = sec.capitulos.filter(c => c.id !== id);
+          if (sec) sec.capitulos = (sec.capitulos || []).filter(c => c.id !== id);
         }
         renderEditorCaps();
       });
@@ -4054,6 +4203,13 @@
   }
 
   grid.addEventListener('click', (e) => {
+    // Botón "Leer introducción" (abre el modal de descripción, no el lector)
+    const leerDesc = e.target.closest('[data-leer-desc]');
+    if (leerDesc) {
+      e.stopPropagation();
+      abrirDescReader(leerDesc.dataset.leerDesc);
+      return;
+    }
     const actionBtn = e.target.closest('[data-action]');
     if (actionBtn) {
       e.stopPropagation();
