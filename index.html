@@ -29,7 +29,7 @@
     --text:#12121a; --muted:#6b7280; --border:#e7e7ee;
     --accent:#6366f1; --accent-2:#8b5cf6;
     --star:#f59e0b; --danger:#e11d48; --ok:#10b981; --nota:#eab308;
-    --fav:#ef4444; --seccion:#0ea5e9;
+    --fav:#ef4444; --seccion:#0ea5e9; --proceso:#0284c7;
     --shadow-sm:0 1px 2px rgba(16,24,40,.05);
     --shadow-md:0 2px 4px rgba(16,24,40,.04), 0 12px 28px -14px rgba(16,24,40,.25);
     --shadow-lg:0 24px 60px -20px rgba(16,24,40,.35);
@@ -335,60 +335,6 @@
   .reader-body{overflow-y:auto;padding:16px 16px 24px;flex:1;min-height:0;scroll-behavior:smooth;position:relative}
   .reader-body.sin-texto{font-family:inherit;font-size:.92rem;color:var(--muted);font-style:italic;text-align:center;padding-top:60px}
 
-  .descripcion-libro{
-    background:var(--surface-2);border:1px solid var(--border);border-radius:14px;
-    padding:16px;margin-bottom:16px;cursor:pointer;
-    border-left:3px solid var(--cat-c1, var(--accent));
-    transition:.16s;
-  }
-  .descripcion-libro:hover{
-    background:color-mix(in srgb, var(--cat-c1, var(--accent)) 6%, var(--surface-2));
-    border-color:color-mix(in srgb, var(--cat-c1, var(--accent)) 40%, var(--border));
-  }
-  .descripcion-label{
-    font-size:.7rem;font-weight:800;color:var(--cat-c1, var(--accent));
-    text-transform:uppercase;letter-spacing:.08em;
-    margin-bottom:6px;display:flex;align-items:center;gap:6px;justify-content:space-between;
-  }
-  .descripcion-label .desc-play-hint{
-    font-size:.62rem;font-weight:700;color:var(--muted);
-    text-transform:none;letter-spacing:0;
-    display:inline-flex;align-items:center;gap:4px;
-  }
-  .descripcion-label .desc-play-hint svg{width:10px;height:10px}
-  .descripcion-label .label-left{display:inline-flex;align-items:center;gap:6px}
-  .descripcion-label .label-left svg{width:12px;height:12px}
-  .descripcion-texto{
-    font-family:var(--serif);font-size:1rem;line-height:1.7;
-    color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;
-    display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden;
-  }
-
-  #descReader{width:min(720px,94vw);max-height:92vh}
-  @media(max-width:640px){#descReader{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
-  .desc-reader-wrap{display:flex;flex-direction:column;max-height:92vh}
-  @media(max-width:640px){.desc-reader-wrap{height:100dvh;max-height:100dvh}}
-  .desc-reader-head{
-    display:flex;gap:12px;align-items:flex-start;padding:16px 20px;
-    border-bottom:1px solid var(--border);flex-shrink:0;
-    background:linear-gradient(135deg,
-      color-mix(in srgb, var(--cat-c1, var(--surface)) 14%, var(--surface)),
-      color-mix(in srgb, var(--cat-c2, var(--surface)) 8%, var(--surface)));
-  }
-  .desc-reader-head .cover{width:60px;height:84px;font-size:1.7rem}
-  .desc-reader-meta{flex:1;min-width:0}
-  .desc-reader-meta h2{margin:0;font-family:var(--serif);font-size:clamp(1.05rem,3vw,1.3rem);line-height:1.22;letter-spacing:-.02em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .desc-reader-meta .autor{margin-top:3px;font-size:.82rem;color:var(--muted);overflow-wrap:anywhere}
-  .desc-reader-meta .subtitulo{margin-top:5px;font-size:.7rem;font-weight:800;color:var(--cat-c1, var(--accent));text-transform:uppercase;letter-spacing:.08em;display:inline-flex;align-items:center;gap:6px}
-  .desc-reader-meta .subtitulo svg{width:11px;height:11px}
-  .desc-reader-body{overflow-y:auto;padding:18px 20px;flex:1;min-height:0;font-family:var(--serif);font-size:1.05rem;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text)}
-  .desc-reader-body p{margin:0 0 1em}
-  .desc-reader-body p:last-child{margin-bottom:0}
-  .desc-reader-foot{display:flex;gap:8px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
-  .desc-reader-foot .btn{padding:9px 14px;font-size:.84rem;flex:1;min-width:0;font-weight:700}
-  .tts-frag{transition:background-color .25s, box-shadow .25s;border-radius:4px;scroll-margin-top:80px;scroll-margin-bottom:80px}
-  .tts-frag.tts-activo{background:color-mix(in srgb,var(--accent) 26%, transparent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 38%, transparent)}
-
   .seccion-bloque{
     background:color-mix(in srgb,var(--seccion) 5%, var(--surface));
     border:1px solid color-mix(in srgb,var(--seccion) 25%, var(--border));
@@ -427,6 +373,27 @@
   .cap-header.sticky-active{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:2px solid var(--accent);box-shadow:0 4px 12px -6px rgba(0,0,0,.15);border-radius:14px 14px 0 0}
   .cap-num{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem;flex-shrink:0}
   .cap-titulo{flex:1;min-width:0;font-size:.96rem;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  /* ═══ BADGES DE ESTADO ═══ */
+  .estado-badge{
+    width:22px;height:22px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:.72rem;font-weight:800;flex-shrink:0;
+    border:1.5px solid transparent;
+  }
+  .estado-badge.leido{
+    background:linear-gradient(135deg,#10b981,#059669);color:#fff;
+    border-color:transparent;
+    box-shadow:0 2px 6px rgba(16,185,129,.35);
+  }
+  .estado-badge.leido svg{width:12px;height:12px}
+  .estado-badge.proceso{
+    background:color-mix(in srgb,#0ea5e9 20%, transparent);
+    color:var(--proceso);
+    border-color:color-mix(in srgb,#0ea5e9 55%, transparent);
+  }
+  .estado-badge.proceso svg{width:10px;height:10px}
+
   .cap-controls{display:flex;gap:6px;flex-shrink:0;align-items:center}
   .cap-toggle{background:none;border:none;padding:4px;cursor:pointer;color:var(--muted);display:grid;place-items:center;border-radius:6px;transition:.15s;flex-shrink:0}
   .cap-toggle:hover{background:var(--surface);color:var(--text)}
@@ -439,7 +406,6 @@
   .cap-speed{font:inherit;font-size:.72rem;font-weight:700;padding:5px 22px 5px 7px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;appearance:none;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat:no-repeat;background-position:right 6px center;}
-  .tts-resume{font-size:.7rem;background:color-mix(in srgb,var(--accent) 15%, transparent);color:var(--accent);padding:3px 8px;border-radius:10px;font-weight:800;white-space:nowrap;flex-shrink:0}
   .cap-resumen{font-family:var(--serif);font-size:1.04rem;line-height:1.8;white-space:normal;overflow-wrap:anywhere;color:var(--text);padding-top:14px}
   .cap-resumen p{margin:0 0 1em}
   .cap-resumen p:last-child{margin-bottom:0}
@@ -457,6 +423,32 @@
   .nota-add input:focus{border-color:var(--nota);box-shadow:0 0 0 3px color-mix(in srgb,var(--nota) 20%, transparent)}
   .nota-add button{font:inherit;font-size:.8rem;font-weight:700;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;flex-shrink:0;transition:.15s}
   .nota-add button:hover{background:var(--nota);color:#fff;border-color:var(--nota)}
+
+  .tts-frag{transition:background-color .25s, box-shadow .25s;border-radius:4px;scroll-margin-top:80px;scroll-margin-bottom:80px}
+  .tts-frag.tts-activo{background:color-mix(in srgb,var(--accent) 26%, transparent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 38%, transparent)}
+
+  #descReader{width:min(720px,94vw);max-height:92vh}
+  @media(max-width:640px){#descReader{width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+  .desc-reader-wrap{display:flex;flex-direction:column;max-height:92vh}
+  @media(max-width:640px){.desc-reader-wrap{height:100dvh;max-height:100dvh}}
+  .desc-reader-head{
+    display:flex;gap:12px;align-items:flex-start;padding:16px 20px;
+    border-bottom:1px solid var(--border);flex-shrink:0;
+    background:linear-gradient(135deg,
+      color-mix(in srgb, var(--cat-c1, var(--surface)) 14%, var(--surface)),
+      color-mix(in srgb, var(--cat-c2, var(--surface)) 8%, var(--surface)));
+  }
+  .desc-reader-head .cover{width:60px;height:84px;font-size:1.7rem}
+  .desc-reader-meta{flex:1;min-width:0}
+  .desc-reader-meta h2{margin:0;font-family:var(--serif);font-size:clamp(1.05rem,3vw,1.3rem);line-height:1.22;letter-spacing:-.02em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .desc-reader-meta .autor{margin-top:3px;font-size:.82rem;color:var(--muted);overflow-wrap:anywhere}
+  .desc-reader-meta .subtitulo{margin-top:5px;font-size:.7rem;font-weight:800;color:var(--cat-c1, var(--accent));text-transform:uppercase;letter-spacing:.08em;display:inline-flex;align-items:center;gap:6px}
+  .desc-reader-meta .subtitulo svg{width:11px;height:11px}
+  .desc-reader-body{overflow-y:auto;padding:18px 20px;flex:1;min-height:0;font-family:var(--serif);font-size:1.05rem;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--text)}
+  .desc-reader-body p{margin:0 0 1em}
+  .desc-reader-body p:last-child{margin-bottom:0}
+  .desc-reader-foot{display:flex;gap:8px;padding:11px 16px;border-top:1px solid var(--border);background:var(--surface-2);flex-wrap:wrap;flex-shrink:0}
+  .desc-reader-foot .btn{padding:9px 14px;font-size:.84rem;flex:1;min-width:0;font-weight:700}
 
   #editor, #importador, #syncDialog, #settingsDialog, #fragDialog, #quickCapDialog, #descDialog{width:min(720px,96vw);max-height:94vh}
   #fragDialog{width:min(400px,94vw)}
@@ -670,14 +662,14 @@
     .frag-btn{font-size:.66rem;padding:4px 7px}
     .cap-speed{font-size:.66rem;padding:4px 20px 4px 6px}
     .cap-controls .icon-btn.sm{width:28px;height:28px}
+    .estado-badge{width:18px;height:18px}
+    .estado-badge svg{width:10px;height:10px}
     .settings-options{display:grid;grid-template-columns:1fr 1fr;gap:6px}
     .settings-options button{width:100%;justify-content:center;padding:9px 8px;font-size:.76rem}
     .settings-preview{padding:11px;gap:9px}
     .settings-preview .cover{width:44px;height:62px;font-size:1.2rem}
     .settings-preview .preview-text strong{font-size:.85rem}
     .settings-preview .preview-text span{font-size:.7rem}
-    .descripcion-libro{padding:13px;margin-bottom:12px}
-    .descripcion-texto{font-size:.95rem}
     .seccion-header{padding:10px 12px;gap:8px}
     .seccion-num{width:26px;height:26px;font-size:.75rem}
     .seccion-titulo{font-size:.88rem}
@@ -807,7 +799,7 @@
         <button class="icon-btn" id="rEditar" title="Editar libro" aria-label="Editar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
         </button>
-        <button class="icon-btn" id="rEditDesc" title="Introducción del libro" aria-label="Introducción">
+        <button class="icon-btn" id="rEditDesc" title="Editar introducción" aria-label="Editar introducción">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
@@ -889,7 +881,7 @@
       </button>
     </header>
     <div class="editor-body">
-      <p class="hint">Una breve presentación del libro. Se mostrará al principio del lector.</p>
+      <p class="hint">Una breve presentación del libro. Se mostrará en la tarjeta del libro, no dentro del lector.</p>
       <div class="field">
         <label for="descInput">Descripción / introducción</label>
         <textarea id="descInput" placeholder="¿De qué trata el libro?" style="min-height:180px"></textarea>
@@ -1303,6 +1295,7 @@
   let categoriaManual = false;
   let estructuraEditor = [];
   const coversCache = new Map();
+  const fragsCountCache = new Map();
   let scrollSaveTimer = null;
   let filtroActivo = 'todos';
   let vistaActual = 'grid';
@@ -1371,23 +1364,106 @@
     toastTimer = setTimeout(() => el.classList.remove('show'), 2300);
   }
 
-  /* ═══════════════ PORCENTAJE DE LECTURA ═══════════════ */
-  // Calcula % de un capítulo según fragmentos de TTS recorridos.
-  // Se puede usar antes de definir dividirResumenEnFragmentos() porque
-  // los fragmentos se cuentan por caracteres/párrafos.
-  function porcentajeCapitulo(cap) {
-    const txt = String(cap?.resumen || '').trim();
-    if (!txt) return (cap && cap.ttsIndice > 0) ? 100 : 0;
-    // Contar fragmentos aproximados: párrafos no vacíos separados por líneas
-    const parrafos = txt.split(/\n+/).map(p => p.trim()).filter(Boolean);
-    let total = 0;
-    for (const p of parrafos) {
-      // ~220 chars por fragmento, dividiendo por fin de oración
-      total += Math.max(1, Math.ceil(p.length / 220));
+  /* ═══════════════ FRAGMENTOS / % DE LECTURA ═══════════════ */
+  function dividirTextoEnTrozos(texto, maxLen = 220) {
+    const limpio = String(texto || '').replace(/\s+/g, ' ').trim();
+    if (!limpio) return [];
+    const oraciones = [];
+    let buf = '';
+    for (let i = 0; i < limpio.length; i++) {
+      const c = limpio[i];
+      buf += c;
+      if (c === '.' || c === '!' || c === '?' || c === '…') {
+        const next = limpio[i+1];
+        const prev = limpio[i-1];
+        if (c === '.') {
+          if (prev && /\d/.test(prev) && next && /\d/.test(next)) continue;
+          if (next && !/[\s\)\]\"'»”]/.test(next)) continue;
+        }
+        let j = i + 1;
+        while (j < limpio.length && /[\)\]\"'»”]/.test(limpio[j])) {
+          buf += limpio[j];
+          j++;
+        }
+        if (j >= limpio.length || /\s/.test(limpio[j])) {
+          oraciones.push(buf.trim());
+          buf = '';
+          i = j - 1;
+        }
+      }
     }
+    if (buf.trim()) oraciones.push(buf.trim());
+
+    const trozos = [];
+    let actual = '';
+    for (const or of oraciones) {
+      if (!or) continue;
+      if ((actual + ' ' + or).trim().length <= maxLen) {
+        actual = (actual + ' ' + or).trim();
+      } else {
+        if (actual) trozos.push(actual);
+        if (or.length > maxLen) {
+          let restante = or;
+          while (restante.length > maxLen) {
+            let corte = restante.lastIndexOf(' ', maxLen);
+            if (corte < maxLen * 0.55) corte = maxLen;
+            trozos.push(restante.slice(0, corte).trim());
+            restante = restante.slice(corte).trim();
+          }
+          actual = restante;
+        } else {
+          actual = or;
+        }
+      }
+    }
+    if (actual) trozos.push(actual);
+    return trozos.filter(t => t.length > 0);
+  }
+
+  function dividirResumenEnFragmentos(resumen) {
+    const parrafos = String(resumen || '').split(/\n+/).map(p => p.trim()).filter(Boolean);
+    return parrafos.map(p => dividirTextoEnTrozos(p, 220));
+  }
+
+  function contarFragmentosCap(cap) {
+    const txt = String(cap?.resumen || '').trim();
+    if (!txt) return 0;
+    const key = (cap.id || '') + '|' + txt.length;
+    if (fragsCountCache.has(key)) return fragsCountCache.get(key);
+    const n = dividirResumenEnFragmentos(txt).flat().length;
+    fragsCountCache.set(key, n);
+    // Limpieza simple
+    if (fragsCountCache.size > 500) {
+      const first = fragsCountCache.keys().next().value;
+      fragsCountCache.delete(first);
+    }
+    return n;
+  }
+
+  // Estado de un capítulo: 'pendiente' | 'proceso' | 'leido'
+  function estadoCapitulo(cap) {
+    const total = contarFragmentosCap(cap);
+    if (total === 0) return 'pendiente';
+    const idx = cap.ttsIndice || 0;
+    if (idx >= total) return 'leido';
+    if (idx > 0) return 'proceso';
+    return 'pendiente';
+  }
+
+  function porcentajeCapitulo(cap) {
+    const total = contarFragmentosCap(cap);
     if (total === 0) return 0;
     const idx = Math.max(0, Math.min(total, cap.ttsIndice || 0));
     return Math.min(100, Math.round((idx / total) * 100));
+  }
+
+  function estadoSeccion(sec) {
+    const caps = (sec.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
+    if (caps.length === 0) return 'pendiente';
+    const estados = caps.map(estadoCapitulo);
+    if (estados.every(e => e === 'leido')) return 'leido';
+    if (estados.every(e => e === 'pendiente')) return 'pendiente';
+    return 'proceso';
   }
 
   function porcentajeLibro(l) {
@@ -1402,8 +1478,27 @@
       }
     }
     if (!caps.length) return 0;
-    const suma = caps.reduce((a, c) => a + porcentajeCapitulo(c), 0);
-    return Math.round(suma / caps.length);
+    let sumaPeso = 0, totalPeso = 0;
+    for (const c of caps) {
+      const total = contarFragmentosCap(c);
+      if (total > 0) {
+        const idx = Math.max(0, Math.min(total, c.ttsIndice || 0));
+        sumaPeso += idx;
+        totalPeso += total;
+      }
+    }
+    if (totalPeso === 0) return 0;
+    return Math.min(100, Math.round((sumaPeso / totalPeso) * 100));
+  }
+
+  function badgeEstadoHTML(estado) {
+    if (estado === 'leido') {
+      return `<span class="estado-badge leido" title="Leído"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>`;
+    }
+    if (estado === 'proceso') {
+      return `<span class="estado-badge proceso" title="En proceso"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>`;
+    }
+    return '';
   }
 
   /* ═══════════════ INDEXEDDB ═══════════════ */
@@ -1688,9 +1783,9 @@
               ${l.autor && l.autor !== '—' ? `<p class="author">${esc(l.autor)}</p>` : ''}
               <div class="meta-row">
                 <span class="pill" style="background:color-mix(in srgb, ${cat.c1} 15%, transparent);color:${cat.c1};border-color:color-mix(in srgb, ${cat.c1} 40%, transparent)">${cat.nombre}</span>
+                <span class="pill pct ${pctClass}">${pct}%</span>
                 ${l.favorito ? `<span class="pill fav">❤ Fav</span>` : ''}
-                ${pct > 0 ? `<span class="pill pct ${pctClass}">${pct}%</span>` : ''}
-                ${enProgreso ? `<span class="pill progreso">En progreso</span>` : ''}
+                ${enProgreso && pct < 100 ? `<span class="pill progreso">En progreso</span>` : ''}
                 ${c.secciones > 0 ? `<span class="pill sec">${c.secciones} sec</span>` : ''}
                 ${c.caps > 0 ? `<span class="pill cap">${c.caps} cap</span>` : `<span class="pill">Sin cap.</span>`}
                 ${c.notas > 0 ? `<span class="pill nota">${c.notas} nota${c.notas > 1 ? 's' : ''}</span>` : ''}
@@ -1817,66 +1912,6 @@
     setTimeout(elegirMejorVoz, 2000);
   }
 
-  function dividirTextoEnTrozos(texto, maxLen = 220) {
-    const limpio = String(texto || '').replace(/\s+/g, ' ').trim();
-    if (!limpio) return [];
-    const oraciones = [];
-    let buf = '';
-    for (let i = 0; i < limpio.length; i++) {
-      const c = limpio[i];
-      buf += c;
-      if (c === '.' || c === '!' || c === '?' || c === '…') {
-        const next = limpio[i+1];
-        const prev = limpio[i-1];
-        if (c === '.') {
-          if (prev && /\d/.test(prev) && next && /\d/.test(next)) continue;
-          if (next && !/[\s\)\]\"'»”]/.test(next)) continue;
-        }
-        let j = i + 1;
-        while (j < limpio.length && /[\)\]\"'»”]/.test(limpio[j])) {
-          buf += limpio[j];
-          j++;
-        }
-        if (j >= limpio.length || /\s/.test(limpio[j])) {
-          oraciones.push(buf.trim());
-          buf = '';
-          i = j - 1;
-        }
-      }
-    }
-    if (buf.trim()) oraciones.push(buf.trim());
-
-    const trozos = [];
-    let actual = '';
-    for (const or of oraciones) {
-      if (!or) continue;
-      if ((actual + ' ' + or).trim().length <= maxLen) {
-        actual = (actual + ' ' + or).trim();
-      } else {
-        if (actual) trozos.push(actual);
-        if (or.length > maxLen) {
-          let restante = or;
-          while (restante.length > maxLen) {
-            let corte = restante.lastIndexOf(' ', maxLen);
-            if (corte < maxLen * 0.55) corte = maxLen;
-            trozos.push(restante.slice(0, corte).trim());
-            restante = restante.slice(corte).trim();
-          }
-          actual = restante;
-        } else {
-          actual = or;
-        }
-      }
-    }
-    if (actual) trozos.push(actual);
-    return trozos.filter(t => t.length > 0);
-  }
-
-  function dividirResumenEnFragmentos(resumen) {
-    const parrafos = String(resumen || '').split(/\n+/).map(p => p.trim()).filter(Boolean);
-    return parrafos.map(p => dividirTextoEnTrozos(p, 220));
-  }
-
   function limpiarResaltado() {
     rBody.querySelectorAll('.tts-frag.tts-activo').forEach(el => el.classList.remove('tts-activo'));
   }
@@ -1957,13 +1992,19 @@
     if (gen !== ttsGeneracion) return;
     if (!ttsActivo) return;
     if (ttsIndice >= ttsCola.length) {
+      // ¡Terminado! Marcamos como leído: ttsIndice = total
       if (ttsCapId) {
         const { cap } = buscarCap(ttsCapId);
-        if (cap) { cap.ttsIndice = 0; guardar(); }
+        if (cap) { cap.ttsIndice = ttsCola.length; guardar(); }
       }
       limpiarResaltado();
-      resetTTS();
-      toast('Lectura terminada');
+      const capIdRef = ttsCapId;
+      pararTTS();
+      ttsCapId = null;
+      if (capIdRef) actualizarCapHeader(capIdRef);
+      toast('Lectura terminada ✓');
+      if (libroAbierto) renderTOC(libroAbierto);
+      render();
       return;
     }
     const trozo = ttsCola[ttsIndice];
@@ -1993,14 +2034,16 @@
       window.speechSynthesis.speak(u);
     } catch (err) {
       toast('Error al reproducir voz');
-      resetTTS();
+      pararTTS();
     }
   }
 
   function renderCapControls(cap, totalFrags) {
     const activo = (ttsActivo && ttsCapId === cap.id);
     const idxActual = cap.ttsIndice || 0;
+    const completo = totalFrags > 0 && idxActual >= totalFrags;
     if (activo) {
+      const idxMostrar = Math.min(idxActual, totalFrags - 1);
       return `
         <button class="icon-btn sm" data-cap-playpause="${cap.id}" title="${ttsPausado ? 'Reanudar' : 'Pausar'}">
           ${ttsPausado
@@ -2010,7 +2053,7 @@
         <button class="icon-btn sm" data-cap-stop="${cap.id}" title="Detener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>
         </button>
-        <button class="frag-btn" data-frag-sel="${cap.id}" title="Elegir fragmento">${idxActual + 1}/${totalFrags}</button>
+        <button class="frag-btn" data-frag-sel="${cap.id}" title="Elegir fragmento">${idxMostrar + 1}/${totalFrags}</button>
         <select class="cap-speed" data-cap-speed="${cap.id}" title="Velocidad">
           ${[0.75, 1, 1.25, 1.5, 1.75, 2].map(v =>
             `<option value="${v}" ${ttsVelocidad === v ? 'selected' : ''}>${v}×</option>`
@@ -2019,10 +2062,9 @@
       `;
     }
     return `
-      <button class="icon-btn sm" data-cap-tts="${cap.id}" title="Escuchar este capítulo">
+      <button class="icon-btn sm" data-cap-tts="${cap.id}" title="${completo ? 'Volver a escuchar' : 'Escuchar este capítulo'}">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
       </button>
-      ${cap.ttsIndice > 0 && cap.ttsIndice < totalFrags ? `<span class="tts-resume" title="Progreso guardado">↻</span>` : ''}
     `;
   }
 
@@ -2031,37 +2073,17 @@
     if (!cap) return;
     const header = rBody.querySelector(`[data-cap-header="${capId}"]`);
     if (!header) return;
-    const totalFrags = dividirResumenEnFragmentos(cap.resumen || '').flat().length;
+    const totalFrags = contarFragmentosCap(cap);
     const activo = (ttsActivo && ttsCapId === capId);
     header.classList.toggle('sticky-active', activo);
     const ctrl = header.querySelector('.cap-controls');
     if (ctrl) ctrl.innerHTML = renderCapControls(cap, totalFrags);
+    // Actualizar badge
+    const badgeCont = header.querySelector('.cap-estado-cont');
+    if (badgeCont) badgeCont.innerHTML = badgeEstadoHTML(estadoCapitulo(cap));
   }
 
   /* ═══════════════ RENDER DE LIBRO ABIERTO ═══════════════ */
-  function renderDescripcionHTML(l) {
-    const d = (l.descripcion || '').trim();
-    if (!d) return '';
-    return `
-      <div class="descripcion-libro" data-abrir-intro="${l.id}" role="button" tabindex="0" title="Abrir introducción">
-        <div class="descripcion-label">
-          <span class="label-left">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-            </svg>
-            Introducción
-          </span>
-          <span class="desc-play-hint">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Abrir
-          </span>
-        </div>
-        <div class="descripcion-texto">${esc(d)}</div>
-      </div>
-    `;
-  }
-
   function renderCapHTML(cap, idx) {
     const notas = cap.notas || [];
     const resumen = (cap.resumen || '').trim();
@@ -2079,10 +2101,12 @@
         return `<p>${spans}</p>`;
       }).join('');
     }
+    const estado = estadoCapitulo(cap);
     return `
       <section class="cap" data-cap-el="${cap.id}" data-cap-id="${cap.id}">
         <div class="cap-header" data-cap-header="${cap.id}">
           <div class="cap-num">${idx + 1}</div>
+          <span class="cap-estado-cont">${badgeEstadoHTML(estado)}</span>
           <div class="cap-titulo">${esc(cap.titulo || 'Capítulo ' + (idx+1))}</div>
           <div class="cap-controls">${renderCapControls(cap, totalFrags)}</div>
           <button class="cap-toggle" data-toggle-cap="${cap.id}" title="Expandir / contraer" aria-label="Expandir">
@@ -2121,10 +2145,12 @@
   function renderSeccionHTML(sec, idxSec, colapsada = false) {
     const caps = (sec.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
     const bodyCaps = caps.map((c, i) => renderCapHTML(c, i)).join('');
+    const estado = estadoSeccion(sec);
     return `
       <div class="seccion-bloque ${colapsada ? 'colapsada' : ''}" data-sec-el="${sec.id}" data-sec-id="${sec.id}">
         <div class="seccion-header" data-toggle-sec="${sec.id}">
           <div class="seccion-num">§</div>
+          <span class="cap-estado-cont">${badgeEstadoHTML(estado)}</span>
           <div class="seccion-titulo">${esc(sec.titulo || 'Sección ' + (idxSec+1))}</div>
           <button class="seccion-toggle" data-toggle-sec="${sec.id}" aria-label="Contraer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2166,12 +2192,6 @@
   const rBody = $('#rBody');
 
   rBody.addEventListener('click', (e) => {
-    const intro = e.target.closest('[data-abrir-intro]');
-    if (intro) {
-      e.stopPropagation();
-      abrirDescReader(intro.dataset.abrirIntro);
-      return;
-    }
     const toggleSec = e.target.closest('[data-toggle-sec]');
     if (toggleSec) {
       e.stopPropagation();
@@ -2214,12 +2234,6 @@
 
   rBody.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter') return;
-    const intro = e.target.closest('[data-abrir-intro]');
-    if (intro) {
-      e.preventDefault();
-      abrirDescReader(intro.dataset.abrirIntro);
-      return;
-    }
     const input = e.target.closest('[data-nota-input]');
     if (!input) return;
     e.preventDefault();
@@ -2465,8 +2479,16 @@
     const fragsPlanos = dividirResumenEnFragmentos(txt).flat();
     if (!fragsPlanos.length) { toast('No hay texto para leer'); return; }
     let inicio = 0;
-    if (cap.ttsIndice && cap.ttsIndice > 0 && cap.ttsIndice < fragsPlanos.length) {
-      const continuar = confirm(`Este capítulo tiene progreso guardado.\n\nAceptar = continuar desde donde quedaste.\nCancelar = empezar de nuevo.`);
+    const totalFrags = fragsPlanos.length;
+    if (cap.ttsIndice && cap.ttsIndice >= totalFrags) {
+      // Ya está completo
+      const reiniciar = confirm('Este capítulo ya está leído.\n\nAceptar = volver a escucharlo desde el principio.\nCancelar = dejarlo como leído.');
+      if (!reiniciar) return;
+      cap.ttsIndice = 0;
+      guardar();
+      inicio = 0;
+    } else if (cap.ttsIndice && cap.ttsIndice > 0) {
+      const continuar = confirm('Este capítulo tiene progreso guardado.\n\nAceptar = continuar desde donde quedaste.\nCancelar = empezar de nuevo.');
       if (continuar) {
         inicio = cap.ttsIndice;
       } else {
@@ -2736,20 +2758,19 @@
     }
   }
 
-  /* ═══════════════ DETECTOR DE ESTRUCTURA (v2) ═══════════════ */
+  /* ═══════════════ DETECTOR DE ESTRUCTURA (v3) ═══════════════ */
   function detectarEstructura(texto) {
     const lineas = String(texto || '').split('\n');
     const nLineas = lineas.length;
 
     function limpiar(t) {
-      return String(t || '').trim()
-        .replace(/^\s*#{1,6}\s*/, '')
-        .replace(/^\s*\*\*\s*/, '')
-        .replace(/\*\*\s*$/, '')
-        .replace(/^\[/, '')
-        .replace(/\]\s*$/, '')
-        .replace(/\s+/g, ' ')
-        .trim();
+      let s = String(t || '').trim();
+      s = s.replace(/^\s*#{1,6}\s*/, '');
+      s = s.replace(/^\*{1,4}\s*/, '');
+      s = s.replace(/\*{1,4}\s*$/, '');
+      s = s.replace(/^\[/, '').replace(/\]\s*$/, '');
+      s = s.replace(/\s+/g, ' ').trim();
+      return s;
     }
 
     function tipoMarcador(linea) {
@@ -2772,13 +2793,9 @@
       }
 
       // ── Partes / Libros / Secciones ──
-      // "I.- Título" / "II.- Título"
       if (/^[ivxlcdm]+\s*\.\s*[-–—]\s*\S/i.test(t)) return 'sec';
-      // "Parte I", "Parte 1", "Parte Primera", "Parte I: Título"
       if (/^(parte|libro|secci[oó]n)\s+([ivxlcdm]+|\d+|primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|s[eé]ptima|octavo|noveno|d[eé]cimo|d[eé]cima|und[eé]cimo|und[eé]cima|duod[eé]cimo|duod[eé]cima)\b/i.test(t)) return 'sec';
-      // "PRIMERA PARTE", "SEGUNDA PARTE:", "TERCERA PARTE —"
       if (/^(primera|segunda|tercera|cuarta|quinta|sexta|s[eé]ptima|octava|novena|d[eé]cima|und[eé]cima|duod[eé]cima)\s+parte\b/i.test(t)) return 'sec';
-      // "LIBRO PRIMERO", "LIBRO I"
       if (/^libro\s+(primero|segundo|tercero|cuarto|quinto|sexto|s[eé]ptimo|octavo|noveno|d[eé]cimo|[ivxlcdm]+|\d+)\b/i.test(t)) return 'sec';
 
       // ── Capítulos con la palabra ──
@@ -2794,13 +2811,14 @@
       }
 
       // ── "1. Título" (número + punto + espacio + Mayúscula) ──
-      if (/^\d{1,3}\.\s+[A-ZÁÉÍÓÚÑ]/.test(t) && t.length < 200) return 'cap';
+      // Cap a 120 chars: títulos muy largos son texto, no capítulos
+      if (/^\d{1,3}\.\s+[A-ZÁÉÍÓÚÑ]/.test(t) && t.length < 120) return 'cap';
 
       // ── "1 TÍTULO EN MAYÚSCULAS" (sin punto) ──
       if (/^\d{1,3}\s+[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s\d"'¡!¿?.,:;()\-]{5,}$/.test(t) && t.length < 150) return 'cap';
 
       // ── "1) Título" / "1- Título" / "1 – Título" / "1.- Título" ──
-      if (/^\d{1,3}\s*[)\-–—.]\s*[A-ZÁÉÍÓÚÑ"“«]/.test(t) && t.length < 200) return 'cap';
+      if (/^\d{1,3}\s*[)\-–—.]\s*[A-ZÁÉÍÓÚÑ"“«]/.test(t) && t.length < 150) return 'cap';
 
       // ── '1-"Título"' (los 200 consejos de Ángel Daro) ──
       if (/^\d{1,3}\s*[-–—]\s*["“«]/.test(t) && t.length < 250) return 'cap';
@@ -2808,44 +2826,85 @@
       return null;
     }
 
-    // ── PASO 1: encontrar el fin de la TOC ──
-    // Estrategia: buscar el primer marcador (no toc) que esté seguido por texto real
-    // (>100 caracteres en alguna de las próximas ~15 líneas).
+    // ── PASO 1: saltar la TOC correctamente ──
     let inicioReal = 0;
-    let hayTOC = false;
+    let tocIdx = -1;
     for (let i = 0; i < nLineas; i++) {
-      if (tipoMarcador(lineas[i]) === 'toc') { hayTOC = true; break; }
+      if (tipoMarcador(lineas[i]) === 'toc') { tocIdx = i; break; }
     }
-    if (hayTOC) {
-      for (let i = 0; i < nLineas; i++) {
+
+    if (tocIdx >= 0) {
+      // Buscar el primer marker cuyo contenido hasta el SIGUIENTE marker sea sustancial
+      for (let i = tocIdx + 1; i < nLineas; i++) {
         const tipo = tipoMarcador(lineas[i]);
-        if (tipo && tipo !== 'toc') {
-          let textoReal = 0;
-          for (let j = i + 1; j < Math.min(nLineas, i + 20); j++) {
-            if (lineas[j].trim().length > 100) { textoReal++; break; }
-          }
-          if (textoReal >= 1) {
-            inicioReal = i;
-            break;
-          }
+        if (!tipo || tipo === 'toc') continue;
+        let contentChars = 0;
+        for (let j = i + 1; j < nLineas; j++) {
+          if (tipoMarcador(lineas[j])) break;
+          contentChars += lineas[j].trim().length;
+          if (contentChars > 300) break;
+        }
+        if (contentChars > 300) {
+          inicioReal = i;
+          break;
         }
       }
+      // Fallback: primera línea no vacía con >100 chars
       if (inicioReal === 0) {
-        // Fallback: saltar hasta 300 líneas o hasta línea larga
-        for (let i = 1; i < nLineas; i++) {
+        for (let i = tocIdx + 1; i < nLineas; i++) {
           if (lineas[i].trim().length > 100) { inicioReal = i; break; }
         }
       }
     }
 
-    // ── PASO 2: recolectar marcadores ──
-    const marcadores = [];
+    // ── PASO 2: recolectar todos los marcadores ──
+    const allMarkers = [];
     for (let i = inicioReal; i < nLineas; i++) {
       const tipo = tipoMarcador(lineas[i]);
       if (tipo && tipo !== 'toc') {
-        marcadores.push({ idx: i, tipo, titulo: limpiar(lineas[i]) });
+        allMarkers.push({ idx: i, tipo, titulo: limpiar(lineas[i]) });
       }
     }
+
+    // ── PASO 3: filtrar ítems de listas numeradas ──
+    function contenidoEntre(aIdx, bIdx) {
+      let chars = 0;
+      for (let j = aIdx + 1; j < bIdx; j++) {
+        if (tipoMarcador(lineas[j])) continue;
+        chars += lineas[j].trim().length;
+        if (chars > 150) return chars;
+      }
+      return chars;
+    }
+
+    const listItems = new Set();
+    for (let i = 0; i < allMarkers.length; i++) {
+      const m = allMarkers[i];
+      const numMatch = m.titulo.match(/^(\d{1,3})\.\s+(.+)$/);
+      if (!numMatch) continue;
+      const num = parseInt(numMatch[1]);
+      const rest = numMatch[2];
+      // Título tras el número demasiado largo → es contenido, no capítulo
+      if (rest.length > 100) { listItems.add(i); continue; }
+      // Vecino N-1 antes, con < 150 chars entre ellos
+      if (i > 0) {
+        const prev = allMarkers[i - 1];
+        const prevMatch = prev.titulo.match(/^(\d{1,3})\.\s+/);
+        if (prevMatch && parseInt(prevMatch[1]) === num - 1) {
+          if (contenidoEntre(prev.idx, m.idx) < 150) listItems.add(i);
+        }
+      }
+      // Vecino N+1 después, con < 150 chars entre ellos
+      if (i + 1 < allMarkers.length) {
+        const next = allMarkers[i + 1];
+        const nextMatch = next.titulo.match(/^(\d{1,3})\.\s+/);
+        if (nextMatch && parseInt(nextMatch[1]) === num + 1) {
+          if (contenidoEntre(m.idx, next.idx) < 150) listItems.add(i);
+        }
+      }
+    }
+
+    const marcadores = allMarkers.filter((_, i) => !listItems.has(i));
 
     // Si no hay marcadores, todo va como un capítulo
     if (marcadores.length === 0) {
@@ -2854,7 +2913,7 @@
       return [{ tipo: 'cap', titulo: 'Capítulo 1', resumen: limpio }];
     }
 
-    // ── PASO 3: armar estructura ──
+    // ── PASO 4: armar estructura ──
     const estructura = [];
     let seccionActual = null;
 
@@ -2874,7 +2933,7 @@
 
       let titulo = m.titulo;
 
-      // Separar "Capítulo 1: Título" cuando hay mucho contenido tras ":"
+      // Separar "Capítulo 1: Título" cuando hay contenido tras ":"
       if (m.tipo === 'cap') {
         const matchColon = titulo.match(/^([^:]{2,90}):\s*(.{40,})$/);
         if (matchColon) {
@@ -2887,7 +2946,7 @@
         }
       }
 
-      // Fusionar "Capítulo N" solo + subtítulo en la línea siguiente
+      // Fusionar "Capítulo N" solo + subtítulo en línea siguiente
       const esSoloCap = /^(cap[ií]tulo|parte|secci[oó]n)\s+[\divxlcdm]+\s*$/i.test(titulo);
       if (esSoloCap && resumen) {
         const rLineas = resumen.split('\n');
@@ -2911,7 +2970,7 @@
         }
       }
 
-      // Fusionar "PRIMERA PARTE" + subtítulo en la línea siguiente
+      // Fusionar "PRIMERA PARTE" + subtítulo en línea siguiente
       const esSoloParte = /^(primera|segunda|tercera|cuarta|quinta|sexta|s[eé]ptima|octava|novena|d[eé]cima|und[eé]cima|duod[eé]cima)\s+parte\s*$/i.test(titulo);
       if (esSoloParte && resumen) {
         const rLineas = resumen.split('\n');
@@ -2928,7 +2987,6 @@
         if (idxSub >= 0) {
           const subtitulo = rLineas[idxSub].trim();
           const resto = rLineas.slice(idxSub + 1).join('\n').trim();
-          // Aunque no haya mucho texto, quitamos el subtítulo del resumen
           titulo = titulo + ': ' + subtitulo;
           resumen = resto;
         }
@@ -2939,29 +2997,8 @@
       if (m.tipo === 'sec') {
         seccionActual = { tipo: 'sec', titulo, capitulos: [] };
         estructura.push(seccionActual);
-        // Si la sección tiene resumen introductorio, lo metemos como primer cap hijo
-        // Solo si hay >=80 chars y no empieza con mayúscula-de-título corto
-        if (resumen && resumen.length >= 80) {
-          const primerParrafo = resumen.split(/\n\n/)[0].trim();
-          const resto = resumen.slice(primerParrafo.length).trim();
-          if (resto.length >= 100) {
-            // Tiene más texto después: el primer párrafo parece intro, resto va al cap
-            // Lo más simple: guardamos TODO el resumen como "intro" de sección
-            // y creamos un cap "Introducción" dentro. Pero el usuario pidió
-            // evitar caps basura. Mejor: si hay más de 1 párrafo grande, crear
-            // un cap con el contenido completo.
-            if (resumen.length >= 200) {
-              seccionActual.capitulos.push({
-                titulo: 'Introducción',
-                resumen
-              });
-            }
-          } else if (resumen.length >= 200) {
-            seccionActual.capitulos.push({
-              titulo: 'Introducción',
-              resumen
-            });
-          }
+        if (resumen && resumen.length >= 200) {
+          seccionActual.capitulos.push({ titulo: 'Introducción', resumen });
         }
       } else if (m.tipo === 'intro') {
         estructura.push({ tipo: 'intro', titulo, resumen });
@@ -2975,12 +3012,11 @@
       }
     }
 
-    // ── PASO 4: limpiar secciones vacías ──
+    // ── PASO 5: limpiar secciones vacías ──
     const limpia = [];
     for (const item of estructura) {
       if (item.tipo === 'sec') {
         if (item.capitulos.length === 0) {
-          // Sección sin hijos → se convierte en capítulo directo con el título
           limpia.push({ tipo: 'cap', titulo: item.titulo, resumen: '' });
         } else {
           limpia.push(item);
@@ -3314,28 +3350,37 @@
     let html = '';
     directos.forEach((c, idx) => {
       const n = (c.notas || []).length;
+      const estado = estadoCapitulo(c);
+      const badge = estado === 'leido' ? '✓' : estado === 'proceso' ? '▶' : '';
       html += `
         <div class="toc-item" data-cap="${c.id}">
           <span class="num">${idx + 1}</span>
           <span class="titulo-toc">${esc(c.titulo || 'Capítulo ' + (idx+1))}</span>
+          ${badge ? `<span class="notas-toc" title="${estado}">${badge}</span>` : ''}
           ${n > 0 ? `<span class="notas-toc" title="${n} nota(s)">${n} 📝</span>` : ''}
         </div>`;
     });
 
     secciones.forEach((s, idxSec) => {
       const caps = (s.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
+      const estado = estadoSeccion(s);
+      const badge = estado === 'leido' ? '✓' : estado === 'proceso' ? '▶' : '';
       html += `
         <div class="toc-item seccion-toc" data-sec="${s.id}">
           <span class="num">§</span>
           <span class="titulo-toc">${esc(s.titulo)}</span>
+          ${badge ? `<span class="notas-toc" title="${estado}">${badge}</span>` : ''}
           <span class="notas-toc">${caps.length} cap</span>
         </div>`;
       caps.forEach((c, idx) => {
         const n = (c.notas || []).length;
+        const estado = estadoCapitulo(c);
+        const badge = estado === 'leido' ? '✓' : estado === 'proceso' ? '▶' : '';
         html += `
           <div class="toc-item" data-cap="${c.id}" style="margin-left:20px">
             <span class="num" style="background:var(--seccion);width:20px;height:20px;font-size:.65rem">${idx+1}</span>
             <span class="titulo-toc">${esc(c.titulo || 'Capítulo ' + (idx+1))}</span>
+            ${badge ? `<span class="notas-toc" title="${estado}">${badge}</span>` : ''}
             ${n > 0 ? `<span class="notas-toc" title="${n} nota(s)">${n} 📝</span>` : ''}
           </div>`;
       });
@@ -3379,7 +3424,7 @@
     const pct = porcentajeLibro(l);
     const sub = [];
     sub.push(`<span style="background:color-mix(in srgb, ${cat.c1} 18%, transparent);color:${cat.c1};padding:1px 7px;border-radius:10px;font-weight:700">${cat.nombre}</span>`);
-    if (pct > 0) sub.push(`<span style="color:var(--ok);font-weight:800">${pct}% leído</span>`);
+    sub.push(`<span style="color:var(--ok);font-weight:800">${pct}% leído</span>`);
     if (l.puntos > 0) sub.push(`<span style="color:var(--star)">${estrellas(l.puntos)}</span>`);
     if (c.secciones > 0) sub.push(`<span>${c.secciones} sec · ${c.caps} cap</span>`);
     else sub.push(`<span>${c.caps} cap</span>`);
@@ -3394,14 +3439,15 @@
 
     const directos = (l.capitulos || []).filter(c => (c.titulo||'').trim() || (c.resumen||'').trim());
     const secciones = (l.secciones || []).filter(s => (s.titulo||'').trim());
-    const descripcionHTML = renderDescripcionHTML(l);
 
-    if (!directos.length && !secciones.length && !descripcionHTML) {
+    // NOTA: la introducción YA NO se muestra en el cuerpo del lector.
+    // Solo se muestra en la tarjeta + botón "Leer introducción".
+    if (!directos.length && !secciones.length) {
       rBody.classList.add('sin-texto');
       rBody.innerHTML = 'Este libro todavía no tiene contenido.<br><br>Pulsa el botón + de arriba para añadir.';
     } else {
       rBody.classList.remove('sin-texto');
-      let html = descripcionHTML;
+      let html = '';
       html += directos.map((cap, idx) => renderCapHTML(cap, idx)).join('');
       html += secciones.map((sec, idx) => renderSeccionHTML(sec, idx, true)).join('');
       rBody.innerHTML = html;
@@ -3577,7 +3623,7 @@
         actualizarWC();
       });
     });
-    // BUG FIX: btn.dataset.capDel (no btn.dataset.id)
+    // BUG FIX: usar btn.dataset.capDel
     cont.querySelectorAll('[data-cap-del]').forEach(btn => {
       btn.addEventListener('click', () => {
         if (!confirm('¿Eliminar este capítulo?')) return;
