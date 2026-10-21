@@ -1,5 +1,5 @@
 // Service Worker — cache offline para la PWA
-const CACHE_NAME = 'biblioteca-v5';
+const CACHE_NAME = 'biblioteca-v6';
 const ASSETS = [
   './',
   './index.html',
@@ -32,7 +32,6 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
   const esCDN = url.hostname.includes('jsdelivr.net');
 
-  // HTML: network-first con fallback al cache
   if (req.destination === 'document' || req.mode === 'navigate') {
     event.respondWith(
       fetch(req)
@@ -46,7 +45,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // CDN de JSZip: cache-first estricto
   if (esCDN) {
     event.respondWith(
       caches.match(req).then((cached) => {
@@ -63,7 +61,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Resto: cache-first con actualización en background
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;

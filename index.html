@@ -8,7 +8,7 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><circle cx='256' cy='256' r='248' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%236366f1'/><path d='M 148 168 Q 202 160 256 168 L 256 384 Q 202 376 148 384 Z' fill='%23fef9c3'/><path d='M 256 168 Q 310 160 364 168 L 364 384 Q 310 376 256 384 Z' fill='%23fde68a'/><line x1='256' y1='168' x2='256' y2='384' stroke='%2392400e' stroke-width='7'/><path d='M 336 168 L 336 268 L 350 254 L 364 268 L 364 168 Z' fill='%23ef4444'/></svg>" />
-<link rel="manifest" href="manifest.json?v=5" />
+<link rel="manifest" href="manifest.json?v=6" />
 
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
@@ -20,7 +20,7 @@
   }catch(e){}
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js?v=5').catch(()=>{});
+      navigator.serviceWorker.register('sw.js?v=6').catch(()=>{});
     });
   }
 </script>
@@ -580,6 +580,12 @@
   .qc-bulk-info li.sec-item:first-child{border-top:none;padding-top:0}
   .qc-bulk-info li.cap-item{margin-left:10px;color:var(--muted)}
   .qc-bulk-info li.intro-item{margin-left:10px;color:var(--accent);font-weight:700}
+  .qc-bulk-info .tag-tipo{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:1px 5px;border-radius:4px;margin-right:4px}
+  .qc-bulk-info .tag-sec{background:color-mix(in srgb,var(--seccion) 20%, transparent);color:var(--seccion)}
+  .qc-bulk-info .tag-cap{background:color-mix(in srgb,var(--accent) 20%, transparent);color:var(--accent)}
+  .qc-bulk-info .tag-intro{background:color-mix(in srgb,var(--accent) 30%, transparent);color:var(--accent)}
+  .qc-bulk-info .tag-vacio{background:color-mix(in srgb,var(--danger) 15%, transparent);color:var(--danger)}
+  .qc-bulk-info .len-info{font-size:.66rem;color:var(--muted);opacity:.7}
 
   #toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:.87rem;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translate(-50%,0)}
@@ -941,9 +947,9 @@
 
       <div data-qc-panel="varios" style="display:none">
         <p class="hint">Pega el libro completo o subí un <strong>EPUB / TXT / MD</strong>. Los EPUB se procesan por estructura real (capítulos, partes, TOC). Los MOBI/AZW/PDF no se pueden procesar: convertílos a EPUB con <a href="https://calibre-ebook.com/" target="_blank" rel="noopener">Calibre</a>.<br>
-        <strong>TXT/MD — Secciones</strong>: <code>Parte I</code>, <code>I.- Título</code>, <code>PRIMERA PARTE:</code>, <code>LIBRO PRIMERO</code>.<br>
-        <strong>TXT/MD — Capítulos</strong>: <code>Capítulo 1</code>, <code>1. Título</code>, <code>1 TÍTULO</code>, <code>1-"Título"</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>, <code>Sobre el autor</code>.<br>
-        <strong>Introducción</strong> y <strong>Prefacio</strong> se auto-asignan como introducción del libro.</p>
+        <strong>Si un EPUB sale raro</strong>, probá convertirlo a TXT con Calibre (Convertir libros → TXT) y subir el .txt.<br>
+        <strong>TXT/MD — Secciones</strong>: <code>Parte I</code>, <code>I.- Título</code>, <code>PRIMERA PARTE:</code>.<br>
+        <strong>TXT/MD — Capítulos</strong>: <code>Capítulo 1</code>, <code>1. Título</code>, <code>1 TÍTULO</code>, <code>Prólogo</code>, <code>Epílogo</code>, <code>Glosario</code>.</p>
         <div class="field">
           <label for="qcBulkTexto">Texto completo</label>
           <textarea id="qcBulkTexto" placeholder="Pega aquí el texto del libro entero o subí un EPUB…" style="min-height:220px"></textarea>
@@ -2777,6 +2783,221 @@
     throw new Error('Extensión no reconocida: ' + (ext || 'sin extensión') + '. Formatos aceptados: EPUB, TXT, MD.');
   }
 
+  // ── Clasificar un título de heading ──
+  function esTituloTOC(titulo) {
+    const t = normalizar(titulo).replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+    return /^(tabla de contenidos?|indices?|contenidos?|contents?|table of contents|sumario|indice general|sumario general)$/.test(t);
+  }
+  function esTituloIntro(titulo) {
+    const t = String(titulo || '').trim();
+    if (/^(introducci[oó]n|prefacio|pr[oó]logo|proemio|presentaci[oó]n|pr[eé]ambulo)(\s*[:.\-–—]\s*.*)?$/i.test(t)) return true;
+    if (/^(una\s+)?nota\s+(r[aá]pida\s+)?(para|del?|de\s+los?)\s+/i.test(t)) return true;
+    if (/^nota\s+(del?|de\s+los?)\s+autor\b/i.test(t)) return true;
+    return false;
+  }
+  function esTituloCapitulo(titulo) {
+    const t = String(titulo || '').trim();
+    return /^(cap[ií]tulo|chapter|cap\.|chap\.|parte|part|libro|secci[oó]n|section)\s+/i.test(t);
+  }
+
+  // ── Procesar un archivo XHTML del EPUB: extrae items ──
+  function procesarXHTML(body, ordenBase) {
+    const resultado = [];
+    const headings = body.querySelectorAll('h1, h2, h3, h4');
+    if (headings.length === 0) {
+      // Sin headings: si hay texto sustancial, lo tratamos como un cap anónimo
+      // (esto lo resolvemos fuera con navMap)
+      return resultado;
+    }
+
+    const allEls = body.querySelectorAll('*');
+    let marcadorActual = null;
+    let buffer = [];
+    let orden = 0;
+
+    const flushActual = () => {
+      if (!marcadorActual) return;
+      const resumen = buffer.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+      resultado.push({ ...marcadorActual, resumen, orden: ordenBase + orden });
+      orden++;
+    };
+
+    allEls.forEach(el => {
+      const tag = el.tagName.toLowerCase();
+      if (/^h[1-4]$/.test(tag)) {
+        flushActual();
+        const nivel = parseInt(tag[1], 10);
+        const titulo = el.textContent.trim();
+        if (!titulo) { marcadorActual = null; buffer = []; return; }
+
+        let tipo;
+        if (esTituloTOC(titulo)) tipo = 'toc';
+        else if (esTituloIntro(titulo)) tipo = 'intro';
+        else if (nivel === 1) tipo = 'sec';
+        else tipo = 'cap';
+
+        marcadorActual = { tipo, titulo, nivel };
+        buffer = [];
+      } else if (marcadorActual && /^(p|blockquote)$/.test(tag)) {
+        const txt = el.textContent.trim();
+        if (txt) buffer.push(txt);
+      } else if (marcadorActual && tag === 'ul') {
+        el.querySelectorAll(':scope > li').forEach(li => {
+          const txt = li.textContent.trim();
+          if (txt) buffer.push('• ' + txt);
+        });
+      } else if (marcadorActual && tag === 'ol') {
+        el.querySelectorAll(':scope > li').forEach((li, i) => {
+          const txt = li.textContent.trim();
+          if (txt) buffer.push((i + 1) + '. ' + txt);
+        });
+      }
+    });
+    flushActual();
+
+    return resultado;
+  }
+
+  // ── Descartar el "esqueleto" inicial (headings huérfanos al principio) ──
+  function descartarEsqueletoInicial(items) {
+    if (items.length < 5) return items;
+
+    // Encontrar primer item con contenido real (>=150 chars) que NO sea copyright
+    let primerContenido = -1;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].resumen.length >= 150) {
+        const esCopyright = /copyright|derechos reservados|all rights reserved|isbn/i.test(items[i].resumen.slice(0, 150));
+        if (!esCopyright) { primerContenido = i; break; }
+      }
+    }
+
+    if (primerContenido <= 0) return items;
+
+    const antes = items.slice(0, primerContenido);
+    const conContenido = antes.filter(x => x.resumen.length >= 100).length;
+    const huerfanos = antes.filter(x => x.resumen.length < 50).length;
+
+    // Solo descartar si hay un "esqueleto claro": >=3 huérfanos Y <=1 con contenido
+    if (huerfanos < 3) return items;
+    if (conContenido > 1) return items;
+
+    console.log(`[EPUB] Descartados ${primerContenido} items de esqueleto inicial`);
+    return items.slice(primerContenido);
+  }
+
+  // ── Eliminar duplicados (mismo título, uno vacío y otro con contenido) ──
+  function normalizarTituloClave(t) {
+    return String(t || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/^(cap[ií]tulo|chapter|parte|part|libro|secci[oó]n|section)\s+[ivxlcdm\d]+\s*[:.\-–—]?\s*/i, '')
+      .replace(/[^\w\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  function eliminarDuplicados(items) {
+    const porClave = new Map();
+    items.forEach((item, i) => {
+      const key = normalizarTituloClave(item.titulo);
+      if (!key) return;
+      if (!porClave.has(key)) porClave.set(key, []);
+      porClave.get(key).push({ item, i });
+    });
+
+    const eliminar = new Set();
+    for (const [key, lista] of porClave) {
+      if (lista.length <= 1) continue;
+      const conContenido = lista.filter(x => x.item.resumen.length >= 100);
+      if (conContenido.length === 0) continue;
+      // Quedarse con el de MÁS contenido
+      const mejor = conContenido.reduce((a, b) => a.item.resumen.length >= b.item.resumen.length ? a : b);
+      for (const x of lista) {
+        if (x !== mejor) eliminar.add(x.i);
+      }
+    }
+    return items.filter((_, i) => !eliminar.has(i));
+  }
+
+  // ── Fusionar "Capítulo N" huérfano con siguiente cap con contenido ──
+  function fusionarTitulosHuerfanos(items) {
+    const resultado = [];
+    for (let i = 0; i < items.length; i++) {
+      const actual = items[i];
+      const siguiente = items[i + 1];
+
+      if (actual.resumen.length < 30 &&
+          esTituloCapitulo(actual.titulo) &&
+          siguiente &&
+          siguiente.resumen.length >= 100 &&
+          siguiente.tipo !== 'intro' &&
+          siguiente.tipo !== 'toc') {
+        resultado.push({
+          tipo: 'cap',
+          titulo: actual.titulo + ': ' + siguiente.titulo,
+          nivel: 1,
+          resumen: siguiente.resumen,
+          orden: actual.orden
+        });
+        i++;
+        continue;
+      }
+      resultado.push(actual);
+    }
+    return resultado;
+  }
+
+  // ── Limpiar y ordenar todos los items ──
+  function limpiarItemsEPUB(items) {
+    // 1. Descartar TOC
+    let limpios = items.filter(x => x.tipo !== 'toc');
+    // 2. Descartar esqueleto inicial
+    limpios = descartarEsqueletoInicial(limpios);
+    // 3. Fusionar títulos huérfanos (Capítulo N vacío + subtítulo siguiente)
+    limpios = fusionarTitulosHuerfanos(limpios);
+    // 4. Eliminar duplicados
+    limpios = eliminarDuplicados(limpios);
+    return limpios;
+  }
+
+  // ── Agrupar en secciones + caps ──
+  function agruparEnSecciones(items) {
+    const intros = [];
+    const flujo = [];
+    let secActual = null;
+
+    for (const item of items) {
+      if (item.tipo === 'intro') {
+        intros.push(item);
+        secActual = null; // reset: los caps siguientes NO son hijos de la intro
+        continue;
+      }
+
+      if (item.tipo === 'sec') {
+        const sec = { tipo: 'sec', titulo: item.titulo, capitulos: [] };
+        if (item.resumen.length >= 200) {
+          sec.capitulos.push({ tipo: 'cap', titulo: 'Introducción', resumen: item.resumen });
+        }
+        flujo.push(sec);
+        secActual = sec;
+      } else if (item.tipo === 'cap') {
+        if (secActual) {
+          secActual.capitulos.push(item);
+        } else {
+          flujo.push(item);
+        }
+      }
+    }
+
+    // Secciones vacías → capítulos directos
+    const resultado = flujo.map(x => {
+      if (x.tipo === 'sec' && x.capitulos.length === 0) {
+        return { tipo: 'cap', titulo: x.titulo, resumen: '' };
+      }
+      return x;
+    });
+
+    return { intros, resultado };
+  }
+
   async function procesarEPUB(file) {
     if (typeof JSZip === 'undefined') {
       throw new Error('El lector EPUB no está cargado. Conectate a internet una vez y volvé a intentar. Después queda cacheado para uso offline.');
@@ -2813,6 +3034,7 @@
       if (idref && manifest[idref]) spine.push(manifest[idref].href);
     });
 
+    // navMap: para EPUBs sin headings, usar los labels de la TOC
     const navMap = {};
     let navPath = null;
     for (const id in manifest) {
@@ -2860,7 +3082,9 @@
       } catch {}
     }
 
+    // Recolectar items de todos los archivos
     const items = [];
+    let ordenGlobal = 0;
     for (const itemPath of spine) {
       const xhtml = await zip.file(itemPath)?.async('string');
       if (!xhtml) continue;
@@ -2872,72 +3096,45 @@
       const body = doc.body || doc.documentElement;
       if (!body) continue;
 
-      const headings = body.querySelectorAll('h1, h2, h3, h4');
+      const itemsArchivo = procesarXHTML(body, ordenGlobal);
 
-      if (headings.length === 0) {
-        const titulo = (navMap[itemPath] || doc.querySelector('title')?.textContent?.trim() || primeraFrase(body) || '').trim();
-        if (!titulo) continue;
-        const resumen = textoPlanoDe(body);
-        if (resumen.trim()) items.push({ tipo: 'cap', titulo, resumen });
-      } else {
-        const allEls = body.querySelectorAll('*');
-        let marcadorActual = null;
-        let buffer = [];
-
-        const flushActual = () => {
-          if (!marcadorActual) return;
-          const resumen = buffer.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-          items.push({ ...marcadorActual, resumen });
-        };
-
-        allEls.forEach(el => {
-          const tag = el.tagName.toLowerCase();
-          if (/^h[1-4]$/.test(tag)) {
-            flushActual();
-            const nivel = parseInt(tag[1], 10);
-            const titulo = el.textContent.trim();
-            if (!titulo) { marcadorActual = null; buffer = []; return; }
-            marcadorActual = { tipo: nivel === 1 ? 'sec' : 'cap', titulo };
-            buffer = [];
-          } else if (marcadorActual && /^(p|blockquote)$/.test(tag)) {
-            const txt = el.textContent.trim();
-            if (txt) buffer.push(txt);
-          } else if (marcadorActual && tag === 'ul') {
-            el.querySelectorAll('li').forEach(li => {
-              const txt = li.textContent.trim();
-              if (txt) buffer.push('• ' + txt);
-            });
-          } else if (marcadorActual && tag === 'ol') {
-            el.querySelectorAll('li').forEach((li, i) => {
-              const txt = li.textContent.trim();
-              if (txt) buffer.push((i + 1) + '. ' + txt);
-            });
-          }
-        });
-        flushActual();
-      }
-    }
-
-    const resultado = [];
-    let secActual = null;
-    for (const item of items) {
-      if (item.tipo === 'sec') {
-        secActual = { tipo: 'sec', titulo: item.titulo, capitulos: [] };
-        if (item.resumen && item.resumen.length >= 200) {
-          secActual.capitulos.push({ tipo: 'cap', titulo: 'Introducción', resumen: item.resumen });
+      // Si no hay headings pero sí contenido Y hay navMap, crear cap con label del navMap
+      if (itemsArchivo.length === 0) {
+        const texto = textoPlanoDe(body);
+        const tituloNav = navMap[itemPath] || doc.querySelector('title')?.textContent?.trim() || '';
+        if (texto && texto.trim().length > 100 && tituloNav) {
+          itemsArchivo.push({
+            tipo: esTituloTOC(tituloNav) ? 'toc' : esTituloIntro(tituloNav) ? 'intro' : 'cap',
+            titulo: tituloNav,
+            nivel: 2,
+            resumen: texto.trim(),
+            orden: ordenGlobal
+          });
         }
-        resultado.push(secActual);
-      } else if (item.tipo === 'cap') {
-        if (secActual) secActual.capitulos.push(item);
-        else resultado.push(item);
+      }
+
+      items.push(...itemsArchivo);
+      ordenGlobal += Math.max(itemsArchivo.length, 1);
+    }
+
+    // Limpiar + agrupar
+    const itemsLimpios = limpiarItemsEPUB(items);
+    console.log('[EPUB] Items tras limpiar:', itemsLimpios.map(x => `[${x.tipo}] ${x.titulo} (${x.resumen.length}c)`));
+
+    const { intros, resultado } = agruparEnSecciones(itemsLimpios);
+
+    // Prepend intros como item 'intro' (van a descripción)
+    const final = [];
+    if (intros.length > 0) {
+      const textoIntro = intros.map(i => i.resumen).filter(Boolean).join('\n\n');
+      if (textoIntro) {
+        final.push({ tipo: 'intro', titulo: 'Introducción', resumen: textoIntro });
       }
     }
-    return resultado.map(x => {
-      if (x.tipo === 'sec' && x.capitulos.length === 0) {
-        return { tipo: 'cap', titulo: x.titulo, resumen: '' };
-      }
-      return x;
-    });
+    final.push(...resultado);
+
+    console.log('[EPUB] Estructura final:', final);
+    return final;
   }
 
   function textoPlanoDe(el) {
@@ -2948,12 +3145,6 @@
     });
     if (partes.length === 0) return el.textContent.replace(/\s+/g, ' ').trim();
     return partes.join('\n\n');
-  }
-
-  function primeraFrase(el) {
-    const p = el.querySelector('p');
-    if (!p) return '';
-    return p.textContent.trim().replace(/\s+/g, ' ').slice(0, 80);
   }
 
   /* ═══════════════ DETECTOR DE ESTRUCTURA (TXT/MD) ═══════════════ */
@@ -3220,12 +3411,20 @@
     return partes.join('\n\n\n');
   }
 
+  function tagTipoHTML(item) {
+    if (item.tipo === 'sec') return '<span class="tag-tipo tag-sec">SEC</span>';
+    if (item.tipo === 'intro') return '<span class="tag-tipo tag-intro">INTRO</span>';
+    const vacio = (item.resumen || '').length < 30;
+    return vacio ? '<span class="tag-tipo tag-vacio">VACÍO</span>' : '<span class="tag-tipo tag-cap">CAP</span>';
+  }
+
   function renderPreviewDesdeCaps() {
     const caps = qcCapsDetectados;
     const secciones = caps.filter(x => x.tipo === 'sec');
     const intros = caps.filter(x => x.tipo === 'intro');
     const capsSueltos = caps.filter(x => x.tipo === 'cap');
     const totalCaps = capsSueltos.length + secciones.reduce((a, s) => a + (s.capitulos || []).length, 0);
+    const huerfanos = capsSueltos.filter(x => (x.resumen || '').length < 30).length;
 
     if (totalCaps === 0 && intros.length === 0) {
       qcBulkInfo.innerHTML = '<strong>No se detectó contenido.</strong>';
@@ -3233,26 +3432,31 @@
       return;
     }
 
-    let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros.length ? ', <span style="color:var(--accent)">'+intros.length+' introducción</span>' : ''}<ul>`;
+    let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros.length ? ', <span style="color:var(--accent)">'+intros.length+' intro</span>' : ''}`;
+    if (huerfanos > 0) {
+      html += ` · <span style="color:var(--danger)">${huerfanos} capítulo${huerfanos === 1 ? '' : 's'} vacío${huerfanos === 1 ? '' : 's'}</span>`;
+    }
+    html += '<ul>';
     let cont = 0;
     for (const item of caps) {
-      if (cont >= 40) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
+      if (cont >= 50) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
       if (item.tipo === 'sec') {
         html += `<li class="sec-item">§ ${esc(item.titulo)} (${(item.capitulos || []).length} cap${(item.capitulos || []).length === 1 ? '' : 's'})</li>`;
         for (const c of (item.capitulos || [])) {
-          if (cont >= 40) break;
-          html += `<li class="cap-item">${esc(c.titulo)} · ${nPalabras(c.resumen).toLocaleString('es')} palabras</li>`;
+          if (cont >= 50) break;
+          html += `<li class="cap-item">${tagTipoHTML(c)}${esc(c.titulo)} <span class="len-info">· ${nPalabras(c.resumen).toLocaleString('es')} pal · ${(c.resumen||'').length} chars</span></li>`;
           cont++;
         }
         cont++;
       } else if (item.tipo === 'intro') {
-        html += `<li class="intro-item">📖 Introducción → se asignará al libro · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
+        html += `<li class="intro-item">${tagTipoHTML(item)}${esc(item.titulo)} → descripción del libro · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
       } else {
-        html += `<li class="cap-item">${esc(item.titulo)} · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
+        html += `<li class="cap-item">${tagTipoHTML(item)}${esc(item.titulo)} <span class="len-info">· ${nPalabras(item.resumen).toLocaleString('es')} pal · ${(item.resumen||'').length} chars</span></li>`;
         cont++;
       }
     }
     html += '</ul>';
+    html += `<p style="margin-top:8px;font-size:.72rem;color:var(--muted)">💡 Si algo no calza, probá convertir el libro a TXT con Calibre y subir el .txt.</p>`;
     qcBulkInfo.innerHTML = html;
     actualizarQcWc();
   }
@@ -3270,45 +3474,7 @@
       return;
     }
     qcCapsDetectados = detectarEstructura(texto);
-
-    const secciones = qcCapsDetectados.filter(x => x.tipo === 'sec');
-    const intros = qcCapsDetectados.filter(x => x.tipo === 'intro');
-    const capsSueltos = qcCapsDetectados.filter(x => x.tipo === 'cap');
-    let totalCaps = capsSueltos.length + secciones.reduce((a, s) => a + s.capitulos.length, 0);
-
-    if (totalCaps === 0 && intros.length === 0) {
-      qcBulkInfo.innerHTML = '<strong>No se detectó contenido.</strong>';
-      actualizarQcWc();
-      return;
-    }
-    if (secciones.length === 0 && capsSueltos.length === 1 && capsSueltos[0].resumen.trim() === texto.trim() && intros.length === 0) {
-      qcBulkInfo.innerHTML = `<strong>No se detectaron marcadores de capítulo.</strong> Se importará todo como un único capítulo. Si quieres dividirlo, separa con líneas como "Capítulo 1", "Capítulo 2", etc.`;
-      actualizarQcWc();
-      return;
-    }
-
-    let html = `<strong>Detectado:</strong> ${secciones.length} sección${secciones.length === 1 ? '' : 'es'}, ${totalCaps} capítulo${totalCaps === 1 ? '' : 's'}${intros.length ? ', <span style="color:var(--accent)">'+intros.length+' introducción</span>' : ''}<ul>`;
-    let cont = 0;
-    for (const item of qcCapsDetectados) {
-      if (cont >= 40) { html += `<li style="color:var(--muted)">… y más</li>`; break; }
-      if (item.tipo === 'sec') {
-        html += `<li class="sec-item">§ ${esc(item.titulo)} (${item.capitulos.length} cap${item.capitulos.length === 1 ? '' : 's'})</li>`;
-        for (const c of item.capitulos) {
-          if (cont >= 40) break;
-          html += `<li class="cap-item">${esc(c.titulo)} · ${nPalabras(c.resumen).toLocaleString('es')} palabras</li>`;
-          cont++;
-        }
-        cont++;
-      } else if (item.tipo === 'intro') {
-        html += `<li class="intro-item">📖 Introducción → se asignará al libro · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
-      } else {
-        html += `<li class="cap-item">${esc(item.titulo)} · ${nPalabras(item.resumen).toLocaleString('es')} palabras</li>`;
-        cont++;
-      }
-    }
-    html += '</ul>';
-    qcBulkInfo.innerHTML = html;
-    actualizarQcWc();
+    renderPreviewDesdeCaps();
   }
 
   qcBulkTexto.addEventListener('input', actualizarBulkInfo);
@@ -3428,7 +3594,9 @@
         qcCapsDetectados = res.estructura;
         qcBulkTexto.value = '[Contenido cargado desde ' + f.name + ']';
         renderPreviewDesdeCaps();
-        toast('EPUB procesado: ' + contarTotalCaps(res.estructura) + ' capítulos');
+        const total = contarTotalCaps(res.estructura);
+        const secs = res.estructura.filter(x => x.tipo === 'sec').length;
+        toast(`EPUB: ${secs} sección${secs===1?'':'es'} · ${total} capítulo${total===1?'':'s'}`);
       } else {
         qcBulkTexto.value = res.texto;
         actualizarBulkInfo();
